@@ -7,17 +7,13 @@ namespace LoginApp.ViewModels
     {
         private MainViewModel _mainViewModel;
 
-        public string SuccessMessage { get; } = "로그인에 성공했습니다!";
-
-
         public SignInSuccessViewModel(MainViewModel mainViewModel)
         {
             _mainViewModel = mainViewModel;
         }
 
-
         /// <summary>
-        /// 
+        /// 로그아웃 버튼을 통해 로그인화면으로 전환
         /// </summary>
         [RelayCommand]
         private void OnSignOut()
