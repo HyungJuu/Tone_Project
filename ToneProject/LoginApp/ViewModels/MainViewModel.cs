@@ -1,9 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LoginApp.Views;
 
 namespace LoginApp.ViewModels
 {
@@ -28,6 +24,24 @@ namespace LoginApp.ViewModels
         public void ShowSignInView()
         {
             CurrentViewModel = new SignInViewModel(this);
+        }
+
+        public void ShowSignUpView()
+        {
+            var signUpView = new Views.SignUpView();
+            signUpView.Show();
+        }
+
+        public void ShowFindAccountView()
+        {
+            var FindAccountView = new Views.FindAccountView();
+            FindAccountView.Show();
+        }
+
+        public void ShowFindPasswordView()
+        {
+            var FindPasswordView = new Views.FindPasswordView();
+            FindPasswordView.Show();
         }
     }
 }

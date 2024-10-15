@@ -3,11 +3,11 @@
 namespace LoginApp.Views
 {
     /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
+    /// FindPasswordView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class FindPasswordView : Window
     {
-        public MainWindow()
+        public FindPasswordView()
         {
             InitializeComponent();
         }

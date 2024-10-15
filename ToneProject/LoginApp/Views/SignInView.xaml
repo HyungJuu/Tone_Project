@@ -30,9 +30,15 @@
                         Command="{Binding SignInCommand}" Style="{StaticResource SignInOut}" Margin="0 0 0 10" />
             </StackPanel>
 
-            <Button Grid.Row="1" Grid.Column="0" Content="회원가입" HorizontalAlignment="Left" Margin="10 0 0 0" />
-            <Button Grid.Row="1" Grid.Column="1" Content="계정찾기"  HorizontalAlignment="Right"/>
-            <Button Grid.Row="1" Grid.Column="2" Content="비밀번호 찾기" HorizontalAlignment="Right" Margin="10 0 10 0"/>
+            <Button Grid.Row="1" Grid.Column="0"
+                    Content="회원가입" Command="{Binding SignUpCommand}"
+                    HorizontalAlignment="Left" Margin="10 0 0 0" />
+            <Button Grid.Row="1" Grid.Column="1"
+                    Content="계정찾기" Command="{Binding FindAccountCommand}"
+                    HorizontalAlignment="Right"/>
+            <Button Grid.Row="1" Grid.Column="2"
+                    Content="비밀번호 찾기" Command="{Binding FindPasswordCommand}"
+                    HorizontalAlignment="Right" Margin="10 0 10 0"/>
         </Grid>
     </Border>
 </UserControl>

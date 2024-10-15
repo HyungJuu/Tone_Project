@@ -1,10 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LoginApp.ViewModels
 {
@@ -43,6 +38,26 @@ namespace LoginApp.ViewModels
                 Id = string.Empty;
                 Password = string.Empty;
             }
+        }
+
+        [RelayCommand]
+        private void OnSignUp()
+        {
+            _mainViewModel.ShowSignUpView();
+
+        }
+
+        [RelayCommand]
+        private void OnFindAccount()
+        {
+            _mainViewModel.ShowFindAccountView();
+
+        }
+
+        [RelayCommand]
+        private void OnFindPassword()
+        {
+            _mainViewModel.ShowFindPasswordView();
         }
     }
 }
