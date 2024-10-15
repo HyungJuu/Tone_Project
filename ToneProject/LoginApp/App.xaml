@@ -20,7 +20,7 @@
             <Setter Property="BorderBrush" Value="Gray" />
         </Style>
 
-        <Style TargetType="Button">
+        <Style TargetType="Button" x:Key="SignInOut">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Padding" Value="5" />
             <Setter Property="Width" Value="200" />
@@ -47,5 +47,25 @@
             </Style.Triggers>
         </Style>
 
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="9" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border TextBlock.Foreground="Black" Background="Transparent" BorderBrush="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
     </Application.Resources>
 </Application>
