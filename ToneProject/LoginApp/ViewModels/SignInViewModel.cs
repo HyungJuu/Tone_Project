@@ -43,21 +43,27 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private void OnSignUp()
         {
-            _mainViewModel.ShowSignUpView();
+            var signUpView = new Views.SignUpView();
+            signUpView.ShowDialog();
 
         }
 
         [RelayCommand]
         private void OnFindAccount()
         {
-            _mainViewModel.ShowFindAccountView();
+            var FindAccountView = new Views.FindAccountView();
+            FindAccountView.ShowDialog();
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [RelayCommand]
         private void OnFindPassword()
         {
-            _mainViewModel.ShowFindPasswordView();
+            var FindPasswordView = new Views.FindPasswordView();
+            FindPasswordView.ShowDialog();
         }
     }
 }
