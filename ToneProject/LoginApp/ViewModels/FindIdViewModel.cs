@@ -2,7 +2,7 @@
 
 namespace LoginApp.ViewModels
 {
-    public class FindAccountViewModel : ObservableObject
+    public class FindIdViewModel : ObservableObject
     {
 
     }

@@ -33,8 +33,8 @@
             <Button Grid.Row="1" Grid.Column="0"
                     Content="회원가입" Command="{Binding SignUpCommand}"
                     HorizontalAlignment="Left" Margin="10 0 0 0" />
-            <Button Grid.Row="1" Grid.Column="1"
-                    Content="계정찾기" Command="{Binding FindAccountCommand}"
+            <Button Grid.Row="2" Grid.Column="1"
+                    Content="아이디찾기" Command="{Binding FindIdCommand}"
                     HorizontalAlignment="Right"/>
             <Button Grid.Row="1" Grid.Column="2"
                     Content="비밀번호 찾기" Command="{Binding FindPasswordCommand}"

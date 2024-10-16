@@ -14,7 +14,7 @@ namespace LoginApp.ViewModels
         private string _password = "";
 
         [ObservableProperty]
-        private string _loginMessage = "";
+        private string _loginStatus = "";
 
         public SignInViewModel(MainViewModel mainViewModel)
         {
@@ -25,18 +25,28 @@ namespace LoginApp.ViewModels
         private void OnSignIn()
         {
             // 임시 아이디, 비밀번호
-            string UsertId = "admin";
-            string UserPassword = "1234";
+            string userId = "admin";
+            string userPassword = "1234";
 
-            if (Id == UsertId && Password == UserPassword)
+            if (string.IsNullOrEmpty(Id))
             {
-                _mainViewModel.ShowMainView();
+                LoginStatus = "아이디를 입력하세요";
+            }
+            else if (string.IsNullOrEmpty(Password))
+            {
+                LoginStatus = "비밀번호를 입력하세요";
+            }
+            else if (Id == userId && Password == userPassword)
+            {
+                _mainViewModel.ShowSignInSuccessView();
+            }
+            else if (Id == userId)
+            {
+                LoginStatus = "비밀번호가 올바르지 않습니다.";
             }
             else
             {
-                LoginMessage = "아이디 또는 비밀번호를 확인하세요.";
-                Id = string.Empty;
-                Password = string.Empty;
+                LoginStatus = "아이디 또는 비밀번호가 올바르지 않습니다";
             }
         }
 
@@ -49,10 +59,10 @@ namespace LoginApp.ViewModels
         }
 
         [RelayCommand]
-        private void OnFindAccount()
+        private void OnFindId()
         {
-            var FindAccountView = new Views.FindAccountView();
-            FindAccountView.ShowDialog();
+            var FindIdView = new Views.FindIdView();
+            FindIdView.ShowDialog();
 
         }
 
