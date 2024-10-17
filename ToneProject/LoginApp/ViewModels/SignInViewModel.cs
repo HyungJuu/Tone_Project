@@ -22,7 +22,7 @@ namespace LoginApp.ViewModels
         }
 
         [RelayCommand]
-        private void OnSignIn()
+        private void SignIn()
         {
             // 임시 아이디, 비밀번호
             string userId = "admin";
@@ -51,27 +51,30 @@ namespace LoginApp.ViewModels
         }
 
         [RelayCommand]
-        private void OnSignUp()
+        private void SignUp()
         {
             var signUpView = new Views.SignUpView();
             signUpView.ShowDialog();
         }
 
         [RelayCommand]
-        private void OnFindId()
+        private void FindId()
         {
             var FindIdView = new Views.FindIdView();
             FindIdView.ShowDialog();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         [RelayCommand]
-        private void OnFindPassword()
+        private void FindPassword()
         {
             var FindPasswordView = new Views.FindPasswordView();
             FindPasswordView.ShowDialog();
+        }
+
+        [RelayCommand]
+        private void SaveSignInInfo()
+        {
+            // 어디에 저장을...
         }
     }
 }

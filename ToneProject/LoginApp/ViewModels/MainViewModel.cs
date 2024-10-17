@@ -16,9 +16,7 @@ namespace LoginApp.ViewModels
         {
             CurrentViewModel = new SignInSuccessViewModel(this);
         }
-        /// <summary>
-        /// 
-        /// </summary>
+
         public void ShowSignInView()
         {
             CurrentViewModel = new SignInViewModel(this);
