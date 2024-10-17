@@ -48,7 +48,7 @@
                     HorizontalAlignment="Right"/>
             <Button Grid.Row="2" Grid.Column="2"
                     Content="비밀번호 찾기" Command="{Binding FindPasswordCommand}"
-                    HorizontalAlignment="Right" Margin="10 0 10 0"/>
+                    HorizontalAlignment="Right" Margin="10 0"/>
             
             <Separator Grid.Row="3" Grid.ColumnSpan="3" Height="1" Width="220" Background="Black" Margin="0 20"/>
 
