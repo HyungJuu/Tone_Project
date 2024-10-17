@@ -55,7 +55,6 @@ namespace LoginApp.ViewModels
         {
             var signUpView = new Views.SignUpView();
             signUpView.ShowDialog();
-
         }
 
         [RelayCommand]
@@ -63,7 +62,6 @@ namespace LoginApp.ViewModels
         {
             var FindIdView = new Views.FindIdView();
             FindIdView.ShowDialog();
-
         }
 
         /// <summary>
