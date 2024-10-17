@@ -8,7 +8,6 @@
         Title="아이디 찾기" Height="450" Width="800">
     <Grid>
         <TextBlock Text="아이디 찾기 화면입니다" 
-           FontSize="20"
-           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                   Style="{StaticResource ViewDescription}" />
     </Grid>
 </Window>
