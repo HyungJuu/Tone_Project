@@ -65,10 +65,5 @@ namespace LoginApp.ViewModels
             var FindPasswordView = new Views.FindPasswordView();
             FindPasswordView.ShowDialog();
         }
-
-        [RelayCommand]
-        private static void SaveSignInInfo()
-        {
-        }
     }
 }

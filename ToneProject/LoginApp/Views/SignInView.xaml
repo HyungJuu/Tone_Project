@@ -85,10 +85,7 @@
                         </PasswordBox.Style>
                     </PasswordBox>
 
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Command="{Binding SaveSignInInfoCommand}" Margin="0 5"/>
-                        <Label Content="간편로그인 정보 저장" FontSize="10"/>
-                    </StackPanel>
+                    <CheckBox Content="비밀번호 표시" Margin="0 5" FontSize="10" Padding="1"/>
 
                     <TextBlock Text="{Binding LoginStatus}"
                                HorizontalAlignment="Left"
