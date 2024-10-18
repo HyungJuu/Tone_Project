@@ -58,11 +58,5 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-        <Style TargetType="TextBlock" x:Key="ViewDescription">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="20" />
-        </Style>
     </Application.Resources>
 </Application>
