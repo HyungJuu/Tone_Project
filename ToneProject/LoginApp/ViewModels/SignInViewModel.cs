@@ -3,9 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace LoginApp.ViewModels
 {
-    public partial class SignInViewModel : ObservableObject
+    public partial class SignInViewModel(MainViewModel mainViewModel) : ObservableObject
     {
-        private MainViewModel _mainViewModel;
+        private readonly MainViewModel _mainViewModel = mainViewModel;
 
         [ObservableProperty]
         private string _id = "";
@@ -15,11 +15,6 @@ namespace LoginApp.ViewModels
 
         [ObservableProperty]
         private string _loginStatus = "";
-
-        public SignInViewModel(MainViewModel mainViewModel)
-        {
-            _mainViewModel = mainViewModel;
-        }
 
         [RelayCommand]
         private void SignIn()
@@ -51,30 +46,29 @@ namespace LoginApp.ViewModels
         }
 
         [RelayCommand]
-        private void SignUp()
+        private static void SignUp()
         {
             var signUpView = new Views.SignUpView();
             signUpView.ShowDialog();
         }
 
         [RelayCommand]
-        private void FindId()
+        private static void FindId()
         {
             var FindIdView = new Views.FindIdView();
             FindIdView.ShowDialog();
         }
 
         [RelayCommand]
-        private void FindPassword()
+        private static void FindPassword()
         {
             var FindPasswordView = new Views.FindPasswordView();
             FindPasswordView.ShowDialog();
         }
 
         [RelayCommand]
-        private void SaveSignInInfo()
+        private static void SaveSignInInfo()
         {
-  
         }
     }
 }

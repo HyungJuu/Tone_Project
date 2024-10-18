@@ -29,8 +29,7 @@ namespace LoginApp.Utils
 
         private static void OnBoundPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var passwordBox = d as PasswordBox;
-            if (passwordBox == null) return;
+            if (d is not PasswordBox passwordBox) return;
 
             passwordBox.PasswordChanged -= PasswordChanged;
             string newString = (string)e.NewValue ?? string.Empty;

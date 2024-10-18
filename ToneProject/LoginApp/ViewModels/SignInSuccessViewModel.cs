@@ -3,18 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace LoginApp.ViewModels
 {
-    public partial class SignInSuccessViewModel : ObservableObject
+    public partial class SignInSuccessViewModel(MainViewModel mainViewModel) : ObservableObject
     {
-        private MainViewModel _mainViewModel;
+        private readonly MainViewModel _mainViewModel = mainViewModel;
 
-        public SignInSuccessViewModel(MainViewModel mainViewModel)
-        {
-            _mainViewModel = mainViewModel;
-        }
-
-        /// <summary>
-        /// 로그아웃 버튼을 통해 로그인화면으로 전환
-        /// </summary>
         [RelayCommand]
         private void OnSignOut()
         {
