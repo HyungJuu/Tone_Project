@@ -104,14 +104,5 @@ namespace LoginApp.ViewModels
             var FindPasswordView = new Views.FindPasswordView();
             FindPasswordView.ShowDialog();
         }
-
-        /// <summary>
-        /// 비밀번호 표시 여부를 전환(표시/숨김)하는 명령입니다.
-        /// </summary>
-        [RelayCommand]
-        private void ShowPassword()
-        {
-            IsPasswordVisible = !IsPasswordVisible; // 현재 비밀번호 표시상태의 반대값으로 변경
-        }
     }
 }

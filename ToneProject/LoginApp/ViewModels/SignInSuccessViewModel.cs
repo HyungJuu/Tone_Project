@@ -19,7 +19,7 @@ namespace LoginApp.ViewModels
         /// 로그아웃을 처리하고 로그인 화면으로 돌아가는 명령을 실행합니다.
         /// </summary>
         [RelayCommand]
-        private void OnSignOut()
+        private void SignOut()
         {
             _mainViewModel.ShowSignInView();
         }
