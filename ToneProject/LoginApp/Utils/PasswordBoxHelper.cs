@@ -5,7 +5,6 @@ namespace LoginApp.Utils
 {
     /// <summary>
     /// 보안상의 이유로 데이터바인딩이 불가능한 PasswordBox에 비밀번호를 바인딩할 수 있도록 도와주는 클래스.
-    /// 비밀번호를 양방향으로 뷰모델과 동기화하는 매커니즘
     /// </summary>
     public class PasswordBoxHelper
     {
@@ -35,10 +34,10 @@ namespace LoginApp.Utils
         /// </summary>
         public static readonly DependencyProperty BoundPasswordProperty =
             DependencyProperty.RegisterAttached(
-                "BoundPassword",
-                typeof(string),
-                typeof(PasswordBoxHelper),
-                new PropertyMetadata("<Default>", OnBoundPasswordChanged));
+                "BoundPassword", // DependencyProperty에 등록할 속성 이름
+                typeof(string), // 속성 타입
+                typeof(PasswordBoxHelper), // DependencyProperty 사용 클래스
+                new PropertyMetadata("<Default>", OnBoundPasswordChanged)); // 속성의 기본값, 콜백메서드
 
         /// <summary>
         /// PasswordBox의 비밀번호가 바뀌었을 때 호출되는 메서드.
@@ -49,7 +48,7 @@ namespace LoginApp.Utils
         private static void OnBoundPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is not PasswordBox passwordBox) return;
-            
+
             // 이벤트를 제거하여 메모리 초기화
             passwordBox.PasswordChanged -= PasswordChanged;
 
@@ -60,15 +59,15 @@ namespace LoginApp.Utils
                 passwordBox.Password = newString;
             }
             // 이벤트를 다시 생성
-            passwordBox.PasswordChanged += PasswordChanged; 
+            passwordBox.PasswordChanged += PasswordChanged;
         }
 
         /// <summary>
         /// PasswordBox에서 비밀번호가 바뀌었을 때 실행되는 메서드.
         /// 비밀번호가 바뀌면 BoundPassword 속성을 업데이트해서 뷰모델과 동기화합니다
         /// </summary>
-        /// <param name="sender">이벤트가 발생한 PasswordBox입니다</param>
-        /// <param name="e">이벤트 정보입니다</param>
+        /// <param name="sender">이벤트가 발생한 객체, PasswordBox입니다</param>
+        /// <param name="e">이벤트에 대한 추가 정보입니다</param>
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
             var passwordBox = (PasswordBox)sender;
