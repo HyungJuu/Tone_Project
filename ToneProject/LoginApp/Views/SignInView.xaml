@@ -52,7 +52,7 @@
         <!-- 비밀번호 텍스트박스 스타일 -->
         <Style TargetType="TextBox" x:Key="PasswordTextBox">
             <Style.Resources>
-                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                <VisualBrush x:Key="PasswordWaterMark" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                     <VisualBrush.Visual>
                         <Label Content="비밀번호" Foreground="LightGray" Padding="10 5"/>
                     </VisualBrush.Visual>
@@ -65,7 +65,7 @@
                         <Condition Property="Text" Value="{x:Static sys:String.Empty}" />
                         <Condition Property="Visibility" Value="Visible" />
                     </MultiTrigger.Conditions>
-                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                    <Setter Property="Background" Value="{StaticResource PasswordWaterMark}" />
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
@@ -102,16 +102,10 @@
                              BorderBrush="LightGray" BorderThickness="0 0 0 1.5" Margin="0 5" Padding="10 5"/>
                     <!-- 비밀번호 입력 -->
                     <Grid>
-                        <!-- Mode=TwoWay : 뷰의 값이 변경되면 뷰모델 속성 업데이트(반대도 마찬가지) 뷰 <-> 뷰모델
-                                  OneWay : 뷰모델 -> 뷰 만
-                        PasswordBoxHelper 클래스를 사용해서 사용자가 입력한 비밀번호를 VeiwModel의 속성와 양방향으로 연결
-                        사용자가 비밀번호를 입력하면 PasswordBoxHelper를 통해 뷰모델의 Password 속성에 전달 -> 뷰모델의 Password속성이 변경되면 그 값이 PasswordBox에 다시 반영 -->
+                        <!--PasswordBoxHelper 클래스를 통해 사용자가 입력한 비밀번호를 VeiwModel의 속성와 양방향으로 연결-->
                         <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"
                                      BorderBrush="LightGray" BorderThickness="0 0 0 1.5" Margin="0 5"
                                      Height="30" Padding="10 5" PasswordChar="•" />
-                        <!--BooleanToVisibilityConverter : bool 값을 Visibility 값으로 변환해주는 변환기
-                        true -> Visibility.Visible (표시)
-                        false -> Visibility.Collapsed (숨김)-->
                         <TextBox Text="{Binding Password, Mode=TwoWay}"
                                  Visibility="{Binding IsPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                  Style="{StaticResource PasswordTextBox}"
