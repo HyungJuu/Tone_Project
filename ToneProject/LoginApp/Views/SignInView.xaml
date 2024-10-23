@@ -10,9 +10,33 @@
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        
+
+        <ControlTemplate x:Key="TextBoxTemplate" TargetType="TextBox">
+            <Grid>
+                <Grid.Resources>
+                    <VisualBrush x:Key="WaterMarkBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None" />
+                </Grid.Resources>
+
+                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <ScrollViewer x:Name="PART_ContentHost" />
+                </Border>
+
+                <TextBlock x:Name="WatermarkText" 
+                           Text="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Tag}" 
+                           Foreground="LightGray" Padding="15 5" Visibility="Collapsed" />
+            </Grid>
+    
+            <ControlTemplate.Triggers>
+                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                    <Setter TargetName="WatermarkText" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+
         <!-- 아이디 워터마크 스타일 -->
-        <Style TargetType="TextBox" x:Key="IdTextBox">
+        <!--<Style TargetType="TextBox" x:Key="IdTextBox">
             <Style.Resources>
                 <VisualBrush x:Key="IdWaterMark" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                     <VisualBrush.Visual>
@@ -26,14 +50,14 @@
                     <Setter Property="Background" Value="{StaticResource IdWaterMark}" />
                 </Trigger>
             </Style.Triggers>
-        </Style>
+        </Style>-->
 
         <!-- 비밀번호 워터마크 스타일 -->
         <Style TargetType="PasswordBox">
             <Style.Resources>
                 <VisualBrush x:Key="PasswordWaterMark" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                     <VisualBrush.Visual>
-                        <Label Content="비밀번호" Foreground="LightGray" Padding="10 5"/>
+                        <Label Content="비밀번호" Foreground="LightGray" Padding="15 5"/>
                     </VisualBrush.Visual>
                 </VisualBrush>
             </Style.Resources>
@@ -50,7 +74,7 @@
         </Style>
 
         <!-- 비밀번호 텍스트박스 스타일 -->
-        <Style TargetType="TextBox" x:Key="PasswordTextBox">
+        <!--<Style TargetType="TextBox" x:Key="PasswordTextBox">
             <Style.Resources>
                 <VisualBrush x:Key="PasswordWaterMark" AlignmentX="Left" AlignmentY="Center" Stretch="None">
                     <VisualBrush.Visual>
@@ -68,7 +92,7 @@
                     <Setter Property="Background" Value="{StaticResource PasswordWaterMark}" />
                 </MultiTrigger>
             </Style.Triggers>
-        </Style>
+        </Style>-->
     </UserControl.Resources>
 
     <Grid VerticalAlignment="Center">
@@ -98,17 +122,17 @@
 
                 <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="20 30 20 0">
                     <!-- 아이디 입력 -->
-                    <TextBox x:Name="txt" Text="{Binding Id}" Style="{StaticResource IdTextBox}"
+                    <TextBox x:Name="txt" Text="{Binding Id}" Template="{StaticResource TextBoxTemplate}" Tag="아이디"
                              BorderBrush="LightGray" BorderThickness="0 0 0 1.5" Margin="0 5" Padding="10 5"/>
                     <!-- 비밀번호 입력 -->
                     <Grid>
                         <!--PasswordBoxHelper 클래스를 통해 사용자가 입력한 비밀번호를 VeiwModel의 속성와 양방향으로 연결-->
-                        <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"
+                        <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" 
                                      BorderBrush="LightGray" BorderThickness="0 0 0 1.5" Margin="0 5"
                                      Height="30" Padding="10 5" PasswordChar="•" />
-                        <TextBox Text="{Binding Password, Mode=TwoWay}"
+                        <TextBox Text="{Binding Password, Mode=TwoWay}" Tag="비밀번호"
                                  Visibility="{Binding IsPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                 Style="{StaticResource PasswordTextBox}"
+                                 Template="{StaticResource TextBoxTemplate}"
                                  BorderBrush="LightGray" BorderThickness="0 0 0 1.5" Margin="0 5" Padding="10 5"/>
                     </Grid>
 
