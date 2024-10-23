@@ -81,7 +81,10 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private static void SignUp()
         {
-            var signUpView = new Views.SignUpView();
+            var signUpView = new Views.SignUpView
+            {
+                DataContext = new SignUpViewModel() // DataContext에 SignUpViewModel 설정
+            };
             signUpView.ShowDialog();
         }
 
