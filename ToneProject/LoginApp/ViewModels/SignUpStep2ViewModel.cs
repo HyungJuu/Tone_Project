@@ -5,14 +5,9 @@ using System.Windows;
 
 namespace LoginApp.ViewModels
 {
-    public partial class SignUpStep2ViewModel : ObservableObject
+    public partial class SignUpStep2ViewModel(SignUpViewModel signUpViewModel) : ObservableObject
     {
-        private readonly SignUpViewModel _signUpViewModel;
-
-        public SignUpStep2ViewModel(SignUpViewModel signUpViewModel)
-        {
-            _signUpViewModel = signUpViewModel;
-        }
+        private readonly SignUpViewModel _signUpViewModel = signUpViewModel;
 
         [RelayCommand]
         public void SignUpEnd(Window currentWindow)

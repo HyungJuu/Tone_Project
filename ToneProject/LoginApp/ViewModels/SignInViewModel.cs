@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LoginApp.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace LoginApp.ViewModels
 {
@@ -8,7 +11,7 @@ namespace LoginApp.ViewModels
     /// 로그인, 회원가입, 아이디/비밀번호 찾기 등의 로직을 처리합니다.
     /// </summary>
     /// <param name="mainViewModel"></param>
-    public partial class SignInViewModel(MainViewModel mainViewModel) : ObservableObject
+    public partial class SignInViewModel(MainViewModel mainViewModel, ToneProjectContext dbContext) : ObservableObject
     {
         /// <summary>
         /// MainViewModel을 참조하여 로그인 성공 시 화면 전환을 처리합니다.
@@ -39,6 +42,9 @@ namespace LoginApp.ViewModels
         [ObservableProperty]
         private bool _isPasswordVisible = false;
 
+
+        private readonly ToneProjectContext _dbContext = dbContext;
+
         /// <summary>
         /// 사용자가 로그인버튼을 눌렀을 때 실행되는 명령입니다.
         /// 아이디/비밀번호의 일치여부를 통해 로그인 상태메시지를 표시하거나 로그인성공 화면으로 전환합니다.
@@ -46,9 +52,7 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private void SignIn()
         {
-            // 임시 아이디, 비밀번호
-            string userId = "admin";
-            string userPassword = "1234";
+            var user = _dbContext.UserInfo.FirstOrDefault(u => u.Id == Id && u.Pwd == Password);
 
             if (string.IsNullOrEmpty(Id))
             {
@@ -58,11 +62,11 @@ namespace LoginApp.ViewModels
             {
                 LoginStatus = "비밀번호를 입력하세요";
             }
-            else if (Id == userId && Password == userPassword)
+            else if (user != null)
             {
-                _mainViewModel.ShowSignInSuccessView(); // 로그인성공 화면 전환
+                _mainViewModel.ShowSignInSuccessView(); // 로그인 성공 화면 전환
             }
-            else if (Id == userId)
+            else if (_dbContext.UserInfo.Any(u => u.Id == Id))
             {
                 LoginStatus = "비밀번호가 올바르지 않습니다.";
                 Password = string.Empty;
@@ -73,6 +77,7 @@ namespace LoginApp.ViewModels
                 Id = string.Empty;
                 Password = string.Empty;
             }
+
         }
 
         /// <summary>

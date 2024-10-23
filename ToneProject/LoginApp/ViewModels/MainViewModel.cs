@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LoginApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LoginApp.ViewModels
 {
@@ -7,6 +9,8 @@ namespace LoginApp.ViewModels
     /// </summary>
     public partial class MainViewModel : ObservableObject
     {
+        private readonly ToneProjectContext _dbContext;
+
         /// <summary>
         /// 현재 화면에 표시될 뷰모델을 나타냅니다
         /// </summary>
@@ -19,7 +23,8 @@ namespace LoginApp.ViewModels
         /// </summary>
         public MainViewModel()
         {
-            CurrentViewModel = new SignInViewModel(this);
+            _dbContext = new ToneProjectContext();
+            CurrentViewModel = new SignInViewModel(this, _dbContext);
         }
 
         /// <summary>
@@ -37,7 +42,7 @@ namespace LoginApp.ViewModels
         /// </summary>
         public void ShowSignInView()
         {
-            CurrentViewModel = new SignInViewModel(this);
+            CurrentViewModel = new SignInViewModel(this, _dbContext);
         }
     }
 }
