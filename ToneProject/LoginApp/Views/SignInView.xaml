@@ -9,51 +9,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        
-        <!--텍스트박스 워터마크 템플릿-->
-        <ControlTemplate x:Key="TextBoxTemplate" TargetType="TextBox">
-            <Grid>
-                <Grid.Resources>
-                    <VisualBrush x:Key="WaterMarkBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None" />
-                </Grid.Resources>
-
-                <Border Background="White" BorderBrush="LightGray" BorderThickness="0 0 0 1.5" Padding="10 5" Margin="0 5">
-                    <ScrollViewer x:Name="PART_ContentHost" Padding="10 5" />
-                </Border>
-
-                <TextBlock x:Name="WatermarkText" Text="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Tag}" 
-                           Foreground="LightGray" Padding="15 5" Margin="0 5" Visibility="Collapsed" />
-            </Grid>
-    
-            <ControlTemplate.Triggers>
-                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                    <Setter TargetName="WatermarkText" Property="Visibility" Value="Visible"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-
-        <!--패스워드박스 워터마크 템플릿-->
-        <ControlTemplate x:Key="PasswordBoxTemplate" TargetType="PasswordBox">
-            <Grid>
-                <Grid.Resources>
-                    <VisualBrush x:Key="WaterMarkBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None" />
-                </Grid.Resources>
-
-                <Border Background="White" BorderBrush="LightGray" BorderThickness="0 0 0 1.5" Height="30" Padding="10 5" Margin="0 5">
-                    <ScrollViewer x:Name="PART_ContentHost" Padding="10 5"/>
-                </Border>
-
-                <TextBlock x:Name="WatermarkText" Text="{Binding RelativeSource={RelativeSource AncestorType=PasswordBox}, Path=Tag}" 
-                           Foreground="LightGray" Padding="15 5" Margin="0 5" Visibility="Collapsed" />
-            </Grid>
-
-            <ControlTemplate.Triggers>
-                <Trigger Property="util:PasswordBoxHelper.BoundPassword" Value="{x:Static sys:String.Empty}">
-                    <Setter TargetName="WatermarkText" Property="Visibility" Value="Visible"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LoginApp;component/Resources/WatermarkStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid VerticalAlignment="Center">
@@ -83,14 +43,14 @@
 
                 <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="20 30 20 0">
                     <!-- 아이디 입력 -->
-                    <TextBox Text="{Binding Id}" Template="{StaticResource TextBoxTemplate}" Tag="아이디"/>
+                    <TextBox Text="{Binding Id}" Template="{StaticResource TextBoxTemplate}" Tag="아이디" Margin="0 5"/>
                     <!-- 비밀번호 입력 -->
                     <Grid>
                         <!--PasswordBoxHelper 클래스를 통해 사용자가 입력한 비밀번호를 VeiwModel의 속성와 양방향으로 연결-->
                         <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" Tag="비밀번호"
                                      Template="{StaticResource PasswordBoxTemplate}" 
-                                     PasswordChar="•" />
-                        <TextBox Text="{Binding Password, Mode=TwoWay}" Tag="비밀번호"
+                                     PasswordChar="•"  Margin="0 5" />
+                        <TextBox Text="{Binding Password, Mode=TwoWay}" Tag="비밀번호"  Margin="0 5"
                                  Visibility="{Binding IsPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                  Template="{StaticResource TextBoxTemplate}" />
                     </Grid>

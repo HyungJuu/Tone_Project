@@ -5,39 +5,68 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LoginApp.Views"
              xmlns:util="clr-namespace:LoginApp.Utils"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="330">
+    
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LoginApp;component/Resources/WatermarkStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
+            <Style x:Key="LabelStyle" TargetType="Label">
+                <Setter Property="Foreground" Value="Gray"/>
+                <Setter Property="FontSize" Value="9"/>
+                <Setter Property="Margin" Value="0 5 0 0"/>
+            </Style>
+
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Width" Value="220" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="Background" Value="#F0F0F0"/>
+                <Setter Property="Margin" Value="0 20"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="3">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="Background" Value="#EBEBEB" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center">
-            <Label Content="아이디" FontSize="8"/>
-            <TextBox Text="{Binding SignUpId}" HorizontalAlignment="Center" Width="100"/>
-            <TextBlock Text="{Binding SignUpIdStatus}" HorizontalAlignment="Left" Foreground="Red" Margin="0 5" FontSize="10"/>
+    <Grid Margin="20 25 20 0">
+        <StackPanel Margin="20 0">
+            <Label Content="아이디" Style="{StaticResource LabelStyle}"/>
+            <TextBox Text="{Binding SignUpId}" Template="{StaticResource TextBoxTemplate}" Tag="아이디 입력"/>
+            <TextBlock Text="{Binding SignUpIdStatus}" HorizontalAlignment="Left" Foreground="Red" FontSize="10"/>
+
+            <Label Content="비밀번호" Style="{StaticResource LabelStyle}"/>
+            <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding SignUpPassword, Mode=TwoWay}" Template="{StaticResource PasswordBoxTemplate}" 
+                         PasswordChar="•" Tag="비밀번호 입력"/>
+            <TextBlock Text="{Binding SignUpPasswordStatus}" HorizontalAlignment="Left" Foreground="Red" FontSize="10"/>
+
+            <Label Content="비밀번호 확인" Style="{StaticResource LabelStyle}"/>
+            <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding SignUpConfirmPassword, Mode=TwoWay}" Template="{StaticResource PasswordBoxTemplate}" 
+                         PasswordChar="•" Tag="비밀번호 확인"/>
+            <TextBlock Text="{Binding SignUpConfirmPasswordStatus}" HorizontalAlignment="Left" Foreground="Red" FontSize="10"/>
+
+            <Button Content="다음" Command="{Binding SignUpNextCommand}" Style="{StaticResource ButtonStyle}" />
         </StackPanel>
-
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center">
-            <Label Content="비밀번호" FontSize="8"/>
-            <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding SignUpPassword, Mode=TwoWay}" HorizontalAlignment="Center" Width="100"/>
-            <TextBlock Text="{Binding SignUpPasswordStatus}" HorizontalAlignment="Left" Foreground="Red" Margin="0 5" FontSize="10"/>
-        </StackPanel>
-
-        <StackPanel Grid.Row="2" HorizontalAlignment="Center">
-            <Label Content="비밀번호 확인" FontSize="8"/>
-            <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding SignUpConfirmPassword, Mode=TwoWay}" HorizontalAlignment="Center" Width="100"/>
-            <TextBlock Text="{Binding SignUpConfirmPasswordStatus}" HorizontalAlignment="Left" Foreground="Red" Margin="0 5" FontSize="10"/>
-        </StackPanel>
-
-        <Button Grid.Row="3" Content="다음" Command="{Binding SignUpNextCommand}" HorizontalAlignment="Center" Width="100"/>
-
     </Grid>
 </UserControl>
