@@ -39,12 +39,13 @@ public partial class ToneProjectContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("name");
             entity.Property(e => e.Order)
-                .HasDefaultValueSql("nextval('userinfo_new_order_seq1'::regclass)")
+                .HasDefaultValueSql("nextval('order_seq'::regclass)")
                 .HasColumnName("order");
             entity.Property(e => e.Pwd)
                 .HasMaxLength(30)
                 .HasColumnName("pwd");
         });
+        modelBuilder.HasSequence("order_seq");
 
         OnModelCreatingPartial(modelBuilder);
     }
