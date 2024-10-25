@@ -3,21 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:LoginApp.Views"
+             xmlns:local="clr-namespace:LoginApp.Views" 
+             xmlns:converters="clr-namespace:LoginApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="330">
+    <UserControl.Resources>
+        <converters:StringToBooleanConverter x:Key="StringToBooleanConverter" />
+
+    </UserControl.Resources>
+
     <Grid>
-        <StackPanel Margin="20 30 20 0">
-            <TextBox Text="닉네임" Margin="0 10"/>
-            <TextBox Text="생일" Margin="0 10"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <RadioButton Content="남성" Margin="10 0"/>
-                <RadioButton Content="여성" Margin="10 0"/>
-                <RadioButton Content="선택안함" Margin="10 0"/>
-            </StackPanel>
-            <Button Content="완료" Command="{Binding SignUpEndCommand}"
-                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
-                    Margin="0 10" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+            <Label Content="닉네임" FontSize="8"/>
+            <TextBox Text="{Binding SignUpName}" Width="100"/>
+            <TextBlock Text="{Binding SignUpNameStatus}" Foreground="Red" FontSize="10" Margin="0 5" />
         </StackPanel>
+        
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+            <Label Content="생년월일" FontSize="8"/>
+            <TextBox Text="{Binding SignUpBirth}" Width="100"/>
+            <TextBlock Text="{Binding SignUpBirthStatus}" Foreground="Red" FontSize="10" Margin="0 5" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <RadioButton Content="남성"
+                             IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='남성'}"
+                             GroupName="GenderGroup"
+                             Command="{Binding SetGenderCommand}"
+                             CommandParameter="남성"
+                             Margin="10 0"/>
+                <RadioButton Content="여성"
+                             IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='여성'}"
+                             GroupName="GenderGroup"
+                             Command="{Binding SetGenderCommand}"
+                             CommandParameter="여성"
+                             Margin="10 0"/>
+                <RadioButton Content="선택안함"
+                             IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='선택안함'}"
+                             GroupName="GenderGroup"
+                             Command="{Binding SetGenderCommand}"
+                             CommandParameter="선택안함"
+                             Margin="10 0"/>
+            </StackPanel>
+            <TextBlock Text="{Binding SignUpGenderStatus}" Foreground="Red" FontSize="10" Margin="0 5" />
+        </StackPanel>
+
+        <Button Grid.Row="3" Content="완료" Command="{Binding SignUpEndCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                    Margin="0 10" />
     </Grid>
 </UserControl>

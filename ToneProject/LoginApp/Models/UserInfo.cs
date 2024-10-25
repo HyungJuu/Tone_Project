@@ -11,7 +11,9 @@ public partial class UserInfo
 
     public string Name { get; set; } = null!;
 
-    public int Birth { get; set; }
+    public DateOnly Birth { get; set; }
 
-    public int Gender { get; set; }
+    public string Gender { get; set; } = null!;
+
+    public int Order { get; set; }
 }

@@ -22,11 +22,11 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         public void SignUpNext()
         {
-            CurrentSignUpViewModel = new SignUpStep2ViewModel(this);
+            CurrentSignUpViewModel = new SignUpStep2ViewModel((SignUpStep1ViewModel)CurrentSignUpViewModel);
         }
 
         [RelayCommand]
-        public void BackToSignIn(Window currentWindow)
+        public static void BackToSignIn(Window currentWindow)
         {
             currentWindow?.Close();
         }

@@ -16,7 +16,6 @@ public partial class ToneProjectContext : DbContext
     }
 
     public virtual DbSet<UserInfo> UserInfos { get; set; }
-    public DbSet<UserInfo> UserInfo { get; internal set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Host=localhost;Database=ToneProject;Username=postgres;Password=0308");
@@ -25,7 +24,7 @@ public partial class ToneProjectContext : DbContext
     {
         modelBuilder.Entity<UserInfo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("UserInfo_pkey");
+            entity.HasKey(e => e.Id).HasName("userinfo_new_pkey1");
 
             entity.ToTable("UserInfo");
 
@@ -33,10 +32,15 @@ public partial class ToneProjectContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("id");
             entity.Property(e => e.Birth).HasColumnName("birth");
-            entity.Property(e => e.Gender).HasColumnName("gender");
+            entity.Property(e => e.Gender)
+                .HasMaxLength(10)
+                .HasColumnName("gender");
             entity.Property(e => e.Name)
                 .HasMaxLength(30)
                 .HasColumnName("name");
+            entity.Property(e => e.Order)
+                .HasDefaultValueSql("nextval('userinfo_new_order_seq1'::regclass)")
+                .HasColumnName("order");
             entity.Property(e => e.Pwd)
                 .HasMaxLength(30)
                 .HasColumnName("pwd");

@@ -52,7 +52,7 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private void SignIn()
         {
-            var user = _dbContext.UserInfo.FirstOrDefault(u => u.Id == Id && u.Pwd == Password);
+            var user = _dbContext.UserInfos.FirstOrDefault(u => u.Id == Id && u.Pwd == Password);
 
             if (string.IsNullOrEmpty(Id))
             {
@@ -66,7 +66,7 @@ namespace LoginApp.ViewModels
             {
                 _mainViewModel.ShowSignInSuccessView(); // 로그인 성공 화면 전환
             }
-            else if (_dbContext.UserInfo.Any(u => u.Id == Id))
+            else if (_dbContext.UserInfos.Any(u => u.Id == Id))
             {
                 LoginStatus = "비밀번호가 올바르지 않습니다.";
                 Password = string.Empty;
