@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LoginApp.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +56,10 @@ namespace LoginApp.ViewModels
                 SignUpIdStatus = "아이디를 입력해주세요";
                 isValid = false;
             }
+            //else if ( )
+            //{
+                // TODO : 아이디가 존재하는 경우에 대해서 추가 예정
+            //}
 
             if (string.IsNullOrEmpty(SignUpPassword))
             {

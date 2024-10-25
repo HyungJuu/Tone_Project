@@ -17,6 +17,8 @@ namespace LoginApp.ViewModels
         /// MainViewModel을 참조하여 로그인 성공 시 화면 전환을 처리합니다.
         /// </summary>
         private readonly MainViewModel _mainViewModel = mainViewModel;
+        
+        private readonly ToneProjectContext _dbContext = dbContext;
 
         /// <summary>
         /// 로그인할 때 사용자의 아이디를 저장하는 속성입니다.
@@ -41,9 +43,6 @@ namespace LoginApp.ViewModels
         /// </summary>
         [ObservableProperty]
         private bool _isPasswordVisible = false;
-
-
-        private readonly ToneProjectContext _dbContext = dbContext;
 
         /// <summary>
         /// 사용자가 로그인버튼을 눌렀을 때 실행되는 명령입니다.
