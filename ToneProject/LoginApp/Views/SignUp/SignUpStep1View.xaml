@@ -4,14 +4,40 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LoginApp.Views"
+             xmlns:util="clr-namespace:LoginApp.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="330">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    </UserControl.Resources>
     <Grid>
-        <StackPanel Margin="20 30 20 0">
-            <TextBox Text="아이디" HorizontalAlignment="Center" Width="100"/>
-            <TextBox Text="비밀번호" HorizontalAlignment="Center" Width="100" />
-            <TextBox Text="비밀번호확인" HorizontalAlignment="Center" Width="100"/>
-            <Button Content="다음" Command="{Binding SignUpNextCommand}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+            <Label Content="아이디" FontSize="8"/>
+            <TextBox Text="{Binding SignUpId}" HorizontalAlignment="Center" Width="100"/>
+            <TextBlock Text="{Binding SignUpIdStatus}" HorizontalAlignment="Left" Foreground="Red" Margin="0 5" FontSize="10"/>
         </StackPanel>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+            <Label Content="비밀번호" FontSize="8"/>
+            <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding SignUpPassword, Mode=TwoWay}" HorizontalAlignment="Center" Width="100"/>
+            <TextBlock Text="{Binding SignUpPasswordStatus}" HorizontalAlignment="Left" Foreground="Red" Margin="0 5" FontSize="10"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center">
+            <Label Content="비밀번호 확인" FontSize="8"/>
+            <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding SignUpConfirmPassword, Mode=TwoWay}" HorizontalAlignment="Center" Width="100"/>
+            <TextBlock Text="{Binding SignUpConfirmPasswordStatus}" HorizontalAlignment="Left" Foreground="Red" Margin="0 5" FontSize="10"/>
+        </StackPanel>
+
+        <Button Grid.Row="3" Content="다음" Command="{Binding SignUpNextCommand}" HorizontalAlignment="Center" Width="100"/>
+
     </Grid>
 </UserControl>
