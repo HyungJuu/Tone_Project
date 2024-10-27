@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LoginApp.Models;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace LoginApp.ViewModels
@@ -17,7 +16,10 @@ namespace LoginApp.ViewModels
         /// MainViewModel을 참조하여 로그인 성공 시 화면 전환을 처리합니다.
         /// </summary>
         private readonly MainViewModel _mainViewModel = mainViewModel;
-        
+
+        /// <summary>
+        /// ToneProjectContext를 참조하여 데이터베이스와 상호작용합니다. 
+        /// </summary>
         private readonly ToneProjectContext _dbContext = dbContext;
 
         /// <summary>
@@ -87,7 +89,7 @@ namespace LoginApp.ViewModels
         {
             var signUpView = new Views.SignUpView
             {
-                DataContext = new SignUpViewModel() // DataContext에 SignUpViewModel 설정
+                DataContext = new SignUpViewModel() // DataContext에 SignUpViewModel 설정..
             };
             signUpView.ShowDialog();
         }

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LoginApp.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace LoginApp.ViewModels
 {

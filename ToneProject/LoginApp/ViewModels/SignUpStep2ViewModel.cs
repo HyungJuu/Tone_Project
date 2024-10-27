@@ -1,33 +1,62 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LoginApp.Models;
-using System;
 using System.Windows;
 
 namespace LoginApp.ViewModels
 {
+    /// <summary>
+    /// 2단계 회원가입 화면 뷰모델.
+    /// 사용자가 이름, 생년월일, 성별을 입력하는 화면을 처리합니다.
+    /// </summary>
+    /// <param name="signUpStep1ViewModel">1단계 회원가입 뷰모델입니다.</param>
     public partial class SignUpStep2ViewModel(SignUpStep1ViewModel signUpStep1ViewModel) : ObservableObject
     {
+        /// <summary>
+        /// SignUpStep1ViewModel(1단계회원가입)의 인스턴스를 참조하여 회원가입 과정에서 사용합니다.
+        /// </summary>
         private readonly SignUpStep1ViewModel _signUpStep1ViewModel = signUpStep1ViewModel;
 
+        /// <summary>
+        /// 사용자가 입력한 이름을 저장합니다.
+        /// </summary>
         [ObservableProperty]
         private string _signUpName = "";
 
+        /// <summary>
+        /// 사용자가 입력한 생년월일을 저장합니다.
+        /// </summary>
         [ObservableProperty]
         private string _signUpBirth = "";
 
+        /// <summary>
+        /// 사용자가 선택한 성별을 저장합니다.
+        /// </summary>
         [ObservableProperty]
         private string _signUpGender = "";
 
+        /// <summary>
+        /// 이름 입력 상태 메시지를 저장합니다.
+        /// </summary>
         [ObservableProperty]
         private string _signUpNameStatus = string.Empty;
 
+        /// <summary>
+        /// 생년월일 입력 상태 메시지를 저장합니다.
+        /// </summary>
         [ObservableProperty]
         private string _signUpBirthStatus = string.Empty;
 
+        /// <summary>
+        /// 성별 입력 상태 메시지를 저장합니다.
+        /// </summary>
         [ObservableProperty]
         private string _signUpGenderStatus = string.Empty;
 
+        /// <summary>
+        /// 사용자의 입력을 검증하고, 유효한 경우 사용자 정보를 데이터베이스에 저장하여 회원가입을 완료합니다.
+        /// </summary>
+        /// <param name="currentWindow">현재 활성화된 창입니다.</param>
         [RelayCommand]
         public void SignUpEnd(Window currentWindow)
         {
@@ -38,16 +67,25 @@ namespace LoginApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// 사용자가 선택한 성별을 설정합니다.
+        /// </summary>
+        /// <param name="gender">성별 값입니다.</param>
         [RelayCommand]
         private void SetGender(string gender)
         {
             SignUpGender = gender;
         }
 
-
+        /// <summary>
+        /// 사용자 정보를 데이터베이스에 저장합니다.
+        /// </summary>
         private void SaveUserInfoToDatabase()
         {
             using var context = new ToneProjectContext();
+
+            // 생년월일을 DateTime에서 DateOnly로 이중으로 바꿀필요가 있는지? 확인해보기
+            // DateOnly birthDate = DateOnly.FromDateTime(DateTime.ParseExact(SignUpBirth, "yyyyMMdd", null));
 
             // 생년월일 문자열을 DateTime으로 변환
             DateTime birthDate = DateTime.ParseExact(SignUpBirth, "yyyyMMdd", null);
@@ -57,6 +95,7 @@ namespace LoginApp.ViewModels
                 Id = _signUpStep1ViewModel.SignUpId,
                 Pwd = _signUpStep1ViewModel.SignUpPassword,
                 Name = SignUpName,
+                //Birth = DateOnly.FromDateTime(DateTime.ParseExact(SignUpBirth, "yyyyMMdd", null)),
                 Birth = DateOnly.FromDateTime(birthDate), // DateTime을 DateOnly로 변환
                 Gender = SignUpGender
             };
@@ -65,6 +104,11 @@ namespace LoginApp.ViewModels
             context.SaveChanges();
         }
 
+        /// <summary>
+        /// 사용자 입력값을 검증합니다. 
+        /// 유효하지 않은 경우 상태 메시지를 업데이트합니다.
+        /// </summary>
+        /// <returns></returns>
         private bool ValidateSignUpInput()
         {
             // 모든 상태 메시지 초기화
@@ -85,6 +129,7 @@ namespace LoginApp.ViewModels
                 SignUpBirthStatus = "생년월일을 입력해 주세요";
                 isValid = false;
             }
+            //else if (SignUpBirth.Length != 8 || !DateOnly.TryParseExact(SignUpBirth, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _))
             else if (SignUpBirth.Length != 8 || !DateTime.TryParseExact(SignUpBirth, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _))
             {
                 SignUpBirthStatus = "생년월일은 8자리 숫자로 입력해 주세요";
