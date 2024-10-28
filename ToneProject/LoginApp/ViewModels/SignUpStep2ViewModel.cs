@@ -68,16 +68,6 @@ namespace LoginApp.ViewModels
         }
 
         /// <summary>
-        /// 사용자가 선택한 성별을 설정합니다.
-        /// </summary>
-        /// <param name="gender">성별 값입니다.</param>
-        [RelayCommand]
-        private void SetGender(string gender)
-        {
-            SignUpGender = gender;
-        }
-
-        /// <summary>
         /// 사용자 정보를 데이터베이스에 저장합니다.
         /// </summary>
         private void SaveUserInfoToDatabase()
