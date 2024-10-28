@@ -24,7 +24,7 @@ public partial class ToneProjectContext : DbContext
     {
         modelBuilder.Entity<UserInfo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("userinfo_new_pkey1");
+            entity.HasKey(e => e.Id).HasName("userinfo_pkey");
 
             entity.ToTable("UserInfo");
 
@@ -38,14 +38,10 @@ public partial class ToneProjectContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(30)
                 .HasColumnName("name");
-            entity.Property(e => e.Order)
-                .HasDefaultValueSql("nextval('order_seq'::regclass)")
-                .HasColumnName("order");
             entity.Property(e => e.Pwd)
                 .HasMaxLength(30)
                 .HasColumnName("pwd");
         });
-        modelBuilder.HasSequence("order_seq");
 
         OnModelCreatingPartial(modelBuilder);
     }
