@@ -83,7 +83,7 @@ namespace LoginApp.ViewModels
                 SignUpIdStatus = "아이디를 입력해주세요";
                 isValid = false;
             }
-            else if(SignUpId.Length < 3)
+            else if (SignUpId.Length < 3)
             {
                 SignUpIdStatus = "아이디를 3자리 이상 입력해주세요";
                 isValid = false;
