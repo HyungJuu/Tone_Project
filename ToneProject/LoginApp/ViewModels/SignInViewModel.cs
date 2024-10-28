@@ -65,7 +65,7 @@ namespace LoginApp.ViewModels
             }
             else if (user != null)
             {
-                _mainViewModel.ShowSignInSuccessView(); // 로그인 성공 화면 전환
+                _mainViewModel.ShowSignInSuccessView();
             }
             else if (_dbContext.UserInfos.Any(u => u.Id == Id))
             {

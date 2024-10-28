@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace LoginApp.Views
 {
     /// <summary>
-    /// SignUpStep1View.xaml에 대한 상호 작용 논리
+    /// SignUpAccountInfoView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class SignUpStep1View : UserControl
+    public partial class SignUpAccountInfoView : UserControl
     {
-        public SignUpStep1View()
+        public SignUpAccountInfoView()
         {
             InitializeComponent();
         }

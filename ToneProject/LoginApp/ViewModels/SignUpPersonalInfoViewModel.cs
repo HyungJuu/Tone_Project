@@ -9,13 +9,13 @@ namespace LoginApp.ViewModels
     /// 2단계 회원가입 화면 뷰모델.
     /// 사용자가 이름, 생년월일, 성별을 입력하는 화면을 처리합니다.
     /// </summary>
-    /// <param name="signUpStep1ViewModel">1단계 회원가입 뷰모델입니다.</param>
-    public partial class SignUpStep2ViewModel(SignUpStep1ViewModel signUpStep1ViewModel) : ObservableObject
+    /// <param name="signUpAccountInfoViewModel">1단계 회원가입 뷰모델입니다.</param>
+    public partial class SignUpPersonalInfoViewModel(SignUpAccountInfoViewModel signUpAccountInfoViewModel) : ObservableObject
     {
         /// <summary>
-        /// SignUpStep1ViewModel(1단계회원가입)의 인스턴스를 참조하여 회원가입 과정에서 사용합니다.
+        /// SignUpAccountInfoViewModel(1단계회원가입)의 인스턴스를 참조하여 회원가입 과정에서 사용합니다.
         /// </summary>
-        private readonly SignUpStep1ViewModel _signUpStep1ViewModel = signUpStep1ViewModel;
+        private readonly SignUpAccountInfoViewModel _signUpAccountInfoViewModel = signUpAccountInfoViewModel;
 
         /// <summary>
         /// 사용자가 입력한 이름을 저장합니다.
@@ -76,8 +76,8 @@ namespace LoginApp.ViewModels
 
             var userInfo = new UserInfo
             {
-                Id = _signUpStep1ViewModel.SignUpId,
-                Pwd = _signUpStep1ViewModel.SignUpPassword,
+                Id = _signUpAccountInfoViewModel.SignUpId,
+                Pwd = _signUpAccountInfoViewModel.SignUpPassword,
                 Name = SignUpName,
                 Birth = DateOnly.ParseExact(SignUpBirth, "yyyyMMdd", null),
                 Gender = SignUpGender

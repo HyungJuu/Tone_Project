@@ -16,12 +16,12 @@
             <views:SignUpView />
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModels:SignUpStep1ViewModel}">
-            <views:SignUpStep1View />
+        <DataTemplate DataType="{x:Type viewModels:SignUpAccountInfoViewModel}">
+            <views:SignUpAccountInfoView />
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModels:SignUpStep2ViewModel}">
-            <views:SignUpStep2View />
+        <DataTemplate DataType="{x:Type viewModels:SignUpPersonalInfoViewModel}">
+            <views:SignUpPersonalInfoView />
         </DataTemplate>
 
         <Style TargetType="Button" x:Key="SignInOut">

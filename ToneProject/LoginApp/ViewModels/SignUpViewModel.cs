@@ -18,21 +18,21 @@ namespace LoginApp.ViewModels
         private object _currentSignUpViewModel;
 
         /// <summary>
-        /// SignUpStep1ViewModel(1단계 회원가입 화면)을 기본 화면으로 설정합니다
+        /// SignUpAccountInfoViewModel(1단계 회원가입 화면)을 기본 화면으로 설정합니다
         /// </summary>
         public SignUpViewModel()
         {
-            CurrentSignUpViewModel = new SignUpStep1ViewModel(this);
+            CurrentSignUpViewModel = new SignUpAccountInfoViewModel(this);
         }
 
         /// <summary>
-        /// SignUpStep2ViewModel(2단계 회원가입 화면)으로 전환합니다.
-        /// 앞단계(SignUpStep1ViewModel)의 정보를 다음단계(SignUpStep2ViewModel)로 가져갑니다.
+        /// SignUpPersonalInfoViewModel(2단계 회원가입 화면)으로 전환합니다.
+        /// 앞단계(SignUpAccountInfoViewModel)의 정보를 다음단계(SignUpPersonalInfoViewModel)로 가져갑니다.
         /// </summary>
         [RelayCommand]
         public void SignUpNext()
         {
-            CurrentSignUpViewModel = new SignUpStep2ViewModel((SignUpStep1ViewModel)CurrentSignUpViewModel);
+            CurrentSignUpViewModel = new SignUpPersonalInfoViewModel((SignUpAccountInfoViewModel)CurrentSignUpViewModel);
         }
 
         /// <summary>

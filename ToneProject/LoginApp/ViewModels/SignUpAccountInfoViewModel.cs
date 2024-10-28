@@ -9,7 +9,7 @@ namespace LoginApp.ViewModels
     /// 사용자가 아이디와 비밀번호를 입력하는 화면을 처리합니다.
     /// </summary>
     /// <param name="signUpViewModel">회원가입 과정에서 사용되는 상위 뷰모델입니다.</param>
-    public partial class SignUpStep1ViewModel(SignUpViewModel signUpViewModel) : ObservableObject
+    public partial class SignUpAccountInfoViewModel(SignUpViewModel signUpViewModel) : ObservableObject
     {
         /// <summary>
         /// SignUpViewModel의 인스턴스를 참조하여 회원가입 과정에서 사용합니다.
