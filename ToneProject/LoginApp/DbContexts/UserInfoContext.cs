@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using LoginApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LoginApp.Models;
+namespace LoginApp.DbContexts;
 
-public partial class ToneProjectContext : DbContext
+public partial class UserInfoContext : DbContext
 {
-    public ToneProjectContext()
+    public UserInfoContext()
     {
     }
 
-    public ToneProjectContext(DbContextOptions<ToneProjectContext> options)
+    public UserInfoContext(DbContextOptions<UserInfoContext> options)
         : base(options)
     {
     }

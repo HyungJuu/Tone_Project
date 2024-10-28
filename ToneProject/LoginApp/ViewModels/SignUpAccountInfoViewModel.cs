@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LoginApp.DbContexts;
 using LoginApp.Models;
 
 namespace LoginApp.ViewModels
@@ -127,7 +128,7 @@ namespace LoginApp.ViewModels
         /// <returns>아이디가 존재하면 true, 존재하지 않으면 false 반환합니다.</returns>
         private static bool DoesUserIdExist(string userId)
         {
-            using var context = new ToneProjectContext();
+            using var context = new UserInfoContext();
             return context.UserInfos.Any(u => u.Id == userId);
         }
     }

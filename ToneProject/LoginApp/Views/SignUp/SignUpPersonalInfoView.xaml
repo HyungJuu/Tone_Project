@@ -73,13 +73,19 @@
 
             <!-- 성별 선택 -->
             <StackPanel Orientation="Horizontal" Margin="0 20 0 5">
+
                 <RadioButton Content="남성"
+                             GroupName="Gender"
                              IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='남성'}"/>
                 <RadioButton Content="여성"
-                             IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='여성'}"
-                             Margin="15 0"/>
+                             GroupName="Gender"
+                             Margin="15 0"
+                             IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='여성'}"/>
                 <RadioButton Content="선택안함"
+                             GroupName="Gender"
                              IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='선택안함'}"/>
+                
+                
             </StackPanel>
             <TextBlock Text="{Binding SignUpGenderStatus}" Style="{StaticResource StatusMessageStyle}"/>
             

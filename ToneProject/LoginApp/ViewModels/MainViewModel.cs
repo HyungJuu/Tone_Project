@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LoginApp.DbContexts;
 using LoginApp.Models;
 
 namespace LoginApp.ViewModels
@@ -8,7 +9,7 @@ namespace LoginApp.ViewModels
     /// </summary>
     public partial class MainViewModel : ObservableObject
     {
-        private readonly ToneProjectContext _dbContext;
+        private readonly UserInfoContext _dbContext;
 
         /// <summary>
         /// 현재 화면에 표시될 뷰모델을 나타냅니다
@@ -22,7 +23,7 @@ namespace LoginApp.ViewModels
         /// </summary>
         public MainViewModel()
         {
-            _dbContext = new ToneProjectContext();
+            _dbContext = new UserInfoContext();
             CurrentViewModel = new SignInViewModel(this, _dbContext);
         }
 
