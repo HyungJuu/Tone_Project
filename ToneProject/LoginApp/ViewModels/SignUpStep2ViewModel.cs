@@ -84,19 +84,12 @@ namespace LoginApp.ViewModels
         {
             using var context = new ToneProjectContext();
 
-            // 생년월일을 DateTime에서 DateOnly로 이중으로 바꿀필요가 있는지? 확인해보기
-            // DateOnly birthDate = DateOnly.FromDateTime(DateTime.ParseExact(SignUpBirth, "yyyyMMdd", null));
-
-            // 생년월일 문자열을 DateTime으로 변환
-            DateTime birthDate = DateTime.ParseExact(SignUpBirth, "yyyyMMdd", null);
-
             var userInfo = new UserInfo
             {
                 Id = _signUpStep1ViewModel.SignUpId,
                 Pwd = _signUpStep1ViewModel.SignUpPassword,
                 Name = SignUpName,
-                //Birth = DateOnly.FromDateTime(DateTime.ParseExact(SignUpBirth, "yyyyMMdd", null)),
-                Birth = DateOnly.FromDateTime(birthDate), // DateTime을 DateOnly로 변환
+                Birth = DateOnly.ParseExact(SignUpBirth, "yyyyMMdd", null),
                 Gender = SignUpGender
             };
 
@@ -129,10 +122,9 @@ namespace LoginApp.ViewModels
                 SignUpBirthStatus = "생년월일을 입력해 주세요";
                 isValid = false;
             }
-            //else if (SignUpBirth.Length != 8 || !DateOnly.TryParseExact(SignUpBirth, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _))
-            else if (SignUpBirth.Length != 8 || !DateTime.TryParseExact(SignUpBirth, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _))
+            else if (SignUpBirth.Length != 8 || !DateOnly.TryParseExact(SignUpBirth, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _))
             {
-                SignUpBirthStatus = "생년월일은 8자리 숫자로 입력해 주세요";
+                SignUpBirthStatus = "생년월일은 형식에 맞는 8자리 숫자로 입력해 주세요";
                 isValid = false;
             }
 
