@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:LoginApp.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="330">
+             d:DesignHeight="400" d:DesignWidth="330">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -30,9 +30,9 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Border Background="{TemplateBinding Background}" 
-                         BorderBrush="{TemplateBinding BorderBrush}" 
-                         BorderThickness="{TemplateBinding BorderThickness}"
-                         CornerRadius="3">
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="3">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
@@ -45,6 +45,13 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+            
+            <!--상태메시지 스타일-->
+            <Style x:Key="StatusMessageStyle" TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Foreground" Value="red"/>
+                <Setter Property="FontSize" Value="10"/>
+            </Style>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/LoginApp;component/Resources/WatermarkStyles.xaml" />
@@ -54,14 +61,17 @@
 
     <Grid Margin="20 25 20 0">
         <StackPanel Margin="20 0">
+            <!-- 닉네임 입력 -->
             <Label Content="닉네임" Style="{StaticResource LabelStyle}"/>
             <TextBox Text="{Binding SignUpName}" Template="{StaticResource TextBoxTemplate}" Tag="닉네임 입력"/>
-            <TextBlock Text="{Binding SignUpNameStatus}" HorizontalAlignment="Left" Foreground="Red" FontSize="10"/>
+            <TextBlock Text="{Binding SignUpNameStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
+            <!-- 생년월일 입력 -->
             <Label Content="생년월일" Style="{StaticResource LabelStyle}"/>
             <TextBox Text="{Binding SignUpBirth}" Template="{StaticResource TextBoxTemplate}" Tag="생년월일 입력"/>
-            <TextBlock Text="{Binding SignUpBirthStatus}" HorizontalAlignment="Left" Foreground="Red" FontSize="10"/>
+            <TextBlock Text="{Binding SignUpBirthStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
+            <!-- 성별 선택 -->
             <StackPanel Orientation="Horizontal" Margin="0 20 0 5">
                 <RadioButton Content="남성"
                              IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='남성'}"/>
@@ -71,9 +81,9 @@
                 <RadioButton Content="선택안함"
                              IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='선택안함'}"/>
             </StackPanel>
+            <TextBlock Text="{Binding SignUpGenderStatus}" Style="{StaticResource StatusMessageStyle}"/>
             
-            <TextBlock Text="{Binding SignUpGenderStatus}" HorizontalAlignment="Left" Foreground="Red" FontSize="10"/>
-            
+            <!-- 회원가입 완료 버튼 -->
             <Button Content="완료" Command="{Binding SignUpEndCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                     Style="{StaticResource ButtonStyle}"

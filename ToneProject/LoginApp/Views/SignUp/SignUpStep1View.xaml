@@ -7,7 +7,7 @@
              xmlns:util="clr-namespace:LoginApp.Utils"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="330">
+             d:DesignHeight="400" d:DesignWidth="330">
     
     <UserControl.Resources>
         <ResourceDictionary>
@@ -47,25 +47,36 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+
+            <!--상태메시지 스타일-->
+            <Style x:Key="StatusMessageStyle" TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Foreground" Value="red"/>
+                <Setter Property="FontSize" Value="10"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid Margin="20 25 20 0">
         <StackPanel Margin="20 0">
+            <!-- 아이디 입력 -->
             <Label Content="아이디" Style="{StaticResource LabelStyle}"/>
             <TextBox Text="{Binding SignUpId}" Template="{StaticResource TextBoxTemplate}" Tag="아이디 입력"/>
-            <TextBlock Text="{Binding SignUpIdStatus}" HorizontalAlignment="Left" Foreground="Red" FontSize="10"/>
+            <TextBlock Text="{Binding SignUpIdStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
+            <!-- 비밀번호 입력 -->
             <Label Content="비밀번호" Style="{StaticResource LabelStyle}"/>
             <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding SignUpPassword, Mode=TwoWay}" Template="{StaticResource PasswordBoxTemplate}" 
                          PasswordChar="•" Tag="비밀번호 입력"/>
-            <TextBlock Text="{Binding SignUpPasswordStatus}" HorizontalAlignment="Left" Foreground="Red" FontSize="10"/>
+            <TextBlock Text="{Binding SignUpPasswordStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
+            <!-- 비밀번호 확인 -->
             <Label Content="비밀번호 확인" Style="{StaticResource LabelStyle}"/>
             <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding SignUpConfirmPassword, Mode=TwoWay}" Template="{StaticResource PasswordBoxTemplate}" 
                          PasswordChar="•" Tag="비밀번호 확인"/>
-            <TextBlock Text="{Binding SignUpConfirmPasswordStatus}" HorizontalAlignment="Left" Foreground="Red" FontSize="10"/>
+            <TextBlock Text="{Binding SignUpConfirmPasswordStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
+            <!-- 회원가입 다음페이지 이동버튼 -->
             <Button Content="다음" Command="{Binding SignUpNextCommand}" Style="{StaticResource ButtonStyle}" />
         </StackPanel>
     </Grid>
