@@ -88,10 +88,10 @@ namespace LoginApp.ViewModels
         }
 
         /// <summary>
-        /// 사용자 입력값을 검증합니다. 
+        /// 사용자 가입정보를 검증합니다. 
         /// 유효하지 않은 경우 상태 메시지를 업데이트합니다.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>모든 입력값이 유효하면 true, 그렇지 않으면 false를 반환합니다.</returns>
         private bool ValidateSignUpInput()
         {
             // 모든 상태 메시지 초기화
@@ -114,7 +114,7 @@ namespace LoginApp.ViewModels
             }
             else if (SignUpBirth.Length != 8 || !DateOnly.TryParseExact(SignUpBirth, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _))
             {
-                SignUpBirthStatus = "생년월일은 형식에 맞는 8자리 숫자로 입력해 주세요";
+                SignUpBirthStatus = "생년월일 형식에 맞는\n8자리 숫자로 입력해 주세요";
                 isValid = false;
             }
 

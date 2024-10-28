@@ -78,24 +78,23 @@ namespace LoginApp.ViewModels
                 Id = string.Empty;
                 Password = string.Empty;
             }
-
         }
 
         /// <summary>
-        /// 회원가입 화면을 보여주는 명령입니다.
+        /// 회원가입 창을 보여줍니다.
         /// </summary>
         [RelayCommand]
         private static void SignUp()
         {
             var signUpView = new Views.SignUpView
             {
-                DataContext = new SignUpViewModel() // DataContext에 SignUpViewModel 설정..
+                DataContext = new SignUpViewModel()
             };
             signUpView.ShowDialog();
         }
 
         /// <summary>
-        /// 아이디 찾기 화면을 보여주는 명령입니다.
+        /// 아이디 찾기 창을 보여줍니다.
         /// </summary>
         [RelayCommand]
         private static void FindId()
@@ -105,7 +104,7 @@ namespace LoginApp.ViewModels
         }
 
         /// <summary>
-        /// 비밀번호 찾기 화면을 보여주는 명령입니다.
+        /// 비밀번호 찾기 창을 보여줍니다.
         /// </summary>
         [RelayCommand]
         private static void FindPassword()

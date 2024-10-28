@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LoginApp.Models;
 
 namespace LoginApp.ViewModels
 {
@@ -64,7 +65,7 @@ namespace LoginApp.ViewModels
         }
 
         /// <summary>
-        /// 사용자 입력값을 검증합니다.
+        /// 사용자 가입정보를 검증합니다.
         /// 유효하지 않은 경우 각 상태 메시지를 업데이트합니다.
         /// </summary>
         /// <returns>입력값의 유효여부를 나타내는 bool 값입니다.</returns>
@@ -82,14 +83,25 @@ namespace LoginApp.ViewModels
                 SignUpIdStatus = "아이디를 입력해주세요";
                 isValid = false;
             }
-            //else if ( )
-            //{
-            // TODO : 아이디가 존재하는 경우에 대해서 추가 예정
-            //}
+            else if(SignUpId.Length < 3)
+            {
+                SignUpIdStatus = "아이디를 3자리 이상 입력해주세요";
+                isValid = false;
+            }
+            else if (DoesUserIdExist(SignUpId))
+            {
+                SignUpIdStatus = "이미 존재하는 아이디입니다.";
+                isValid = false;
+            }
 
             if (string.IsNullOrEmpty(SignUpPassword))
             {
                 SignUpPasswordStatus = "비밀번호를 입력해주세요";
+                isValid = false;
+            }
+            else if (SignUpPassword.Length < 4)
+            {
+                SignUpPasswordStatus = "비밀번호를 4자리 이상 입력해주세요";
                 isValid = false;
             }
 
@@ -106,6 +118,17 @@ namespace LoginApp.ViewModels
             }
 
             return isValid;
+        }
+
+        /// <summary>
+        /// 데이터베이스에서 아이디가 존재하는지 확인합니다.
+        /// </summary>
+        /// <param name="userId">확인할 사용자 아이디</param>
+        /// <returns>아이디가 존재하면 true, 존재하지 않으면 false 반환합니다.</returns>
+        private static bool DoesUserIdExist(string userId)
+        {
+            using var context = new ToneProjectContext();
+            return context.UserInfos.Any(u => u.Id == userId);
         }
     }
 }
