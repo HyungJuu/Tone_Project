@@ -54,65 +54,22 @@ namespace LoginApp.ViewModels
         /// 아이디/비밀번호의 일치여부를 통해 로그인 상태메시지를 표시하거나 로그인성공 화면으로 전환합니다.
         /// </summary>
         [RelayCommand]
-        private void SignIn()
+        public void SignIn()
         {
-            // 아이디 및 비밀번호 검증
-            LoginStatus = ValidationHelper.ValidateSignInId(Id) ?? ValidationHelper.ValidateSignInPassword(Password);
-            if (LoginStatus != null) return;
+            var validationMessage = ValidationHelper.ValidateSignInCredentials(Id, Password, _dbContext);
 
-            // 데이터베이스에서 사용자를 조회
-            var user = _dbContext.UserInfos.FirstOrDefault(u => u.Id == Id);
-
-            if (user == null)
+            if (!string.IsNullOrEmpty(validationMessage))
             {
-                LoginStatus = "아이디 또는 비밀번호가 올바르지 않습니다";
-                Id = Password = string.Empty;
-                return;
+                LoginStatus = validationMessage;
+                if (validationMessage.Contains("아이디")) Id = string.Empty;
+                if (validationMessage.Contains("비밀번호")) Password = string.Empty;
             }
-
-            // 비밀번호 매칭 검증
-            LoginStatus = ValidationHelper.ValidatePasswordMatch(Password, user.Pwd);
-            if (LoginStatus != null)
+            else
             {
-                Password = string.Empty;
-                return;
+                // 로그인 성공 시 호출
+                _mainViewModel.ShowSignInSuccessView();
             }
-
-            // 로그인 성공
-            _mainViewModel.ShowSignInSuccessView();
         }
-
-
-
-        //    if (string.IsNullOrEmpty(Id))
-        //    {
-        //        LoginStatus = "아이디를 입력하세요";
-        //    }
-        //    else if (string.IsNullOrEmpty(Password))
-        //    {
-        //        LoginStatus = "비밀번호를 입력하세요";
-        //    }
-        //    else
-        //    {
-        //        var user = _dbContext.UserInfos.FirstOrDefault(u => u.Id == Id);
-
-        //        if (user == null)
-        //        {
-        //            LoginStatus = "아이디 또는 비밀번호가 올바르지 않습니다";
-        //            Id = string.Empty;
-        //            Password = string.Empty;
-        //        }
-        //        else if (user.Pwd != Password)
-        //        {
-        //            LoginStatus = "비밀번호가 올바르지 않습니다.";
-        //            Password = string.Empty; // 비밀번호 입력란 초기화
-        //        }
-        //        else
-        //        {
-        //            _mainViewModel.ShowSignInSuccessView();
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// 회원가입 창을 보여줍니다.
