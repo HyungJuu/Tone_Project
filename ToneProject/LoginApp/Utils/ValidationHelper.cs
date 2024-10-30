@@ -56,29 +56,29 @@ namespace LoginApp.Utils
         }
 
         /// <summary>
-        /// 로그인 자격 증명을 검증하고 적절한 오류 메시지를 반환합니다.
+        /// 로그인 자격 증명을 검증하고 검증 결과와 오류 메시지를 반환합니다.
         /// </summary>
-        /// <param name="id">아이디</param>
-        /// <param name="password">비밀번호</param>
+        /// <param name="id">검증할 아이디</param>
+        /// <param name="password">검증할 비밀번호</param>
         /// <param name="dbContext">데이터베이스 컨텍스트</param>
-        /// <returns>자격 증명이 올바르지 않으면 오류 메시지를 반환하고, 올바르면 빈 문자열을 반환합니다.</returns>
-        public static string ValidateSignInCredentials(string id, string password, UserInfoContext dbContext)
+        /// <returns>아이디와 비밀번호가 유효하면 (true, 빈 문자열)을 반환하고, 유효하지 않으면 (false, 오류 메시지)를 반환합니다.</returns>
+        public static (bool IsValid, string Message) ValidateSignInCredentials(string id, string password, UserInfoContext dbContext)
         {
             var idEmptyMessage = CheckIdNotEmpty(id);
             if (!string.IsNullOrEmpty(idEmptyMessage))
-                return idEmptyMessage;
+                return (false, idEmptyMessage);
 
             var passwordEmptyMessage = CheckPasswordNotEmpty(password);
             if (!string.IsNullOrEmpty(passwordEmptyMessage))
-                return passwordEmptyMessage;
+                return (false, passwordEmptyMessage);
 
             if (!CheckIdExists(id, dbContext))
-                return "아이디 또는 비밀번호가 올바르지 않습니다";
+                return (false, "아이디 또는 비밀번호가 올바르지 않습니다");
 
             if (!CheckPasswordMatch(id, password, dbContext))
-                return "비밀번호가 올바르지 않습니다.";
+                return (false, "비밀번호가 올바르지 않습니다.");
 
-            return string.Empty;
+            return (true, string.Empty);
         }
         #endregion
 

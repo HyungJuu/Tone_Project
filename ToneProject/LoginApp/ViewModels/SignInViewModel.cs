@@ -54,21 +54,26 @@ namespace LoginApp.ViewModels
         /// 아이디/비밀번호의 일치여부를 통해 로그인 상태메시지를 표시하거나 로그인성공 화면으로 전환합니다.
         /// </summary>
         [RelayCommand]
-        public void SignIn()
+        private void SignIn()
         {
-            var validationMessage = ValidationHelper.ValidateSignInCredentials(Id, Password, _dbContext);
+            var (isValid, message) = ValidationHelper.ValidateSignInCredentials(Id, Password, _dbContext);
 
-            if (!string.IsNullOrEmpty(validationMessage))
+            if (!isValid)
             {
-                LoginStatus = validationMessage;
-                if (validationMessage.Contains("아이디")) Id = string.Empty;
-                if (validationMessage.Contains("비밀번호")) Password = string.Empty;
+                LoginStatus = message;
+
+                if (message.Contains("아이디 또는 비밀번호가 올바르지 않습니다"))
+                {
+                    Id = string.Empty;
+                    Password = string.Empty;
+                }
+                else if (message.Contains("비밀번호가 올바르지 않습니다"))
+                    Password = string.Empty;
+                return;
             }
-            else
-            {
-                // 로그인 성공 시 호출
-                _mainViewModel.ShowSignInSuccessView();
-            }
+
+            // 로그인 성공 시 처리
+            _mainViewModel.ShowSignInSuccessView();
         }
 
         /// <summary>
