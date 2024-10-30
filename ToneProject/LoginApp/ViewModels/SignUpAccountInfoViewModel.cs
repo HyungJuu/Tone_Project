@@ -73,15 +73,16 @@ namespace LoginApp.ViewModels
         /// <returns>입력값의 유효 여부를 나타내는 bool 값입니다.</returns>
         private bool ValidateSignUpInput()
         {
-            var (idStatus, passwordStatus, confirmPasswordStatus) =
+            var (isValid, idStatus, passwordStatus, confirmPasswordStatus) =
                 ValidationHelper.ValidateSignUpInput(SignUpId, SignUpPassword, SignUpConfirmPassword, _dbContext);
 
-            SignUpIdStatus = idStatus;
-            SignUpPasswordStatus = passwordStatus;
-            SignUpConfirmPasswordStatus = confirmPasswordStatus;
-
-            // 모든 상태 메시지가 비어 있다면 검증 통과
-            return string.IsNullOrEmpty(idStatus) && string.IsNullOrEmpty(passwordStatus) && string.IsNullOrEmpty(confirmPasswordStatus);
+            if (!isValid)
+            {
+                SignUpIdStatus = idStatus;
+                SignUpPasswordStatus = passwordStatus;
+                SignUpConfirmPasswordStatus = confirmPasswordStatus;
+            }
+            return isValid;
         }
     }
 }

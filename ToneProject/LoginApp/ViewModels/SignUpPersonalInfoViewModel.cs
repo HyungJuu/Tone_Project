@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using LoginApp.DbContexts;
 using LoginApp.Models;
+using LoginApp.Utils;
 using System.Windows;
 using static LoginApp.ViewModels.SignUpPersonalInfoViewModel;
 
@@ -49,12 +50,6 @@ namespace LoginApp.ViewModels
         [ObservableProperty]
         private string _signUpBirthStatus = string.Empty;
 
-        /// <summary>
-        /// 성별 입력 상태 메시지를 저장합니다.
-        /// </summary>
-        [ObservableProperty]
-        private string _signUpGenderStatus = string.Empty;
-
         public enum Gender
         {
             남성,
@@ -89,7 +84,7 @@ namespace LoginApp.ViewModels
                 Pwd = _signUpAccountInfoViewModel.SignUpPassword,
                 Name = SignUpName,
                 Birth = DateOnly.ParseExact(SignUpBirth, "yyyyMMdd", null),
-                Gender = SignUpGender.ToString() // Enum 값을 문자열로 저장
+                Gender = SignUpGender.ToString()
             };
 
             context.UserInfos.Add(userInfo);
@@ -103,33 +98,14 @@ namespace LoginApp.ViewModels
         /// <returns>모든 입력값이 유효하면 true, 그렇지 않으면 false를 반환합니다.</returns>
         private bool ValidateSignUpInput()
         {
-            // 모든 상태 메시지 초기화
-            SignUpNameStatus = string.Empty;
-            SignUpBirthStatus = string.Empty;
-            SignUpGenderStatus = string.Empty;
+            var (isValid, nameStatus, birthStatus) = ValidationHelper.ValidateSignUpInput(SignUpName, SignUpBirth);
 
-            bool isValid = true;
-
-            if (string.IsNullOrEmpty(SignUpName))
+            if (!isValid)
             {
-                SignUpNameStatus = "이름을 입력해 주세요";
-                isValid = false;
+                SignUpNameStatus = nameStatus;
+                SignUpBirthStatus = birthStatus;
             }
-
-            if (string.IsNullOrEmpty(SignUpBirth))
-            {
-                SignUpBirthStatus = "생년월일을 입력해 주세요";
-                isValid = false;
-            }
-            else if (SignUpBirth.Length != 8 || !DateOnly.TryParseExact(SignUpBirth, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _))
-            {
-                SignUpBirthStatus = "생년월일 형식에 맞는\n8자리 숫자로 입력해 주세요";
-                isValid = false;
-            }
-
             return isValid;
         }
-
-        
     }
 }
