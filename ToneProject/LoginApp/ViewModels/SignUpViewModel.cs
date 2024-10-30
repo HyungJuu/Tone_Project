@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LoginApp.DbContexts;
 using System.Windows;
 
 namespace LoginApp.ViewModels
@@ -10,6 +11,7 @@ namespace LoginApp.ViewModels
     /// </summary>
     public partial class SignUpViewModel : ObservableObject
     {
+        private readonly UserInfoContext _dbContext;
 
         /// <summary>
         /// 현재 회원가입 화면에 표시될 뷰모델을 나타냅니다
@@ -22,7 +24,8 @@ namespace LoginApp.ViewModels
         /// </summary>
         public SignUpViewModel()
         {
-            CurrentSignUpViewModel = new SignUpAccountInfoViewModel(this);
+            _dbContext = new UserInfoContext();
+            CurrentSignUpViewModel = new SignUpAccountInfoViewModel(this, _dbContext);
         }
 
         /// <summary>
