@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LoginApp.DbContexts;
-using LoginApp.Models;
 
 namespace LoginApp.ViewModels
 {

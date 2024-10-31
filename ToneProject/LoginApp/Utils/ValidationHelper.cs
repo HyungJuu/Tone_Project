@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using LoginApp.DbContexts;
-using LoginApp.Models;
-using LoginApp.ViewModels;
+﻿using LoginApp.DbContexts;
 
 namespace LoginApp.Utils
 {

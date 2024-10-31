@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LoginApp.DbContexts;
-using LoginApp.Models;
 using LoginApp.Utils;
-using System.Windows.Controls;
 
 
 namespace LoginApp.ViewModels
