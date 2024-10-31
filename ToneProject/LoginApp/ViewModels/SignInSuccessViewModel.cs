@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LoginApp.ViewModels.SnakeGame;
 
 namespace LoginApp.ViewModels
 {
@@ -15,6 +16,9 @@ namespace LoginApp.ViewModels
         /// </summary>
         private readonly MainViewModel _mainViewModel = mainViewModel;
 
+        [ObservableProperty]
+        private object? _currentGameViewModel;
+
         /// <summary>
         /// 로그아웃을 처리하고 로그인 화면으로 돌아가는 명령을 실행합니다.
         /// </summary>
@@ -22,6 +26,18 @@ namespace LoginApp.ViewModels
         private void SignOut()
         {
             _mainViewModel.ShowSignInView();
+        }
+
+        [RelayCommand]
+        private void StartSnakeGame()
+        {
+            CurrentGameViewModel  = new SnakeGameIntroViewModel(this);
+        }
+
+        [RelayCommand]
+        public void GoToSelectGame()
+        {
+            CurrentGameViewModel = null; 
         }
     }
 }

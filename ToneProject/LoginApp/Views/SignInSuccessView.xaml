@@ -10,14 +10,24 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Button Content="로그아웃" Width="80" Height="30"
+                    Command="{Binding SignOutCommand}"
+                    Style="{StaticResource SignInOut}"
+                    VerticalAlignment="top" HorizontalAlignment="Right" Margin="10"/>
+
+            <Label Content="게임 선택" HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="10"/>
+        </Grid>
         
-        <Button Grid.Row="0" Content="로그아웃" Width="80" Height="30"
-            Command="{Binding SignOutCommand}"
-            Style="{StaticResource SignInOut}"
-            VerticalAlignment="top" HorizontalAlignment="Right" Margin="10"/>
-        
-            <TextBlock Grid.Row="1" Text="로그인에 성공했습니다"
-                       VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" />
-        
-    </Grid>
+        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Background="White" Width="500" Height="350">
+            <Button Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100"
+                    Command="{Binding StartSnakeGameCommand}">
+                <Image Source="/Resources/SnakeGame.png"></Image>
+            </Button>
+        </Border>
+        <Border Grid.RowSpan="2">
+            <ContentControl Content="{Binding CurrentGameViewModel}" />
+        </Border>
+        </Grid>
 </UserControl>
