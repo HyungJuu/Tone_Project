@@ -4,15 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LoginApp.Views" 
-             xmlns:converters="clr-namespace:LoginApp.Converters"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="330">
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <converters:StringToBooleanConverter x:Key="StringToBooleanConverter" />
-
             <Style x:Key="LabelStyle" TargetType="Label">
                 <Setter Property="Foreground" Value="Gray"/>
                 <Setter Property="FontSize" Value="9"/>
@@ -53,6 +49,10 @@
                 <Setter Property="FontSize" Value="10"/>
             </Style>
 
+            <Style x:Key="DefaultGender" TargetType="RadioButton">
+                <Setter Property="IsChecked" Value="True"/>
+            </Style>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/LoginApp;component/Resources/WatermarkStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -74,22 +74,29 @@
             <!-- 성별 선택 -->
             <StackPanel Orientation="Horizontal" Margin="0 20 0 5">
                 <RadioButton Content="남성"
-                             GroupName="Gender"
-                             IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='남성'}"/>
+                             GroupName="GenderGroup"
+                             Command="{Binding SelectGenderCommand}"
+                             CommandParameter="0"/>
+
                 <RadioButton Content="여성"
-                             GroupName="Gender"
-                             Margin="15 0"
-                             IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='여성'}"/>
-                <RadioButton Content="선택안함"
-                             GroupName="Gender"
-                             IsChecked="{Binding SignUpGender, Converter={StaticResource StringToBooleanConverter}, ConverterParameter='선택안함'}"/>
+                             GroupName="GenderGroup"
+                             Command="{Binding SelectGenderCommand}"
+                             CommandParameter="1"
+                             Margin="20 0"/>
+
+                <RadioButton Style="{StaticResource DefaultGender}"
+                             Content="선택안함"
+                             GroupName="GenderGroup"
+                             Command="{Binding SelectGenderCommand}"
+                             CommandParameter="2"/>
             </StackPanel>
-            
+
             <!-- 회원가입 완료 버튼 -->
             <Button Content="완료" Command="{Binding SignUpEndCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                     Style="{StaticResource ButtonStyle}"
                     Margin="0 20" />
         </StackPanel>
+
     </Grid>
 </UserControl>

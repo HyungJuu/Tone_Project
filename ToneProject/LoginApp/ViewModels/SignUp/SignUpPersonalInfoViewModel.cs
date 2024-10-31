@@ -4,7 +4,6 @@ using LoginApp.DbContexts;
 using LoginApp.Models;
 using LoginApp.Utils;
 using System.Windows;
-using static LoginApp.ViewModels.SignUpPersonalInfoViewModel;
 
 namespace LoginApp.ViewModels
 {
@@ -50,11 +49,13 @@ namespace LoginApp.ViewModels
         [ObservableProperty]
         private string _signUpBirthStatus = string.Empty;
 
-        public enum Gender
+        [RelayCommand]
+        public void SelectGender(object parameter)
         {
-            남성,
-            여성,
-            선택안함
+            if (parameter is string parameterString && int.TryParse(parameterString, out int genderValue))
+            {
+                SignUpGender = (Gender)genderValue;
+            }
         }
 
         /// <summary>
