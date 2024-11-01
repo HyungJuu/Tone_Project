@@ -23,23 +23,12 @@ public partial class UserInfoContext : DbContext
     {
         modelBuilder.Entity<UserInfo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("userinfo_pkey");
-
             entity.ToTable("UserInfo");
 
-            entity.Property(e => e.Id)
-                .HasMaxLength(30)
-                .HasColumnName("id");
-            entity.Property(e => e.Birth).HasColumnName("birth");
-            entity.Property(e => e.Gender)
-                .HasMaxLength(10)
-                .HasColumnName("gender");
-            entity.Property(e => e.Name)
-                .HasMaxLength(30)
-                .HasColumnName("name");
-            entity.Property(e => e.Pwd)
-                .HasMaxLength(30)
-                .HasColumnName("pwd");
+            entity.Property(e => e.Id).HasMaxLength(30);
+            entity.Property(e => e.Gender).HasMaxLength(10);
+            entity.Property(e => e.Name).HasMaxLength(30);
+            entity.Property(e => e.Pwd).HasMaxLength(30);
         });
 
         OnModelCreatingPartial(modelBuilder);

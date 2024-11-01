@@ -29,15 +29,15 @@ namespace LoginApp.ViewModels
         }
 
         [RelayCommand]
-        private void StartSnakeGame()
+        private void SelectSnakeGame()
         {
-            CurrentGameViewModel  = new SnakeGameIntroViewModel(this);
+            CurrentGameViewModel = new SnakeGameIntroViewModel(this);
         }
 
         [RelayCommand]
         public void GoToSelectGame()
         {
-            CurrentGameViewModel = null; 
+            CurrentGameViewModel = null;
         }
     }
 }

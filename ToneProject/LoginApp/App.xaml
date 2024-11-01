@@ -30,8 +30,8 @@
             <snakegames:SnakeGameIntroView />
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type snakegameVM:SnakeGameViewModel}">
-            <snakegames:SnakeGameView />
+        <DataTemplate DataType="{x:Type snakegameVM:SnakeGamePlayViewModel}">
+            <snakegames:SnakeGamePlayView />
         </DataTemplate>
 
         <Style TargetType="Button" x:Key="SignInOut">

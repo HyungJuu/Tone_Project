@@ -22,7 +22,7 @@
         
         <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Background="White" Width="500" Height="350">
             <Button Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100"
-                    Command="{Binding StartSnakeGameCommand}">
+                    Command="{Binding SelectSnakeGameCommand}">
                 <Image Source="/Resources/SnakeGame.png"></Image>
             </Button>
         </Border>
