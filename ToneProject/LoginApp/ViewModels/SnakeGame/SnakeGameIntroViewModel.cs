@@ -18,9 +18,8 @@ namespace LoginApp.ViewModels.SnakeGame
         [RelayCommand]
         public void StartSnakeGame()
         {
-            // SnakeGamePlayViewModel을 생성하고 타이머 시작 메서드 호출
             var snakeGamePlayViewModel = new SnakeGamePlayViewModel();
-            snakeGamePlayViewModel.StartGame(); // 게임 시작 (3초 카운트다운 포함)
+            snakeGamePlayViewModel.StartGame();
             CurrentViewModel = snakeGamePlayViewModel; // CurrentViewModel을 SnakeGamePlayViewModel로 설정하여 화면 전환
         }
     }

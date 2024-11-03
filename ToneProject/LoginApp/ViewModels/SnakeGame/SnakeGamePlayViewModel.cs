@@ -23,13 +23,13 @@ namespace LoginApp.ViewModels.SnakeGame
             {
                 Interval = TimeSpan.FromSeconds(1)
             };
-            _countdownTimer.Tick += OnCountdownTick;
+            _countdownTimer.Tick += UpdateCountdown;
 
             _gameTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(1)
             };
-            _gameTimer.Tick += OnGameTimerTick;
+            _gameTimer.Tick += UpdateGameTimer;
         }
 
         [ObservableProperty]
@@ -39,7 +39,7 @@ namespace LoginApp.ViewModels.SnakeGame
         private string timerDisplay;
 
         [ObservableProperty]
-        private bool isPaused; // 일시정지 상태를 나타내는 속성
+        private bool isPaused;
 
         // 게임 시작
         public void StartGame()
@@ -58,13 +58,13 @@ namespace LoginApp.ViewModels.SnakeGame
         }
 
         // 카운트다운 타이머의 Tick 이벤트
-        private void OnCountdownTick(object? sender, EventArgs e)
+        private void UpdateCountdown(object? sender, EventArgs e)
         {
-            if (IsPaused) return; // IsPaused를 사용하도록 수정
+            if (IsPaused) return;
 
             if (_countdownTime > TimeSpan.Zero)
             {
-                _countdownTime = _countdownTime.Subtract(TimeSpan.FromSeconds(1));
+                _countdownTime = _countdownTime.Subtract(TimeSpan.FromSeconds(1)); // 1초씩 뺌
                 CountdownDisplay = _countdownTime.Seconds.ToString();
             }
             else
@@ -83,19 +83,19 @@ namespace LoginApp.ViewModels.SnakeGame
         }
 
         // 게임 타이머의 Tick 이벤트
-        private void OnGameTimerTick(object? sender, EventArgs e)
+        private void UpdateGameTimer(object? sender, EventArgs e)
         {
-            if (IsPaused) return; // IsPaused를 사용하도록 수정
+            if (IsPaused) return; // 일시정지 시 종료
 
             if (_gameTime > TimeSpan.Zero)
             {
-                _gameTime = _gameTime.Subtract(TimeSpan.FromSeconds(1));
+                _gameTime = _gameTime.Subtract(TimeSpan.FromSeconds(1)); // 1초씩 뺌
                 TimerDisplay = _gameTime.ToString(@"mm\:ss");
             }
             else
             {
                 _gameTimer.Stop();
-                TimerDisplay = "Time's up!";
+                TimerDisplay = "성공!";
             }
         }
     }
