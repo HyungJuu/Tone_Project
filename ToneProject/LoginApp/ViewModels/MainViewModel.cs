@@ -16,8 +16,6 @@ namespace LoginApp.ViewModels
         [ObservableProperty]
         private object _currentViewModel;
 
-
-
         /// <summary>
         /// MainViewModel의 생성자.
         /// 초기화 시 SignInViewModel(로그인화면)을 기본 화면으로 설정합니다
@@ -45,8 +43,5 @@ namespace LoginApp.ViewModels
         {
             CurrentViewModel = new SignInViewModel(this, _dbContext);
         }
-
-
-
     }
 }
