@@ -6,7 +6,7 @@ namespace LoginApp.Utils
     /// <summary>
     /// 로그인 및 회원가입과 관련된 입력값 검증 클래스
     /// </summary>
-    public static class ValidationHelper
+    public static partial class ValidationHelper
     {
         #region 로그인 관련 검증
         /// <summary>
@@ -35,10 +35,10 @@ namespace LoginApp.Utils
         }
         #endregion
 
-
         #region 회원가입(계정) 관련 검증
 
-        private static readonly Regex IdRegex = new(@"^[a-zA-Z0-9]*$"); // 아이디: 영문, 숫자(선택)
+        [GeneratedRegex(@"^[a-zA-Z0-9]*$")]
+        private static partial Regex IdRegex();
 
         public static string ValidateUserId(string userId, UserInfoContext context)
         {
@@ -48,7 +48,7 @@ namespace LoginApp.Utils
             {
                 return "아이디를 입력해주세요.";
             }
-            if (!IdRegex.IsMatch(userId))
+            if (!IdRegex().IsMatch(userId))
             {
                 return "아이디는 영문과 숫자만 입력 가능합니다.";
             }
@@ -63,7 +63,8 @@ namespace LoginApp.Utils
             return string.Empty;
         }
 
-        private static readonly Regex PasswordRegex = new(@"^[a-zA-Z](?=.*\d)(?=.*[!@#$%]).+$"); // 비밀번호 : 영문, 숫자, 특수문자
+        [GeneratedRegex(@"^[a-zA-Z](?=.*\d)(?=.*[!@#$%]).+$")]
+        private static partial Regex PasswordRegex();
 
         public static string ValidatePassword(string password)
         {
@@ -77,7 +78,7 @@ namespace LoginApp.Utils
             {
                 return "영문자를 6자리 이상 입력해주세요.";
             }
-            if (!PasswordRegex.IsMatch(password))
+            if (!PasswordRegex().IsMatch(password))
             {
                 return "숫자, 특수문자(!,@,#,$,%)를 포함해야 합니다.";
             }
@@ -113,12 +114,9 @@ namespace LoginApp.Utils
 
             return (isValid, idStatus, passwordStatus, confirmPasswordStatus);
         }
-
         #endregion
 
-
         #region 회원가입(개인정보) 관련 검증
-
         /// <summary>
         /// 이름의 유효성을 검증합니다.
         /// </summary>
