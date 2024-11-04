@@ -2,30 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:util="clr-namespace:LoginApp.Utils"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
-    <!--텍스트박스 워터마크 템플릿-->
-    <ControlTemplate x:Key="TextBoxTemplate" TargetType="TextBox">
-        <Grid>
-            <Grid.Resources>
-                <VisualBrush x:Key="WaterMarkBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None" />
-            </Grid.Resources>
-
-            <Border Background="White" BorderBrush="LightGray" BorderThickness="0 0 0 1.5" Padding="5" Margin="0 0 0 5">
-                <ScrollViewer x:Name="PART_ContentHost"/>
-            </Border>
-
-            <TextBlock x:Name="WatermarkText" Text="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Tag}" 
-                   Foreground="LightGray" Padding="10 5" Margin="0 0 0 5" Visibility="Collapsed"/>
-        </Grid>
-
-        <ControlTemplate.Triggers>
-            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                <Setter TargetName="WatermarkText" Property="Visibility" Value="Visible"/>
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
 
     <!--패스워드박스 워터마크 템플릿-->
     <ControlTemplate x:Key="PasswordBoxTemplate" TargetType="PasswordBox">

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LoginApp.Views"
              xmlns:util="clr-namespace:LoginApp.Utils"
+             xmlns:MyNamespace="clr-namespace:LoginApp.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="330">
     
@@ -60,7 +61,7 @@
         <StackPanel Margin="20 0">
             <!-- 아이디 입력 -->
             <Label Content="아이디" Style="{StaticResource LabelStyle}"/>
-            <TextBox Text="{Binding SignUpId}" Template="{StaticResource TextBoxTemplate}" Tag="아이디 입력(영문, 숫자만 가능)"/>
+            <MyNamespace:WaterMarkTextBox Text="{Binding SignUpId}" Watermark="아이디 입력(영문, 숫자만 가능)" Margin="0 5"/>
             <TextBlock Text="{Binding SignUpIdStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
             <!-- 비밀번호 입력 -->

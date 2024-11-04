@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LoginApp.Views" 
+             xmlns:MyNamespace="clr-namespace:LoginApp.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="330">
 
@@ -63,12 +64,12 @@
         <StackPanel Margin="20 0">
             <!-- 닉네임 입력 -->
             <Label Content="닉네임" Style="{StaticResource LabelStyle}"/>
-            <TextBox Text="{Binding SignUpName}" Template="{StaticResource TextBoxTemplate}" Tag="닉네임 입력"/>
+            <MyNamespace:WaterMarkTextBox Text="{Binding SignUpName}" Watermark="닉네임 입력" Margin="0 5"/>
             <TextBlock Text="{Binding SignUpNameStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
             <!-- 생년월일 입력 -->
             <Label Content="생년월일" Style="{StaticResource LabelStyle}"/>
-            <TextBox Text="{Binding SignUpBirth}" Template="{StaticResource TextBoxTemplate}" Tag="생년월일 입력"/>
+            <MyNamespace:WaterMarkTextBox Text="{Binding SignUpBirth}" Watermark="생년월일 입력" Margin="0 5"/>
             <TextBlock Text="{Binding SignUpBirthStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
             <!-- 성별 선택 -->
