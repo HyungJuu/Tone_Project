@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:util="clr-namespace:LoginApp.Utils"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:MyNamespace="clr-namespace:LoginApp.Controls"
+             xmlns:control="clr-namespace:LoginApp.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -43,14 +43,14 @@
 
                 <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="20 30 20 0">
                     <!-- 아이디 입력 -->
-                    <MyNamespace:WaterMarkTextBox Text="{Binding Id}" Watermark="아이디" Margin="0 5"/>
+                    <control:WaterMarkTextBox Text="{Binding Id}" Watermark="아이디" Margin="0 5"/>
                     <!-- 비밀번호 입력 -->
                     <Grid>
                         <!--PasswordBoxHelper 클래스를 통해 사용자가 입력한 비밀번호를 VeiwModel의 속성와 양방향으로 연결-->
                         <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" Tag="비밀번호"
                                      Template="{StaticResource PasswordBoxTemplate}" 
                                      PasswordChar="•"  Margin="0 5" />
-                        <MyNamespace:WaterMarkTextBox Text="{Binding Password}" Watermark="비밀번호" Margin="0 5"
+                        <control:WaterMarkTextBox Text="{Binding Password}" Watermark="비밀번호" Margin="0 5"
                                                       Visibility="{Binding IsPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     </Grid>
 

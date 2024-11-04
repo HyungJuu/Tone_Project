@@ -41,23 +41,14 @@ namespace LoginApp.Controls
     /// 2단계)
     /// 계속 진행하여 XAML 파일에서 컨트롤을 사용합니다.
     ///
-    ///     <control:WaterMarkTextBox/>
+    ///     <control:SignUpButton/>
     ///
     /// </summary>
-    public class WaterMarkTextBox : TextBox
+    public class SignUpButton : Button
     {
-        static WaterMarkTextBox()
+        static SignUpButton()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(WaterMarkTextBox), new FrameworkPropertyMetadata(typeof(WaterMarkTextBox)));
-        }
-
-        public static readonly DependencyProperty WatermarkProperty = DependencyProperty.Register(
-        "Watermark", typeof(string), typeof(WaterMarkTextBox), new PropertyMetadata(default(string))); // 속성 이름, 속성 데이터타입, 속성이 정의된 클래스, 기본값==null
-
-        public string Watermark
-        {
-            get => (string)GetValue(WatermarkProperty);
-            set => SetValue(WatermarkProperty, value);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(SignUpButton), new FrameworkPropertyMetadata(typeof(SignUpButton)));
         }
     }
 }
