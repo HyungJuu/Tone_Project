@@ -60,13 +60,13 @@
         <StackPanel Margin="20 0">
             <!-- 아이디 입력 -->
             <Label Content="아이디" Style="{StaticResource LabelStyle}"/>
-            <TextBox Text="{Binding SignUpId}" Template="{StaticResource TextBoxTemplate}" Tag="아이디 입력"/>
+            <TextBox Text="{Binding SignUpId}" Template="{StaticResource TextBoxTemplate}" Tag="아이디 입력(영문, 숫자만 가능)"/>
             <TextBlock Text="{Binding SignUpIdStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
             <!-- 비밀번호 입력 -->
             <Label Content="비밀번호" Style="{StaticResource LabelStyle}"/>
             <PasswordBox util:PasswordBoxHelper.BoundPassword="{Binding SignUpPassword, Mode=TwoWay}" Template="{StaticResource PasswordBoxTemplate}" 
-                         PasswordChar="•" Tag="비밀번호 입력"/>
+                         PasswordChar="•" Tag="비밀번호 입력(영문, 숫자, 특수문자)"/>
             <TextBlock Text="{Binding SignUpPasswordStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
             <!-- 비밀번호 확인 -->

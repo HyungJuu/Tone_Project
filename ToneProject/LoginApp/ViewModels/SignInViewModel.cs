@@ -54,19 +54,16 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private void SignIn()
         {
-            var (isValid, message) = ValidationHelper.ValidateSignInCredentials(Id, Password, _dbContext);
+            var (IsValid, Message, ClearId, ClearPassword) = ValidationHelper.ValidateSignInput(Id, Password, _dbContext);
 
-            if (!isValid)
+            if (!IsValid)
             {
-                LoginStatus = message;
+                LoginStatus = Message;
 
-                if (message.Contains("아이디 또는 비밀번호가 올바르지 않습니다"))
-                {
-                    Id = string.Empty;
-                    Password = string.Empty;
-                }
-                else if (message.Contains("비밀번호가 올바르지 않습니다"))
-                    Password = string.Empty;
+                // 오류 종류에 따라 입력 필드를 초기화
+                Id = ClearId ? string.Empty : Id;
+                Password = ClearPassword ? string.Empty : Password;
+
                 return;
             }
 

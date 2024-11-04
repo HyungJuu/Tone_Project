@@ -1,4 +1,5 @@
 ﻿using LoginApp.DbContexts;
+using System.Text.RegularExpressions;
 
 namespace LoginApp.Utils
 {
@@ -9,125 +10,80 @@ namespace LoginApp.Utils
     {
         #region 로그인 관련 검증
         /// <summary>
-        /// 아이디가 비어있는지 확인합니다.
+        /// 
         /// </summary>
-        /// <param name="id">검증할 아이디</param>
-        /// <returns>아이디가 비어 있으면 오류 메시지, 그렇지 않으면 빈 문자열을 반환합니다.</returns>
-        public static string CheckIdNotEmpty(string id)
+        /// <param name="id"></param>
+        /// <param name="password"></param>
+        /// <param name="dbContext"></param>
+        /// <returns></returns>
+        public static (bool IsValid, string Message, bool ClearId, bool ClearPassword) ValidateSignInput(string id, string password, UserInfoContext dbContext)
         {
-            return string.IsNullOrEmpty(id) ? "아이디를 입력하세요" : string.Empty;
-        }
+            if (string.IsNullOrEmpty(id))
+                return (false, "아이디를 입력하세요", true, false);
 
-        /// <summary>
-        /// 비밀번호가 비어 있는지 확인합니다.
-        /// </summary>
-        /// <param name="password">검증할 비밀번호</param>
-        /// <returns>비밀번호가 비어 있으면 오류 메시지, 그렇지 않으면 빈 문자열을 반환합니다.</returns>
-        public static string CheckPasswordNotEmpty(string password)
-        {
-            return string.IsNullOrEmpty(password) ? "비밀번호를 입력하세요" : string.Empty;
-        }
+            if (string.IsNullOrEmpty(password))
+                return (false, "비밀번호를 입력하세요", false, true);
 
-        /// <summary>
-        /// 아이디가 데이터베이스에 존재하는지 확인합니다.
-        /// </summary>
-        /// <param name="id">검증할 아이디</param>
-        /// <param name="dbContext">데이터베이스 컨텍스트</param>
-        /// <returns>아이디가 존재하면 true, 그렇지 않으면 false 반환합니다.</returns>
-        public static bool CheckIdExists(string id, UserInfoContext dbContext)
-        {
-            return dbContext.UserInfos.Any(u => u.Id == id);
-        }
+            if (!dbContext.UserInfos.Any(u => u.Id == id))
+                return (false, "아이디 또는 비밀번호가 올바르지 않습니다", true, true);
 
-        /// <summary>
-        /// 아이디와 비밀번호가 데이터베이스의 정보와 일치하는지 확인합니다.
-        /// </summary>
-        /// <param name="id">아이디</param>
-        /// <param name="password">비밀번호</param>
-        /// <param name="dbContext">데이터베이스 컨텍스트</param>
-        /// <returns>아이디와 비밀번호가 일치하면 true, 그렇지 않으면 false 반환합니다.</returns>
-        public static bool CheckPasswordMatch(string id, string password, UserInfoContext dbContext)
-        {
-            var user = dbContext.UserInfos.FirstOrDefault(u => u.Id == id);
-            return user != null && user.Pwd == password;
-        }
+            var user = dbContext.UserInfos.SingleOrDefault(u => u.Id == id);
+            if (user == null || user.Pwd != password)
+                return (false, "비밀번호가 올바르지 않습니다.", false, true);
 
-        /// <summary>
-        /// 로그인 자격 증명을 검증하고 검증 결과와 오류 메시지를 반환합니다.
-        /// </summary>
-        /// <param name="id">검증할 아이디</param>
-        /// <param name="password">검증할 비밀번호</param>
-        /// <param name="dbContext">데이터베이스 컨텍스트</param>
-        /// <returns>아이디와 비밀번호가 유효하면 (true, 빈 문자열)을 반환하고, 유효하지 않으면 (false, 오류 메시지)를 반환합니다.</returns>
-        public static (bool IsValid, string Message) ValidateSignInCredentials(string id, string password, UserInfoContext dbContext)
-        {
-            var idEmptyMessage = CheckIdNotEmpty(id);
-            if (!string.IsNullOrEmpty(idEmptyMessage))
-                return (false, idEmptyMessage);
-
-            var passwordEmptyMessage = CheckPasswordNotEmpty(password);
-            if (!string.IsNullOrEmpty(passwordEmptyMessage))
-                return (false, passwordEmptyMessage);
-
-            if (!CheckIdExists(id, dbContext))
-                return (false, "아이디 또는 비밀번호가 올바르지 않습니다");
-
-            if (!CheckPasswordMatch(id, password, dbContext))
-                return (false, "비밀번호가 올바르지 않습니다.");
-
-            return (true, string.Empty);
+            return (true, string.Empty, false, false);
         }
         #endregion
 
 
         #region 회원가입(계정) 관련 검증
-        /// <summary>
-        /// 사용자 아이디의 유효성을 검증합니다.
-        /// </summary>
-        /// <param name="userId">검증할 사용자 아이디</param>
-        /// <param name="context">데이터베이스 컨텍스트</param>
-        /// <returns>유효하지 않으면 오류 메시지를 반환하고, 유효하면 빈 문자열을 반환합니다.</returns>
+
+        private static readonly Regex IdRegex = new(@"^[a-zA-Z0-9]*$"); // 아이디: 영문, 숫자(선택)
+
         public static string ValidateUserId(string userId, UserInfoContext context)
         {
+            int letterCount = userId.Count(char.IsLetter);
+
             if (string.IsNullOrEmpty(userId))
             {
-                return "아이디를 입력해주세요";
+                return "아이디를 입력해주세요.";
             }
-            if (userId.Length < 3)
+            if (!IdRegex.IsMatch(userId))
             {
-                return "아이디를 3자리 이상 입력해주세요";
+                return "아이디는 영문과 숫자만 입력 가능합니다.";
             }
-            if (DoesUserIdExist(userId, context))
+            if (letterCount < 6)
+            {
+                return "영문자를 6자리 이상 입력해주세요.";
+            }
+            if (CheckUserIdExist(userId, context))
             {
                 return "이미 존재하는 아이디입니다.";
             }
             return string.Empty;
         }
 
-        /// <summary>
-        /// 비밀번호의 유효성을 검증합니다.
-        /// </summary>
-        /// <param name="password">검증할 비밀번호</param>
-        /// <returns>유효하지 않으면 오류 메시지를 반환하고, 유효하면 빈 문자열을 반환합니다.</returns>
+        private static readonly Regex PasswordRegex = new(@"^[a-zA-Z](?=.*\d)(?=.*[!@#$%]).+$"); // 비밀번호 : 영문, 숫자, 특수문자
+
         public static string ValidatePassword(string password)
         {
+            int letterCount = password.Count(char.IsLetter);
+
             if (string.IsNullOrEmpty(password))
             {
-                return "비밀번호를 입력해주세요";
+                return "비밀번호를 입력해주세요.";
             }
-            if (password.Length < 4)
+            if (letterCount < 6)
             {
-                return "비밀번호를 4자리 이상 입력해주세요";
+                return "영문자를 6자리 이상 입력해주세요.";
+            }
+            if (!PasswordRegex.IsMatch(password))
+            {
+                return "숫자, 특수문자(!,@,#,$,%)를 포함해야 합니다.";
             }
             return string.Empty;
         }
 
-        /// <summary>
-        /// 비밀번호 확인의 유효성을 검증합니다.
-        /// </summary>
-        /// <param name="password">비밀번호</param>
-        /// <param name="confirmPassword">비밀번호 확인</param>
-        /// <returns>비밀번호가 일치하지 않으면 오류 메시지를 반환하고, 일치하면 빈 문자열을 반환합니다.</returns>
         public static string ValidateConfirmPassword(string password, string confirmPassword)
         {
             if (string.IsNullOrEmpty(confirmPassword))
@@ -141,25 +97,11 @@ namespace LoginApp.Utils
             return string.Empty;
         }
 
-        /// <summary>
-        /// 주어진 아이디가 데이터베이스에 존재하는지 확인합니다.
-        /// </summary>
-        /// <param name="userId">아이디</param>
-        /// <param name="context">데이터베이스 컨텍스트</param>
-        /// <returns>아이디가 존재하면 true, 그렇지 않으면 false 반환합니다.</returns>
-        private static bool DoesUserIdExist(string userId, UserInfoContext context)
+        private static bool CheckUserIdExist(string userId, UserInfoContext context)
         {
             return context.UserInfos.Any(u => u.Id == userId);
         }
 
-        /// <summary>
-        /// 회원가입 시 아이디, 비밀번호, 비밀번호 확인의 유효성을 검증하고 결과를 튜플로 반환합니다.
-        /// </summary>
-        /// <param name="userId">아이디</param>
-        /// <param name="password">비밀번호</param>
-        /// <param name="confirmPassword">비밀번호 확인</param>
-        /// <param name="context">데이터베이스 컨텍스트</param>
-        /// <returns>유효성 상태를 나타내는 튜플을 반환합니다.</returns>
         public static (bool isValid, string IdStatus, string PasswordStatus, string ConfirmPasswordStatus) ValidateSignUpInput(
             string userId, string password, string confirmPassword, UserInfoContext context)
         {
@@ -171,6 +113,7 @@ namespace LoginApp.Utils
 
             return (isValid, idStatus, passwordStatus, confirmPasswordStatus);
         }
+
         #endregion
 
 
