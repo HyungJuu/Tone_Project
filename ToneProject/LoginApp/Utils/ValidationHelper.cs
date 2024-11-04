@@ -52,9 +52,9 @@ namespace LoginApp.Utils
             {
                 return "아이디는 영문과 숫자만 입력 가능합니다.";
             }
-            if (letterCount < 6)
+            if (letterCount < 4)
             {
-                return "영문자를 6자리 이상 입력해주세요.";
+                return "영문자를 4자리 이상 입력해주세요.";
             }
             if (CheckUserIdExist(userId, context))
             {

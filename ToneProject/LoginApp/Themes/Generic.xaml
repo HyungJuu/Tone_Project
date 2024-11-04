@@ -6,7 +6,7 @@
     xmlns:control="clr-namespace:LoginApp.Controls">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <!--텍스트박스 워터마크-->
+    
     <Style TargetType="{x:Type control:WaterMarkTextBox}">
         <Setter Property="Template">
             <Setter.Value>
@@ -28,7 +28,6 @@
         </Setter>
     </Style>
     
-    <!--회원가입 관련버튼-->
     <Style TargetType="{x:Type control:SignUpButton}">
         <Setter Property="Padding" Value="5" />
         <Setter Property="Width" Value="220" />
@@ -52,6 +51,34 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Background" Value="#EBEBEB" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type control:SignInOutButton}">
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Width" Value="220" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="#FEE500" />
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:SignInOutButton}">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Background" Value="#FADA0A" />
             </Trigger>
         </Style.Triggers>
     </Style>
