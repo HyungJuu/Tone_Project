@@ -24,12 +24,7 @@ SET row_security = off;
 -- Name: ToneProject; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE "ToneProject" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'Korean_Korea.949';
-
-
 ALTER DATABASE "ToneProject" OWNER TO postgres;
-
-\connect "ToneProject"
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -69,10 +64,8 @@ ALTER TABLE public."UserInfo" OWNER TO postgres;
 -- Data for Name: UserInfo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."UserInfo" ("Id", "Pwd", "Name", "Birth", "Gender") FROM stdin;
-test	tttest123!	test	2000-11-22	선택안함
-rmsdk	rlarmsdk0308!	T	1999-04-08	여
-\.
+INSERT INTO public."UserInfo" ("Id", "Pwd", "Name", "Birth", "Gender") VALUES 
+    ('test', 'tttest123!', 'test', '2000-11-22', '선택안함');
 
 
 --
