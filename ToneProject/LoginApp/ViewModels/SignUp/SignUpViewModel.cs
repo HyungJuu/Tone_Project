@@ -25,7 +25,7 @@ namespace LoginApp.ViewModels
         public SignUpViewModel()
         {
             _dbContext = new UserInfoContext();
-            CurrentSignUpViewModel = new SignUpAccountInfoViewModel(this, _dbContext);
+            CurrentSignUpViewModel = new SignUpAccountInfoViewModel(this);
         }
 
         /// <summary>

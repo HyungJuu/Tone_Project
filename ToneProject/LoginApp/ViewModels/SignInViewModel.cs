@@ -11,17 +11,12 @@ namespace LoginApp.ViewModels
     /// 로그인, 회원가입, 아이디/비밀번호 찾기 등의 로직을 처리합니다.
     /// </summary>
     /// <param name="mainViewModel"></param>
-    public partial class SignInViewModel(MainViewModel mainViewModel, UserInfoContext dbContext) : ObservableObject
+    public partial class SignInViewModel(MainViewModel mainViewModel) : ObservableObject
     {
         /// <summary>
         /// MainViewModel을 참조하여 로그인 성공 시 화면 전환을 처리합니다.
         /// </summary>
         private readonly MainViewModel _mainViewModel = mainViewModel;
-
-        /// <summary>
-        /// UserInfoContext를 참조하여 데이터베이스와 상호작용합니다. 
-        /// </summary>
-        private readonly UserInfoContext _dbContext = dbContext;
 
         /// <summary>
         /// 로그인할 때 사용자의 아이디를 저장하는 속성입니다.
@@ -54,20 +49,18 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private void SignIn()
         {
-            var (IsValid, Message, ClearId, ClearPassword) = ValidationHelper.ValidateSignInput(Id, Password, _dbContext);
+            var result = ValidationHelper.CheckSignIn(Id, Password);
 
-            if (!IsValid)
+            if (!result.IsValid)
             {
-                LoginStatus = Message;
+                LoginStatus = result.Message;
 
-                // 오류 종류에 따라 입력 필드를 초기화
-                Id = ClearId ? string.Empty : Id;
-                Password = ClearPassword ? string.Empty : Password;
+                Id = result.ClearId ? string.Empty : Id;
+                Password = result.ClearPassword ? string.Empty : Password;
 
                 return;
             }
 
-            // 로그인 성공 시 처리
             _mainViewModel.ShowSignInSuccessView();
         }
 
