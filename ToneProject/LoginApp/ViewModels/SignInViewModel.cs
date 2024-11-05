@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using LoginApp.DbContexts;
 using LoginApp.Utils;
+using LoginApp.Views;
+using static LoginApp.Utils.ValidationHelper;
 
 
 namespace LoginApp.ViewModels
@@ -55,7 +57,7 @@ namespace LoginApp.ViewModels
                 _mainViewModel.ShowSignInSuccessView();
             }
 
-            var result = ValidationHelper.CheckSignIn(Id, Password);
+            SignInResult result = ValidationHelper.CheckSignIn(Id, Password);
 
             if (!result.IsValid)
             {
@@ -76,7 +78,7 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private static void SignUp()
         {
-            var signUpView = new Views.SignUpView
+            SignUpView signUpView = new()
             {
                 DataContext = new SignUpViewModel()
             };
@@ -89,7 +91,7 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private static void FindId()
         {
-            var FindIdView = new Views.FindIdView();
+            FindIdView FindIdView = new();
             FindIdView.ShowDialog();
         }
 
@@ -99,7 +101,7 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private static void FindPassword()
         {
-            var FindPasswordView = new Views.FindPasswordView();
+            FindPasswordView FindPasswordView = new();
             FindPasswordView.ShowDialog();
         }
     }

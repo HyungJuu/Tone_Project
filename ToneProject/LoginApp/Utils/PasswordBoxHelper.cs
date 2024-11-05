@@ -70,7 +70,7 @@ namespace LoginApp.Utils
         /// <param name="e">이벤트에 대한 추가 정보입니다</param>
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
-            var passwordBox = (PasswordBox)sender;
+            PasswordBox passwordBox = (PasswordBox)sender;
             SetBoundPassword(passwordBox, passwordBox.Password);
         }
     }

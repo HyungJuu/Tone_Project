@@ -18,7 +18,7 @@ namespace LoginApp.ViewModels.SnakeGame
         [RelayCommand]
         public void StartSnakeGame()
         {
-            var snakeGamePlayViewModel = new SnakeGamePlayViewModel();
+            SnakeGamePlayViewModel snakeGamePlayViewModel = new();
             snakeGamePlayViewModel.StartGame();
             CurrentViewModel = snakeGamePlayViewModel; // CurrentViewModel을 SnakeGamePlayViewModel로 설정하여 화면 전환
         }

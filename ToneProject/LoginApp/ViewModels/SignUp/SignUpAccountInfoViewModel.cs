@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using LoginApp.DbContexts;
 using LoginApp.Utils;
 using System.Net.NetworkInformation;
+using static LoginApp.Utils.ValidationHelper;
 
 namespace LoginApp.ViewModels
 {
@@ -60,7 +61,7 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         public void SignUpNext()
         {
-            var result = ValidationHelper.CheckSignUp(SignUpId, SignUpPassword, SignUpConfirmPassword);
+            SignUpAccountResult result = ValidationHelper.CheckSignUp(SignUpId, SignUpPassword, SignUpConfirmPassword);
 
             if (!result.IsValid)
             {

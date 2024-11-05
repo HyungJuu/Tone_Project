@@ -4,6 +4,7 @@ using LoginApp.DbContexts;
 using LoginApp.Models;
 using LoginApp.Utils;
 using System.Windows;
+using static LoginApp.Utils.ValidationHelper;
 
 namespace LoginApp.ViewModels
 {
@@ -18,6 +19,8 @@ namespace LoginApp.ViewModels
         /// SignUpAccountInfoViewModel(1단계회원가입)의 인스턴스를 참조하여 회원가입 과정에서 사용합니다.
         /// </summary>
         private readonly SignUpAccountInfoViewModel _signUpAccountInfoViewModel = signUpAccountInfoViewModel;
+
+        private static readonly UserInfoContext _dbContext = new();
 
         /// <summary>
         /// 사용자가 입력한 이름을 저장합니다.
@@ -65,7 +68,7 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         public void SignUpEnd(Window currentWindow)
         {
-            var result = ValidationHelper.CheckSignUp(SignUpName, SignUpBirth);
+            SignUpPersonalResult result = ValidationHelper.CheckSignUp(SignUpName, SignUpBirth);
 
             if (!result.IsVaild)
             {
@@ -83,9 +86,7 @@ namespace LoginApp.ViewModels
         /// </summary>
         private void SaveUserInfoToDatabase()
         {
-            using var context = new UserInfoContext();
-
-            var userInfo = new UserInfo
+            UserInfo userInfo = new UserInfo
             {
                 Id = _signUpAccountInfoViewModel.SignUpId,
                 Pwd = _signUpAccountInfoViewModel.SignUpPassword,
@@ -94,8 +95,8 @@ namespace LoginApp.ViewModels
                 Gender = SignUpGender.ToString()
             };
 
-            context.UserInfos.Add(userInfo);
-            context.SaveChanges();
+            _dbContext.UserInfos.Add(userInfo);
+            _dbContext.SaveChanges();
         }
     }
 }

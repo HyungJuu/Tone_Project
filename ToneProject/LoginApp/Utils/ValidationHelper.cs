@@ -1,4 +1,5 @@
 ﻿using LoginApp.DbContexts;
+using LoginApp.Models;
 using System.Text.RegularExpressions;
 
 namespace LoginApp.Utils
@@ -38,7 +39,7 @@ namespace LoginApp.Utils
             if (string.IsNullOrEmpty(password))
                 return new SignInResult(false, "비밀번호를 입력하세요", false, true);
 
-            var user = _dbContext.UserInfos.SingleOrDefault(u => u.Id == id);
+            UserInfo? user = _dbContext.UserInfos.SingleOrDefault(u => u.Id == id);
 
             if (user == null || user.Pwd != password)
                 return new SignInResult(false, "아이디 또는 비밀번호가 올바르지 않습니다", true, true);
@@ -168,7 +169,7 @@ namespace LoginApp.Utils
         /// <param name="isValid">개인정보 입력 성공 유무</param>
         /// <param name="nameStatus">이름(닉네임) 입력 상태메시지</param>
         /// <param name="birthStatus">생년월일 입력 상태메시지</param>
-        public struct SignPersonalResult(bool isValid, string nameStatus, string birthStatus)
+        public struct SignUpPersonalResult(bool isValid, string nameStatus, string birthStatus)
         {
             public bool IsVaild { get; private set; } = isValid;
             public string NameStatus { get; private set; } = nameStatus;
@@ -213,14 +214,14 @@ namespace LoginApp.Utils
         /// <param name="name">사용자 입력 이름</param>
         /// <param name="birth">사용자 입력 생년월일</param>
         /// <returns>회원가입 결과를 나타내는 구조체 반환</returns>
-        public static SignPersonalResult CheckSignUp(string name, string birth)
+        public static SignUpPersonalResult CheckSignUp(string name, string birth)
         {
             string nameStatus = CheckName(name);
             string birthStatus = CheckBirth(birth);
 
             bool isValid = string.IsNullOrEmpty(nameStatus) && string.IsNullOrEmpty(birthStatus);
 
-            return new SignPersonalResult(isValid, nameStatus, birthStatus);
+            return new SignUpPersonalResult(isValid, nameStatus, birthStatus);
         }
         #endregion
     }
