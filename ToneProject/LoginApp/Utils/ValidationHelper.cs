@@ -10,12 +10,12 @@ namespace LoginApp.Utils
     {
         #region 로그인 관련 검증
         /// <summary>
-        /// 
+        /// 로그인 시 입력값 검증
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="password"></param>
+        /// <param name="id">아이디</param>
+        /// <param name="password">비밀번호</param>
         /// <param name="dbContext"></param>
-        /// <returns></returns>
+        /// <returns>결과 메시지 및 입력값 초기화 여부</returns>
         public static (bool IsValid, string Message, bool ClearId, bool ClearPassword) ValidateSignInput(string id, string password, UserInfoContext dbContext)
         {
             if (string.IsNullOrEmpty(id))
@@ -28,7 +28,7 @@ namespace LoginApp.Utils
                 return (false, "아이디 또는 비밀번호가 올바르지 않습니다", true, true);
 
             var user = dbContext.UserInfos.SingleOrDefault(u => u.Id == id);
-            if (user == null || user.Pwd != password)
+            if (user != null && user.Pwd != password)
                 return (false, "비밀번호가 올바르지 않습니다.", false, true);
 
             return (true, string.Empty, false, false);
@@ -37,9 +37,20 @@ namespace LoginApp.Utils
 
         #region 회원가입(계정) 관련 검증
 
+        /// <summary>
+        /// .NET 7.0 기능.
+        /// 정규식을 미리 컴파일하여 사용하도록 정의.
+        /// 성능 향상, 코드 관리
+        /// </summary>
         [GeneratedRegex(@"^[a-zA-Z0-9]*$")]
         private static partial Regex IdRegex();
 
+        /// <summary>
+        /// 회원가입 시 아이디 입력값 검증
+        /// </summary>
+        /// <param name="userId">사용자 입력 아이디</param>
+        /// <param name="context"></param>
+        /// <returns>오류 메시지</returns>
         public static string ValidateUserId(string userId, UserInfoContext context)
         {
             int letterCount = userId.Count(char.IsLetter);
@@ -66,6 +77,11 @@ namespace LoginApp.Utils
         [GeneratedRegex(@"^[a-zA-Z](?=.*\d)(?=.*[!@#$%]).+$")]
         private static partial Regex PasswordRegex();
 
+        /// <summary>
+        /// 회원가입 시 비밀번호 입력값 검증
+        /// </summary>
+        /// <param name="password">사용자 입력 비밀번호</param>
+        /// <returns>오류 메시지</returns>
         public static string ValidatePassword(string password)
         {
             int letterCount = password.Count(char.IsLetter);
@@ -85,6 +101,12 @@ namespace LoginApp.Utils
             return string.Empty;
         }
 
+        /// <summary>
+        /// 비밀번호 확인 입력값 검증
+        /// </summary>
+        /// <param name="password">사용자 입력 비밀번호</param>
+        /// <param name="confirmPassword">비밀번호 재입력값</param>
+        /// <returns>오류 메시지</returns>
         public static string ValidateConfirmPassword(string password, string confirmPassword)
         {
             if (string.IsNullOrEmpty(confirmPassword))
@@ -98,11 +120,22 @@ namespace LoginApp.Utils
             return string.Empty;
         }
 
+        /// <summary>
+        /// 데이터베이스에 아이디 존재유무 확인
+        /// </summary>
         private static bool CheckUserIdExist(string userId, UserInfoContext context)
         {
             return context.UserInfos.Any(u => u.Id == userId);
         }
 
+        /// <summary>
+        /// 회원가입 계정 검증
+        /// </summary>
+        /// <param name="userId">아이디</param>
+        /// <param name="password">비밀번호</param>
+        /// <param name="confirmPassword">비밀번호 확인</param>
+        /// <param name="context">데이터베이스 컨텍스트</param>
+        /// <returns>유효성 상태 및 각 상태메시지 반환</returns>
         public static (bool isValid, string IdStatus, string PasswordStatus, string ConfirmPasswordStatus) ValidateSignUpInput(
             string userId, string password, string confirmPassword, UserInfoContext context)
         {
@@ -118,10 +151,10 @@ namespace LoginApp.Utils
 
         #region 회원가입(개인정보) 관련 검증
         /// <summary>
-        /// 이름의 유효성을 검증합니다.
+        /// 이름 입력값 검증
         /// </summary>
         /// <param name="name">이름</param>
-        /// <returns>유효하지 않으면 오류 메시지를 반환하고, 유효하면 빈 문자열을 반환합니다.</returns>
+        /// <returns>오류메시지 및 빈문자열 반환</returns>
         public static string ValidateName(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -132,10 +165,10 @@ namespace LoginApp.Utils
         }
 
         /// <summary>
-        /// 생년월일의 유효성을 검증합니다.
+        /// 생년월일 입력값 검증
         /// </summary>
         /// <param name="birth">생년월일</param>
-        /// <returns>유효하지 않으면 오류 메시지를 반환하고, 유효하면 빈 문자열을 반환합니다.</returns>
+        /// <returns>오류메시지 및 빈문자열 반환</returns>
         public static string ValidateBirth(string birth)
         {
             if (string.IsNullOrEmpty(birth))
@@ -150,11 +183,11 @@ namespace LoginApp.Utils
         }
 
         /// <summary>
-        /// 회원가입 시 이름과 생년월일의 유효성을 검증하고 결과를 튜플로 반환합니다.
+        /// 회원가입 사용자정보 검증
         /// </summary>
         /// <param name="name">이름</param>
         /// <param name="birth">생년월일</param>
-        /// <returns>유효성 상태를 나타내는 튜플을 반환합니다.</returns>
+        /// <returns>유효성 상태를 나타내는 튜플을 반환</returns>
         public static (bool isValid, string nameStatus, string birthStatus) ValidateSignUpInput(
             string name, string birth)
         {
