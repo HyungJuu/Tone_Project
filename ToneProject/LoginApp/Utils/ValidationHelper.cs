@@ -117,7 +117,7 @@ namespace LoginApp.Utils
 
             if (!PasswordRegex().IsMatch(password))
                 return "숫자, 특수문자(!,@,#,$,%)를 포함해야 합니다.";
-            
+
             return string.Empty;
         }
 
@@ -160,11 +160,27 @@ namespace LoginApp.Utils
         }
         #endregion
 
-
-
         #region 회원가입(개인정보) 관련 검증
-        
-        public static string ValidateName(string name)
+
+        /// <summary>
+        /// 회원가입(개인정보) 결과를 나타내는 구조체
+        /// </summary>
+        /// <param name="isValid">개인정보 입력 성공 유무</param>
+        /// <param name="nameStatus">이름(닉네임) 입력 상태메시지</param>
+        /// <param name="birthStatus">생년월일 입력 상태메시지</param>
+        public struct SignPersonalResult(bool isValid, string nameStatus, string birthStatus)
+        {
+            public bool IsVaild { get; private set; } = isValid;
+            public string NameStatus { get; private set; } = nameStatus;
+            public string BirthStatus { get; private set; } = birthStatus;
+        }
+
+        /// <summary>
+        /// 이름(닉네임) 입력 상태 확인 메서드
+        /// </summary>
+        /// <param name="name">사용자 입력 이름</param>
+        /// <returns>조건에 따른 문자열(오류메시지) 반환. 아니면 빈문자열 반환</returns>
+        private static string CheckName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -173,8 +189,12 @@ namespace LoginApp.Utils
             return string.Empty;
         }
 
-        
-        public static string ValidateBirth(string birth)
+        /// <summary>
+        /// 생년월일 입력 상태 확인 메서드
+        /// </summary>
+        /// <param name="birth">사용자 입력 생년월일</param>
+        /// <returns>조건에 따른 문자열(오류메시지) 반환. 아니면 빈문자열 반환</returns>
+        private static string CheckBirth(string birth)
         {
             if (string.IsNullOrEmpty(birth))
             {
@@ -187,15 +207,20 @@ namespace LoginApp.Utils
             return string.Empty;
         }
 
-        public static (bool isValid, string nameStatus, string birthStatus) ValidateSignUpInput(
-            string name, string birth)
+        /// <summary>
+        /// 회원가입(개인정보) 입력 확인 메서드
+        /// </summary>
+        /// <param name="name">사용자 입력 이름</param>
+        /// <param name="birth">사용자 입력 생년월일</param>
+        /// <returns>회원가입 결과를 나타내는 구조체 반환</returns>
+        public static SignPersonalResult CheckSignUp(string name, string birth)
         {
-            string nameStatus = ValidateName(name);
-            string birthStatus = ValidateBirth(birth);
+            string nameStatus = CheckName(name);
+            string birthStatus = CheckBirth(birth);
 
             bool isValid = string.IsNullOrEmpty(nameStatus) && string.IsNullOrEmpty(birthStatus);
 
-            return (isValid, nameStatus, birthStatus);
+            return new SignPersonalResult(isValid, nameStatus, birthStatus);
         }
         #endregion
     }

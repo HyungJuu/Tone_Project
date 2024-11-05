@@ -59,17 +59,23 @@ namespace LoginApp.ViewModels
         }
 
         /// <summary>
-        /// 사용자의 입력을 검증하고, 유효한 경우 사용자 정보를 데이터베이스에 저장하여 회원가입을 완료합니다.
+        /// 사용자의 입력을 확인 후, 결과에 따라 입력 정보를 데이터베이스에 저장하여 회원가입을 완료합니다.
         /// </summary>
-        /// <param name="currentWindow">현재 활성화된 창입니다.</param>
+        /// <param name="currentWindow">현재 활성화된 창</param>
         [RelayCommand]
         public void SignUpEnd(Window currentWindow)
         {
-            if (ValidateSignUpInput())
+            var result = ValidationHelper.CheckSignUp(SignUpName, SignUpBirth);
+
+            if (!result.IsVaild)
             {
-                SaveUserInfoToDatabase();
-                SignUpViewModel.BackToSignIn(currentWindow);
+                SignUpNameStatus = result.NameStatus;
+                SignUpBirthStatus = result.BirthStatus;
+
+                return;
             }
+            SaveUserInfoToDatabase();
+            SignUpViewModel.BackToSignIn(currentWindow);
         }
 
         /// <summary>
@@ -90,23 +96,6 @@ namespace LoginApp.ViewModels
 
             context.UserInfos.Add(userInfo);
             context.SaveChanges();
-        }
-
-        /// <summary>
-        /// 사용자 가입정보를 검증합니다. 
-        /// 유효하지 않은 경우 상태 메시지를 업데이트합니다.
-        /// </summary>
-        /// <returns>모든 입력값이 유효하면 true, 그렇지 않으면 false를 반환합니다.</returns>
-        private bool ValidateSignUpInput()
-        {
-            var (isValid, nameStatus, birthStatus) = ValidationHelper.ValidateSignUpInput(SignUpName, SignUpBirth);
-
-            if (!isValid)
-            {
-                SignUpNameStatus = nameStatus;
-                SignUpBirthStatus = birthStatus;
-            }
-            return isValid;
         }
     }
 }
