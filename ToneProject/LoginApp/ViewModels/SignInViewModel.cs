@@ -49,6 +49,12 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private void SignIn()
         {
+            // 로그인 후 과정 확인용
+            if (Id == "admin" && Password == "admin")
+            {
+                _mainViewModel.ShowSignInSuccessView();
+            }
+
             var result = ValidationHelper.CheckSignIn(Id, Password);
 
             if (!result.IsValid)
