@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using LoginApp.DbContexts;
 using LoginApp.Utils;
+using System.Net.NetworkInformation;
 
 namespace LoginApp.ViewModels
 {
@@ -59,29 +60,18 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         public void SignUpNext()
         {
-            if (ValidateSignUpInput())
+            var result = ValidationHelper.CheckSignUp(SignUpId, SignUpPassword, SignUpConfirmPassword);
+
+            if (!result.IsValid)
             {
-                _signUpViewModel.SignUpNext();
+                SignUpIdStatus = result.IdStatus;
+                SignUpPasswordStatus = result.PwdStatus;
+                SignUpConfirmPasswordStatus = result.PwdCheckStatus;
+
+                return;
             }
+            
+            _signUpViewModel.SignUpNext();
         }
-
-        /// <summary>
-        /// 사용자 가입정보를 검증하고, 유효하지 않은 경우 상태 메시지를 업데이트합니다.
-        /// </summary>
-        /// <returns>입력값의 유효 여부를 나타내는 bool 값입니다.</returns>
-        private bool ValidateSignUpInput()
-        {
-            var (isValid, idStatus, passwordStatus, confirmPasswordStatus) =
-                ValidationHelper.ValidateSignUpInput(SignUpId, SignUpPassword, SignUpConfirmPassword);
-
-            if (!isValid)
-            {
-                SignUpIdStatus = idStatus;
-                SignUpPasswordStatus = passwordStatus;
-                SignUpConfirmPasswordStatus = confirmPasswordStatus;
-            }
-            return isValid;
-        }
-
     }
 }

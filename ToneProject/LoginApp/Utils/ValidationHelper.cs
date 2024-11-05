@@ -10,7 +10,7 @@ namespace LoginApp.Utils
         #region 로그인 관련
 
         /// <summary>
-        /// 로그인 결과를 나타내는 클래스
+        /// 로그인 결과를 나타내는 구조체
         /// </summary>
         /// <param name="isValid">로그인 성공 유무</param>
         /// <param name="message">오류메시지</param>
@@ -29,7 +29,7 @@ namespace LoginApp.Utils
         /// </summary>
         /// <param name="id">사용자 아이디</param>
         /// <param name="password">사용자 비밀번호</param>
-        /// <returns></returns>
+        /// <returns>로그인 결과를 나타내는 구조체 반환</returns>
         public static SignInResult CheckSignIn(string id, string password)
         {
             if (string.IsNullOrEmpty(id))
@@ -49,10 +49,33 @@ namespace LoginApp.Utils
 
         #region 회원가입(계정) 관련 검증
 
+        /// <summary>
+        /// 회원가입(계정) 결과를 나타내는 구조체
+        /// </summary>
+        /// <param name="isValid">계정 입력 성공 유무</param>
+        /// <param name="idStatus">아이디 입력 상태메시지</param>
+        /// <param name="pwdStatus">비밀번호 입력 상태메시지</param>
+        /// <param name="pwdCheckStatus">비밀번호 입력 확인 상태메시지</param>
+        public struct SignUpAccountResult(bool isValid, string idStatus, string pwdStatus, string pwdCheckStatus)
+        {
+            public bool IsValid { get; set; } = isValid;
+            public string IdStatus { get; set; } = idStatus;
+            public string PwdStatus { get; set; } = pwdStatus;
+            public string PwdCheckStatus { get; set; } = pwdCheckStatus;
+        }
+
+        /// <summary>
+        /// 아이디 입력 정규식
+        /// </summary>
         [GeneratedRegex(@"^[a-zA-Z0-9]*$")]
         private static partial Regex IdRegex();
 
-        public static string CheckUserId(string userId)
+        /// <summary>
+        /// 아이디 입력 상태 확인 메서드
+        /// </summary>
+        /// <param name="userId">사용자 입력 아이디</param>
+        /// <returns>조건에 따른 문자열(오류메시지) 반환. 아니면 빈문자열 반환</returns>
+        private static string CheckId(string userId)
         {
             int letterCount = userId.Count(char.IsLetter);
 
@@ -65,16 +88,24 @@ namespace LoginApp.Utils
             if (letterCount < 4)
                 return "영문자를 4자리 이상 입력해주세요.";
 
-            if (CheckUserIdExist(userId))
+            if (_dbContext.UserInfos.Any(u => u.Id == userId))
                 return "이미 존재하는 아이디입니다.";
 
             return string.Empty;
         }
 
+        /// <summary>
+        /// 비밀번호 입력 정규식
+        /// </summary>
         [GeneratedRegex(@"^[a-zA-Z](?=.*\d)(?=.*[!@#$%]).+$")]
         private static partial Regex PasswordRegex();
 
-        public static string CheckPasswordMsg(string password)
+        /// <summary>
+        /// 비밀번호 입력 상태 확인 메서드
+        /// </summary>
+        /// <param name="password">사용자 입력 비밀번호</param>
+        /// <returns>조건에 따른 문자열(오류메시지) 반환. 아니면 빈문자열 반환</returns>
+        private static string CheckPassword(string password)
         {
             int letterCount = password.Count(char.IsLetter);
 
@@ -90,37 +121,46 @@ namespace LoginApp.Utils
             return string.Empty;
         }
 
-        public static string DoubleCheckPasswordMsg(string password, string confirmPassword)
+        /// <summary>
+        /// 비밀번호 재입력 상태 확인 메서드
+        /// </summary>
+        /// <param name="password">사용자 입력 비밀번호</param>
+        /// <param name="checkPassword">재입력 비밀번호</param>
+        /// <returns>조건에 따른 문자열(오류메시지) 반환. 아니면 빈문자열 반환</returns>
+        private static string DoubleCheckPassword(string password, string checkPassword)
         {
-            if (string.IsNullOrEmpty(confirmPassword))
+            if (string.IsNullOrEmpty(checkPassword))
             {
                 return "비밀번호 확인이 필요합니다";
             }
-            if (password != confirmPassword)
+            if (password != checkPassword)
             {
                 return "비밀번호가 일치하지 않습니다";
             }
             return string.Empty;
         }
 
-        
-        private static bool CheckUserIdExist(string userId)
+        /// <summary>
+        /// 회원가입(계정) 입력 확인 메서드
+        /// </summary>
+        /// <param name="userId">사용자 입력 아이디</param>
+        /// <param name="password">사용자 입력 비밀번호</param>
+        /// <param name="checkPassword">사용자 입력 비밀번호 확인</param>
+        /// <returns>회원가입 결과를 나타내는 구조체 반환</returns>
+        public static SignUpAccountResult CheckSignUp(string userId, string password, string checkPassword)
         {
-            return _dbContext.UserInfos.Any(u => u.Id == userId);
-        }
+            string idStatus = CheckId(userId);
+            string pwdStatus = CheckPassword(password);
+            string pwdCheckStatus = DoubleCheckPassword(password, checkPassword);
 
-        public static (bool isValid, string IdStatus, string PasswordStatus, string ConfirmPasswordStatus) ValidateSignUpInput(
-            string userId, string password, string confirmPassword)
-        {
-            string idStatus = CheckUserId(userId);
-            string passwordStatus = CheckPasswordMsg(password);
-            string confirmPasswordStatus = DoubleCheckPasswordMsg(password, confirmPassword);
+            // 아이디, 비밀번호, 비밀번호 확인 메시지가 비었을 때
+            bool isValid = string.IsNullOrEmpty(idStatus) && string.IsNullOrEmpty(pwdStatus) && string.IsNullOrEmpty(pwdCheckStatus);
 
-            bool isValid = string.IsNullOrEmpty(idStatus) && string.IsNullOrEmpty(passwordStatus) && string.IsNullOrEmpty(confirmPasswordStatus);
-
-            return (isValid, idStatus, passwordStatus, confirmPasswordStatus);
+            return new SignUpAccountResult(isValid, idStatus, pwdStatus, pwdCheckStatus);
         }
         #endregion
+
+
 
         #region 회원가입(개인정보) 관련 검증
         
