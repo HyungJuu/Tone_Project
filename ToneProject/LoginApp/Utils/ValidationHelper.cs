@@ -14,12 +14,9 @@ namespace LoginApp.Utils
             if (string.IsNullOrEmpty(password))
                 return (false, "비밀번호를 입력하세요", false, true);
 
-            if (!dbContext.UserInfos.Any(u => u.Id == id))
-                return (false, "아이디 또는 비밀번호가 올바르지 않습니다", true, true);
-
             var user = dbContext.UserInfos.SingleOrDefault(u => u.Id == id);
-            if (user != null && user.Pwd != password)
-                return (false, "비밀번호가 올바르지 않습니다.", false, true);
+            if (user == null || user.Pwd != password)
+                return (false, "아이디 또는 비밀번호가 올바르지 않습니다", true, true);
 
             return (true, string.Empty, false, false);
         }
