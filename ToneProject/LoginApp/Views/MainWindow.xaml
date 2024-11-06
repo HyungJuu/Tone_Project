@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <ContentControl Content="{Binding CurrentViewModel}" />

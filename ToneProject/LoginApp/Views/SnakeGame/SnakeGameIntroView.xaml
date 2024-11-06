@@ -6,6 +6,17 @@
              xmlns:local="clr-namespace:LoginApp.Views.SnakeGame"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="scoreButton" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -13,17 +24,35 @@
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Content="메인화면으로" VerticalAlignment="Top" HorizontalAlignment="Right"
                 Background="Gray" FontSize="10" Margin="10"
-                Command="{Binding SelectGameCommand}"/>
+                Command="{Binding BackToMainCommand}"/>
 
         <Grid Grid.Row="1">
-            <Border BorderBrush="Blue" BorderThickness="3"  Width="300" Height="330">
+            <Border BorderBrush="MediumVioletRed" BorderThickness="3"  Width="300" Height="330" Background="Black">
                 <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Snake Game" FontSize="20" />
-                    <Button Content="성적 보기" Margin="30"/>
-                    <Button Content="게임 시작" Command="{Binding StartSnakeGameCommand}"/>
+                    <TextBlock Text="Snake Game" Foreground="White" FontSize="25" FontWeight="Bold"/>
+                    <Button Content="성적 보기" Margin="30"
+                            Style="{StaticResource scoreButton}"
+                            Command="{Binding ShowMyTopScoreCommand}"/>
+                    <Button Content="게임 시작" Style="{x:Null}" Command="{Binding StartSnakeGameCommand}"/>
                 </StackPanel>
             </Border>
             
+            <DataGrid Width="200" HorizontalAlignment="Right" Margin="25 50"
+                      ItemsSource="{Binding Scores}"
+                      Visibility="{Binding IsScoreVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      IsReadOnly="True" AutoGenerateColumns="False"
+                      CanUserSortColumns="False" 
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="False">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="아이디" Binding="{Binding UserId}" Width="66"/>
+                    <DataGridCheckBoxColumn Header="성공" Binding="{Binding GameClear}" Width="34" />
+                    <DataGridTextColumn Header="점수" Binding="{Binding Score}" Width="34"/>
+                    <DataGridTextColumn Header="게임날짜" Binding="{Binding PlayedDate, StringFormat='yy/MM/dd'}" Width="58" />
+                </DataGrid.Columns>
+            </DataGrid>
+
             <!--게임시작 화면 연결-->
             <ContentControl Content="{Binding CurrentViewModel}"/>
         </Grid>
