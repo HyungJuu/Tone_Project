@@ -28,9 +28,9 @@ namespace LoginApp.ViewModels
         /// 로그인 성공 시 호출되는 메서드.
         /// SignInSuccessViewModel(로그인성공 화면)으로 전환합니다.
         /// </summary>
-        public void ShowSignInSuccessView()
-        {
-            CurrentViewModel = new SignInSuccessViewModel(this);
+        public void ShowSignInSuccessView(string userId)
+        { 
+            CurrentViewModel = new SignInSuccessViewModel(this, userId);
         }
 
         /// <summary>
