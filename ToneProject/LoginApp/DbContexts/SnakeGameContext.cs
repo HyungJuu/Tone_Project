@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using LoginApp.Models;
+﻿using LoginApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LoginApp.DbContexts;

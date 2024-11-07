@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LoginApp.DbContexts;
 using LoginApp.Utils;
-using System.Net.NetworkInformation;
 using static LoginApp.Utils.ValidationHelper;
 
 namespace LoginApp.ViewModels
@@ -71,7 +69,7 @@ namespace LoginApp.ViewModels
 
                 return;
             }
-            
+
             _signUpViewModel.SignUpNext();
         }
     }
