@@ -6,15 +6,32 @@ namespace LoginApp.ViewModels.SnakeGame
 {
     public partial class SnakeGamePlayViewModel : ObservableObject
     {
+        private readonly SignInSuccessViewModel _signInSuccessViewModel;
+
         private readonly DispatcherTimer _countdownTimer;
         private readonly DispatcherTimer _gameTimer;
+
         private TimeSpan _countdownTime;
         private TimeSpan _gameTime;
 
-        public SnakeGamePlayViewModel()
+        [ObservableProperty]
+        private object? _currentViewModel;
+
+        [ObservableProperty]
+        private string _countdownDisplay;
+
+        [ObservableProperty]
+        private string _timerDisplay;
+
+        [ObservableProperty]
+        private bool isPaused = false;
+
+        public SnakeGamePlayViewModel(SignInSuccessViewModel signInSuccessViewModel)
         {
+            _signInSuccessViewModel = signInSuccessViewModel;
             _countdownTime = TimeSpan.FromSeconds(3); // 3초 카운트다운
-            _gameTime = TimeSpan.FromMinutes(10); // 10분 타이머
+            //_gameTime = TimeSpan.FromMinutes(1); // 10분 타이머
+            _gameTime = TimeSpan.FromSeconds(5); // 테스트용
 
             CountdownDisplay = _countdownTime.Seconds.ToString();
             TimerDisplay = _gameTime.ToString(@"mm\:ss");
@@ -32,39 +49,33 @@ namespace LoginApp.ViewModels.SnakeGame
             _gameTimer.Tick += UpdateGameTimer;
         }
 
-        [ObservableProperty]
-        private string countdownDisplay;
-
-        [ObservableProperty]
-        private string timerDisplay;
-
-        [ObservableProperty]
-        private bool isPaused;
-
-        // 게임 시작
+        /// <summary>
+        /// 게임 시작
+        /// </summary>
+        [RelayCommand]
         public void StartGame()
         {
             _countdownTime = TimeSpan.FromSeconds(3);
             CountdownDisplay = _countdownTime.Seconds.ToString();
-            IsPaused = false; // 게임 시작 시 일시정지 해제
             _countdownTimer.Start();
         }
 
-        // 일시정지/재개
+        /// <summary>
+        /// 게임 일시정지/재개
+        /// </summary>
         [RelayCommand]
-        public void TogglePause()
+        private void TogglePause()
         {
-            IsPaused = !IsPaused; // IsPaused 속성의 값을 변경
+            IsPaused = !IsPaused;
         }
 
-        // 카운트다운 타이머의 Tick 이벤트
         private void UpdateCountdown(object? sender, EventArgs e)
         {
             if (IsPaused) return;
 
             if (_countdownTime > TimeSpan.Zero)
             {
-                _countdownTime = _countdownTime.Subtract(TimeSpan.FromSeconds(1)); // 1초씩 뺌
+                _countdownTime = _countdownTime.Subtract(TimeSpan.FromSeconds(1));
                 CountdownDisplay = _countdownTime.Seconds.ToString();
             }
             else
@@ -82,20 +93,19 @@ namespace LoginApp.ViewModels.SnakeGame
             _gameTimer.Start();
         }
 
-        // 게임 타이머의 Tick 이벤트
         private void UpdateGameTimer(object? sender, EventArgs e)
         {
-            if (IsPaused) return; // 일시정지 시 종료
+            if (IsPaused) return;
 
             if (_gameTime > TimeSpan.Zero)
             {
-                _gameTime = _gameTime.Subtract(TimeSpan.FromSeconds(1)); // 1초씩 뺌
+                _gameTime = _gameTime.Subtract(TimeSpan.FromSeconds(1));
                 TimerDisplay = _gameTime.ToString(@"mm\:ss");
             }
             else
             {
                 _gameTimer.Stop();
-                TimerDisplay = "성공!";
+                CurrentViewModel = new SnakeGameEndViewModel(_signInSuccessViewModel);
             }
         }
     }

@@ -40,6 +40,10 @@
                 <snakegames:SnakeGamePlayView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type snakegameVM:SnakeGameEndViewModel}">
+                <snakegames:SnakeGameEndView />
+            </DataTemplate>
+
             <Style TargetType="Button">
                 <Setter Property="FontSize" Value="9" />
                 <Setter Property="Template">

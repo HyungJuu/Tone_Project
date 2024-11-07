@@ -6,15 +6,48 @@
              xmlns:local="clr-namespace:LoginApp.Views.SnakeGame"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="210"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- 왼쪽 영역 (성적 조회) -->
+            <Border Grid.Column="0" Background="#FF202020" BorderBrush="#FEE500" BorderThickness="3 3 0 3">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="성적" FontSize="18" Foreground="White" HorizontalAlignment="Center" Margin="0 60 0 10"/>
 
-        <Border BorderBrush="MediumVioletRed" BorderThickness="3" Width="300" Height="330" Background="Black">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="게임 종료" FontSize="20" Foreground="White" HorizontalAlignment="Center"/>
-                <Button Content="성적 보기" Style="{x:Null}" Margin="30" Command="{Binding ShowMyTopScoreCommand}"/>
-                <Button Content="게임 재시작" Style="{x:Null}" Command="{Binding StartAgainCommand}"/>
-            </StackPanel>
-        </Border>
+                    <DataGrid Width="210" HorizontalAlignment="Center" Margin="5 40" BorderBrush="#FADA0A" BorderThickness="3"
+                              ItemsSource="{Binding Scores}"
+                              Visibility="{Binding IsScoreVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                              IsReadOnly="True" AutoGenerateColumns="False"
+                              CanUserSortColumns="False" 
+                              CanUserReorderColumns="False"
+                              CanUserResizeColumns="False">
 
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="아이디" Binding="{Binding UserId}" Width="70"/>
+                            <DataGridCheckBoxColumn Header="성공" Binding="{Binding GameClear}" Width="34" />
+                            <DataGridTextColumn Header="점수" Binding="{Binding Score}" Width="34"/>
+                            <DataGridTextColumn Header="게임날짜" Binding="{Binding PlayedDate, StringFormat='yy/MM/dd'}" Width="58" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </StackPanel>
+            </Border>
+
+            <!-- 오른쪽 영역 -->
+            <Border Grid.Column="1"  Background="#FF202020" BorderBrush="#FEE500" BorderThickness="3" Width="300" Height="300">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="게임 종료" FontSize="25" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold"/>
+                    <Button Content="성적 보기" Style="{x:Null}" Margin="30" Command="{Binding ShowMyTopScoreCommand}"/>
+                    <Button Content="게임 재시작" Style="{x:Null}" Command="{Binding StartAgainCommand}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        
+        <!--게임시작 화면 연결-->
+        <ContentControl Content="{Binding CurrentViewModel}"/>
     </Grid>
 </UserControl>

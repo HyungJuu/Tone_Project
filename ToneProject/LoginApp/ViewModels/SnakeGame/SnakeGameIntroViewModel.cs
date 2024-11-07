@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LoginApp.DbContexts;
 using LoginApp.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -24,24 +23,17 @@ namespace LoginApp.ViewModels.SnakeGame
         {
             Scores.Clear();
 
-            string? loggedInUserId = _signInSuccessViewModel.CurrentUserId; // 로그인된 사용자 아이디
+            string? loggedInUserId = _signInSuccessViewModel.CurrentUserId ?? "Unknown"; // 로그인된 사용자 아이디
 
             try
             {
-                using (var context = new SnakeGameContext())
-                {
-                    var topScores = context.SnakeGameRecords
-                        .Where(r => r.UserId == loggedInUserId)  // 로그인 아이디의 데이터 조회
-                        .OrderByDescending(r => r.GameClear)  // 게임 클리어 기준으로 내림차순 정렬
-                        .ThenByDescending(r => r.Score)  // 점수를 기준으로 내림차순 정렬
-                        .Take(5)  // 상위 5개 레코드만 가져옴
-                        .ToList();
+                // ScoreService에서 점수 조회
+                var topScores = ScoreService.GetTopScoresByUserId(loggedInUserId);
 
-                    // 가져온 데이터를 Scores ObservableCollection에 추가
-                    foreach (var record in topScores)
-                    {
-                        Scores.Add(record);
-                    }
+                // 조회된 점수를 Scores에 추가
+                foreach (var record in topScores)
+                {
+                    Scores.Add(record);
                 }
 
                 IsScoreVisible = true;
@@ -61,8 +53,8 @@ namespace LoginApp.ViewModels.SnakeGame
         [RelayCommand]
         public void StartSnakeGame()
         {
-            SnakeGamePlayViewModel snakeGamePlayViewModel = new();
-            snakeGamePlayViewModel.StartGame();
+            SnakeGamePlayViewModel snakeGamePlayViewModel = new(_signInSuccessViewModel);
+            snakeGamePlayViewModel.StartGame();  // 게임을 시작
             CurrentViewModel = snakeGamePlayViewModel;
         }
     }

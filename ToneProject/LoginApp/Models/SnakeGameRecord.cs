@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace LoginApp.Models;
+﻿namespace LoginApp.Models;
 
 public partial class SnakeGameRecord
 {

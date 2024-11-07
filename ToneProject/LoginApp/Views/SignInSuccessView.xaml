@@ -15,19 +15,22 @@
         <Grid Grid.Row="0">
             <control:SignInOutButton Content="로그아웃" Command="{Binding SignOutCommand}"
                                      Width="80" Height="30"
-                                     VerticalAlignment="Center" HorizontalAlignment="Right" Margin="15 10"/>
+                                     VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 5 15 0"/>
 
-            <Label Content="게임 선택" HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="10"/>
+            <Label Content="게임 선택" HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0 5 0 0"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="20 30 20 20">
+            <Border BorderBrush="LightGray" BorderThickness="1" Background="White">
+                <Button Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100"
+                        Command="{Binding SelectSnakeGameCommand}" BorderBrush="LightGray">
+                    <Image Source="/Resources/SnakeGame.png" Margin="5"></Image>
+                </Button>
+            </Border>
         </Grid>
         
-        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Background="White" Width="500" Height="350">
-            <Button Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100"
-                    Command="{Binding SelectSnakeGameCommand}">
-                <Image Source="/Resources/SnakeGame.png"></Image>
-            </Button>
-        </Border>
         <Border Grid.RowSpan="2">
             <ContentControl Content="{Binding CurrentGameViewModel}" />
         </Border>
-        </Grid>
+    </Grid>
 </UserControl>
