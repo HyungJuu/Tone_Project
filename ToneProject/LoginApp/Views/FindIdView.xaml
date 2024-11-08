@@ -4,11 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="아이디 찾기" Height="400" Width="600"
+        Title="아이디 찾기" Height="480" Width="600"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock Text="아이디 찾기 화면입니다" 
-                   VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="아이디 찾기" FontSize="20" HorizontalAlignment="Center" FontWeight="Bold" Margin="15" />
+
+        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Background="White" Width="300" Height="330" CornerRadius="15">
+            <ContentControl Content="{Binding CurrentSignUpViewModel}" />
+        </Border>
     </Grid>
 </Window>
