@@ -53,7 +53,7 @@ namespace LoginApp.ViewModels
             // 로그인 후 과정 확인용
             if (Id == "admin" && Password == "admin")
             {
-                _mainViewModel.ShowSignInSuccessView(Id);
+                _mainViewModel.ShowDashboardView(Id);
             }
 
             SignInResult result = ValidationHelper.CheckSignIn(Id, Password);
@@ -66,7 +66,7 @@ namespace LoginApp.ViewModels
                 return;
             }
 
-            _mainViewModel.ShowSignInSuccessView(Id);
+            _mainViewModel.ShowDashboardView(Id);
         }
 
         /// <summary>

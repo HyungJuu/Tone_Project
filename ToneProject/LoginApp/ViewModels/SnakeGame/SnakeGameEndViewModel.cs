@@ -6,9 +6,9 @@ using System.Windows;
 
 namespace LoginApp.ViewModels.SnakeGame
 {
-    public partial class SnakeGameEndViewModel(SignInSuccessViewModel signInSuccessViewModel) : ObservableObject
+    public partial class SnakeGameEndViewModel(DashboardViewModel dashboardViewModel) : ObservableObject
     {
-        private readonly SignInSuccessViewModel _signInSuccessViewModel = signInSuccessViewModel;
+        private readonly DashboardViewModel _dashboardViewModel = dashboardViewModel;
 
         public ObservableCollection<SnakeGameRecord> Scores { get; set; } = [];
 
@@ -24,7 +24,7 @@ namespace LoginApp.ViewModels.SnakeGame
         {
             Scores.Clear();
 
-            string? loggedInUserId = _signInSuccessViewModel.CurrentUserId ?? "Unknown";
+            string? loggedInUserId = _dashboardViewModel.CurrentUserId ?? "Unknown";
 
             try
             {
@@ -46,7 +46,7 @@ namespace LoginApp.ViewModels.SnakeGame
         [RelayCommand]
         public void StartAgain()
         {
-            SnakeGamePlayViewModel snakeGamePlayViewModel = new(_signInSuccessViewModel);
+            SnakeGamePlayViewModel snakeGamePlayViewModel = new(_dashboardViewModel);
             snakeGamePlayViewModel.StartGame();
             CurrentViewModel = snakeGamePlayViewModel;
         }

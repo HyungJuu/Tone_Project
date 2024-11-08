@@ -6,7 +6,7 @@ namespace LoginApp.ViewModels.SnakeGame
 {
     public partial class SnakeGamePlayViewModel : ObservableObject
     {
-        private readonly SignInSuccessViewModel _signInSuccessViewModel;
+        private readonly DashboardViewModel _dashboardViewModel;
 
         private readonly DispatcherTimer _countdownTimer;
         private readonly DispatcherTimer _gameTimer;
@@ -26,9 +26,9 @@ namespace LoginApp.ViewModels.SnakeGame
         [ObservableProperty]
         private bool isPaused = false;
 
-        public SnakeGamePlayViewModel(SignInSuccessViewModel signInSuccessViewModel)
+        public SnakeGamePlayViewModel(DashboardViewModel dashboardViewModel)
         {
-            _signInSuccessViewModel = signInSuccessViewModel;
+            _dashboardViewModel = dashboardViewModel;
             _countdownTime = TimeSpan.FromSeconds(3); // 3초 카운트다운
             //_gameTime = TimeSpan.FromMinutes(1); // 10분 타이머
             _gameTime = TimeSpan.FromSeconds(5); // 테스트용
@@ -105,7 +105,7 @@ namespace LoginApp.ViewModels.SnakeGame
             else
             {
                 _gameTimer.Stop();
-                CurrentViewModel = new SnakeGameEndViewModel(_signInSuccessViewModel);
+                CurrentViewModel = new SnakeGameEndViewModel(_dashboardViewModel);
             }
         }
     }

@@ -16,8 +16,8 @@
                 <views:SignInView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModels:SignInSuccessViewModel}">
-                <views:SignInSuccessView />
+            <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
+                <views:DashboardView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModels:SignUpViewModel}">

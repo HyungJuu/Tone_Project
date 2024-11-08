@@ -6,9 +6,9 @@ using System.Windows;
 
 namespace LoginApp.ViewModels.SnakeGame
 {
-    public partial class SnakeGameIntroViewModel(SignInSuccessViewModel signInSuccessViewModel) : ObservableObject
+    public partial class SnakeGameIntroViewModel(DashboardViewModel dashboardViewModel) : ObservableObject
     {
-        private readonly SignInSuccessViewModel _signInSuccessViewModel = signInSuccessViewModel;
+        private readonly DashboardViewModel _dashboardViewModel = dashboardViewModel;
 
         public ObservableCollection<SnakeGameRecord> Scores { get; set; } = [];
 
@@ -23,7 +23,7 @@ namespace LoginApp.ViewModels.SnakeGame
         {
             Scores.Clear();
 
-            string? loggedInUserId = _signInSuccessViewModel.CurrentUserId ?? "Unknown"; // 로그인된 사용자 아이디
+            string? loggedInUserId = _dashboardViewModel.CurrentUserId ?? "Unknown"; // 로그인된 사용자 아이디
 
             try
             {
@@ -47,13 +47,13 @@ namespace LoginApp.ViewModels.SnakeGame
         [RelayCommand]
         public void BackToMain()
         {
-            _signInSuccessViewModel.BackToSelectGame();
+            _dashboardViewModel.BackToSelectGame();
         }
 
         [RelayCommand]
         public void StartSnakeGame()
         {
-            SnakeGamePlayViewModel snakeGamePlayViewModel = new(_signInSuccessViewModel);
+            SnakeGamePlayViewModel snakeGamePlayViewModel = new(_dashboardViewModel);
             snakeGamePlayViewModel.StartGame();  // 게임을 시작
             CurrentViewModel = snakeGamePlayViewModel;
         }
