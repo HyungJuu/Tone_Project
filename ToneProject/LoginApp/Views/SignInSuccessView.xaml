@@ -22,11 +22,15 @@
 
         <Grid Grid.Row="1" Margin="20 30 20 20">
             <Border BorderBrush="LightGray" BorderThickness="1" Background="White">
-                <Button Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100"
-                        Command="{Binding SelectSnakeGameCommand}" BorderBrush="LightGray">
+                <Button Width="100" Height="100" HorizontalAlignment="Left" Margin="125"
+                        Command="{Binding SelectSnakeGameCommand}">
                     <Image Source="/Resources/SnakeGame.png" Margin="5"></Image>
                 </Button>
             </Border>
+            <StackPanel Width="150" Height="200" HorizontalAlignment="Left" Margin="100 0">
+                <Rectangle Width="150" Height="150" Stroke="LightGray" Margin="0 25 0 0"/>
+                <TextBlock Text="스네이크 게임" HorizontalAlignment="Center" Foreground="gray" FontWeight="Bold" FontSize="14" />
+            </StackPanel>
         </Grid>
         
         <Border Grid.RowSpan="2">
