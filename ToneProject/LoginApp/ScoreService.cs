@@ -13,7 +13,7 @@ namespace LoginApp
         /// </summary>
         /// <param name="userId">로그인 계정 아이디</param>
         /// <param name="topCount">조회 데이터 수</param>
-        /// <returns></returns>
+        /// <returns>조건에 따라 조회된 데이터 반환</returns>
         public static List<SnakeGameRecord> GetTopScoresByUserId(string userId, int topCount = 5)
         {
             using var context = new SnakeGameContext();
