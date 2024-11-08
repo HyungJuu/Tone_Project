@@ -14,7 +14,7 @@
 
         <Label Content="회원가입" FontSize="20" HorizontalAlignment="Center" FontWeight="Bold" Margin="15" />
 
-        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Background="White" Width="300" Height="330">
+        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Background="White" Width="300" Height="330" CornerRadius="15">
             <ContentControl Content="{Binding CurrentSignUpViewModel}" />
         </Border>
     </Grid>

@@ -57,7 +57,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- 왼쪽 영역 (버튼, 타이머, 점수) -->
-                <Border Grid.Column="0" Background="#FF202020" BorderBrush="#FEE500" BorderThickness="3 3 0 3">
+                <Border Grid.Column="0" Background="#FF202020" BorderBrush="#FEE500" BorderThickness="3 3 0 3" CornerRadius="5 0 0 5">
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="게임 메뉴" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
                         <!-- 일시정지/재개 버튼 -->
@@ -70,7 +70,7 @@
                 </Border>
 
                 <!-- 오른쪽 영역 (게임 영역) -->
-                <Border Grid.Column="1" Background="Black" BorderBrush="#FEE500" BorderThickness="3">
+                <Border Grid.Column="1" Background="Black" BorderBrush="#FEE500" BorderThickness="3" CornerRadius="0 5 5 0">
                     <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="게임 영역" Foreground="White" FontSize="20"/>
                     </StackPanel>
