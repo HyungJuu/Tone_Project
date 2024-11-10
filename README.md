@@ -1,7 +1,6 @@
 # Tone_Project
 
 - PostgreSQL에 TonePorject의 데이터베이스 받아오는 방법  
-    &rarr; **✅현재 백업파일은 방법(2)에 맞춰 수정되어 있음✅**
     
     - 방법(1)
         1. 백업파일 생성시 **[Include CREATE DATABASE statement 옵션]** 을 선택했을 경우, CREATE DATABASE 쿼리 우선 실행
