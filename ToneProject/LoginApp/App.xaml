@@ -16,8 +16,8 @@
                 <views:SignInView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModels:SignInSuccessViewModel}">
-                <views:SignInSuccessView />
+            <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
+                <views:DashboardView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModels:SignUpViewModel}">
@@ -38,6 +38,10 @@
 
             <DataTemplate DataType="{x:Type snakegameVM:SnakeGamePlayViewModel}">
                 <snakegames:SnakeGamePlayView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type snakegameVM:SnakeGameEndViewModel}">
+                <snakegames:SnakeGameEndView />
             </DataTemplate>
 
             <Style TargetType="Button">

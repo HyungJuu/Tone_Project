@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LoginApp.DbContexts;
 using LoginApp.Utils;
 using LoginApp.Views;
 using static LoginApp.Utils.ValidationHelper;
@@ -54,7 +53,7 @@ namespace LoginApp.ViewModels
             // 로그인 후 과정 확인용
             if (Id == "admin" && Password == "admin")
             {
-                _mainViewModel.ShowSignInSuccessView();
+                _mainViewModel.ShowDashboardView(Id);
             }
 
             SignInResult result = ValidationHelper.CheckSignIn(Id, Password);
@@ -62,14 +61,12 @@ namespace LoginApp.ViewModels
             if (!result.IsValid)
             {
                 LoginStatus = result.Message;
-
                 Id = result.ClearId ? string.Empty : Id;
                 Password = result.ClearPassword ? string.Empty : Password;
-
                 return;
             }
 
-            _mainViewModel.ShowSignInSuccessView();
+            _mainViewModel.ShowDashboardView(Id);
         }
 
         /// <summary>

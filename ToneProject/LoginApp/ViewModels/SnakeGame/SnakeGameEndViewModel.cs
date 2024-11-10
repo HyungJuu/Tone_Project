@@ -7,10 +7,10 @@ using System.Windows;
 namespace LoginApp.ViewModels.SnakeGame
 {
     /// <summary>
-    /// 게임 선택 후 성적조회 및 시작 기능을 제공하는 뷰모델 클래스
+    /// 게임 종료 후 성적조회 및 재시작 기능을 제공하는 뷰모델 클래스
     /// </summary>
     /// <param name="dashboardViewModel"></param>
-    public partial class SnakeGameIntroViewModel(DashboardViewModel dashboardViewModel) : ObservableObject
+    public partial class SnakeGameEndViewModel(DashboardViewModel dashboardViewModel) : ObservableObject
     {
         private readonly DashboardViewModel _dashboardViewModel = dashboardViewModel;
 
@@ -39,14 +39,12 @@ namespace LoginApp.ViewModels.SnakeGame
         {
             Scores.Clear();
 
-            string? loggedInUserId = _dashboardViewModel.CurrentUserId ?? "Unknown"; // 로그인된 사용자 아이디
+            string? loggedInUserId = _dashboardViewModel.CurrentUserId ?? "Unknown";
 
             try
             {
-                // ScoreService에서 점수 조회
                 var topScores = ScoreService.GetTopScoresByUserId(loggedInUserId);
 
-                // 조회된 점수를 Scores에 추가
                 foreach (var record in topScores)
                 {
                     Scores.Add(record);
@@ -61,22 +59,13 @@ namespace LoginApp.ViewModels.SnakeGame
         }
 
         /// <summary>
-        /// 게임선택 화면으로 돌아가기
+        /// 게임화면으로 전환하여 게임 재시작.
         /// </summary>
         [RelayCommand]
-        public void BackToMain()
-        {
-            _dashboardViewModel.BackToSelectGame();
-        }
-
-        /// <summary>
-        /// 게임화면으로 전환하여 게임 시작.
-        /// </summary>
-        [RelayCommand]
-        public void StartSnakeGame()
+        public void StartAgain()
         {
             SnakeGamePlayViewModel snakeGamePlayViewModel = new(_dashboardViewModel);
-            snakeGamePlayViewModel.StartGame();  // 게임을 시작
+            snakeGamePlayViewModel.StartGame();
             CurrentViewModel = snakeGamePlayViewModel;
         }
     }

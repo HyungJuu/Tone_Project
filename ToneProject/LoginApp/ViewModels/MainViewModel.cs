@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using LoginApp.DbContexts;
 
 namespace LoginApp.ViewModels
 {
@@ -26,11 +25,11 @@ namespace LoginApp.ViewModels
 
         /// <summary>
         /// 로그인 성공 시 호출되는 메서드.
-        /// SignInSuccessViewModel(로그인성공 화면)으로 전환합니다.
+        /// DashboardViewModel(로그인성공 화면)으로 전환합니다.
         /// </summary>
-        public void ShowSignInSuccessView()
+        public void ShowDashboardView(string userId)
         {
-            CurrentViewModel = new SignInSuccessViewModel(this);
+            CurrentViewModel = new DashboardViewModel(this, userId);
         }
 
         /// <summary>

@@ -49,7 +49,7 @@
             <TextBlock Text="{Binding SignUpConfirmPasswordStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
             <!-- 회원가입 다음페이지 이동버튼 -->
-            <control:SignUpButton Content="완료" Command="{Binding SignUpNextCommand}" Margin="0 20" />
+            <control:SignUpButton Content="완료" Command="{Binding SignUpNextCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
