@@ -236,7 +236,14 @@ namespace LoginApp.Utils
         public static readonly SignUpPersonalResult SignUpPersonalSuccess = new(true, string.Empty, string.Empty);
 
         /// <summary>
-        /// 이름(닉네임) 입력 상태 확인 메서드
+        /// 이름 입력 정규식
+        /// </summary>
+        /// <returns></returns>
+        [GeneratedRegex(@"^[a-zA-Z가-힣]+$")]
+        private static partial Regex nameRegex();
+
+        /// <summary>
+        /// 이름 입력 상태 확인 메서드
         /// </summary>
         /// <param name="name">사용자 입력 이름</param>
         /// <returns>조건에 따른 문자열(오류메시지) 반환. 아니면 빈문자열 반환</returns>
@@ -247,6 +254,10 @@ namespace LoginApp.Utils
             if (string.IsNullOrEmpty(name))
             {
                 inputNameResult = "이름을 입력해 주세요";
+            }
+            else if (!nameRegex().IsMatch(name))
+            {
+                inputNameResult = "영문과 한글만 입력 가능합니다";
             }
             else
             {

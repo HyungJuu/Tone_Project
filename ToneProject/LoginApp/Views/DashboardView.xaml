@@ -15,7 +15,7 @@
         <Grid Grid.Row="0">
             <control:SignInOutButton Content="로그아웃" Command="{Binding SignOutCommand}"
                                      Width="80" Height="30"
-                                     VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 5 15 0"/>
+                                     VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 5 20 0"/>
 
             <Label Content="게임 선택" HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0 5 0 0"/>
         </Grid>

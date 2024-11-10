@@ -33,7 +33,7 @@
         <StackPanel Margin="20 0">
             <!-- 아이디 입력 -->
             <Label Content="아이디" Style="{StaticResource LabelStyle}"/>
-            <control:WaterMarkTextBox Text="{Binding SignUpId}" Watermark="아이디 입력(영문, 숫자만 가능)" Margin="0 5"/>
+            <control:WaterMarkTextBox Text="{Binding SignUpId}" Watermark="아이디 입력(영문, 숫자만 가능)"/>
             <TextBlock Text="{Binding SignUpIdStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
             <!-- 비밀번호 입력 -->

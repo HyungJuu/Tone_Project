@@ -28,9 +28,9 @@
 
     <Grid Margin="20 25 20 0">
         <StackPanel Margin="20 0">
-            <!-- 닉네임 입력 -->
-            <Label Content="닉네임" Style="{StaticResource LabelStyle}"/>
-            <control:WaterMarkTextBox Text="{Binding SignUpName}" Watermark="닉네임 입력" Margin="0 5"/>
+            <!-- 이름 입력 -->
+            <Label Content="이름" Style="{StaticResource LabelStyle}"/>
+            <control:WaterMarkTextBox Text="{Binding SignUpName}" Watermark="이름 입력" Margin="0 5"/>
             <TextBlock Text="{Binding SignUpNameStatus}" Style="{StaticResource StatusMessageStyle}"/>
 
             <!-- 생년월일 입력 -->
