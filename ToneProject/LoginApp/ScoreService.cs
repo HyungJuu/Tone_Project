@@ -1,5 +1,6 @@
 ﻿using LoginApp.DbContexts;
 using LoginApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LoginApp
 {
@@ -14,14 +15,15 @@ namespace LoginApp
         /// <param name="userId">로그인 계정 아이디</param>
         /// <param name="topCount">조회 데이터 수</param>
         /// <returns>조건에 따라 조회된 데이터 반환</returns>
-        public static List<SnakeGameRecord> GetTopScoresByUserId(string userId, int topCount = 5)
+        public static async Task<List<SnakeGameRecord>> LoadTopScoresAsync(string userId, int topCount = 5)
         {
             using var context = new SnakeGameContext();
-            return [.. context.SnakeGameRecords
+            return await context.SnakeGameRecords
                 .Where(r => r.UserId == userId)
                 .OrderByDescending(r => r.GameClear)
                 .ThenByDescending(r => r.Score)
-                .Take(topCount)];
+                .Take(topCount)
+                .ToListAsync();
         }
     }
 }

@@ -34,17 +34,17 @@ namespace LoginApp.ViewModels
         /// 로그인 ID 초기화 및 로그인 화면으로 전환
         /// </summary>
         [RelayCommand]
-        private void SignOut()
+        public void SignOut()
         {
             _mainViewModel.ShowSignInView();
-            CurrentUserId = null; // 로그아웃 시 ID 초기화
+            CurrentUserId = null; // ID 초기화
         }
 
         /// <summary>
         /// 스네이크 게임 선택 시 게임 인트로 화면으로 전환
         /// </summary>
         [RelayCommand]
-        private void SelectSnakeGame()
+        public void SelectSnakeGame()
         {
             CurrentGameViewModel = new SnakeGameIntroViewModel(this);
         }

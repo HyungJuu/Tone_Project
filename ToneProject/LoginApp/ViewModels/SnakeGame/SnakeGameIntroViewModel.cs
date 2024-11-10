@@ -15,7 +15,7 @@ namespace LoginApp.ViewModels.SnakeGame
         private readonly DashboardViewModel _dashboardViewModel = dashboardViewModel;
 
         /// <summary>
-        /// 사용자의 게임 기록을 저장
+        /// 사용자의 게임 기록을 저장하여 화면에 표시
         /// </summary>
         public ObservableCollection<SnakeGameRecord> Scores { get; set; } = [];
 
@@ -35,16 +35,16 @@ namespace LoginApp.ViewModels.SnakeGame
         /// 현재접속자의 상위 5개의 게임 데이터를 화면에 표시
         /// </summary>
         [RelayCommand]
-        public void ShowMyTopScore()
+        public async Task ShowTopScoreAsync()
         {
             Scores.Clear();
 
-            string? loggedInUserId = _dashboardViewModel.CurrentUserId ?? "Unknown"; // 로그인된 사용자 아이디
+            string? currentUser = _dashboardViewModel.CurrentUserId ?? "Unknown"; // 로그인된 사용자 아이디
 
             try
             {
                 // ScoreService에서 점수 조회
-                var topScores = ScoreService.GetTopScoresByUserId(loggedInUserId);
+                var topScores = await ScoreService.LoadTopScoresAsync(currentUser);
 
                 // 조회된 점수를 Scores에 추가
                 foreach (var record in topScores)
@@ -75,9 +75,8 @@ namespace LoginApp.ViewModels.SnakeGame
         [RelayCommand]
         public void StartSnakeGame()
         {
-            SnakeGamePlayViewModel snakeGamePlayViewModel = new(_dashboardViewModel);
-            snakeGamePlayViewModel.StartGame();  // 게임을 시작
-            CurrentViewModel = snakeGamePlayViewModel;
+            CurrentViewModel = new SnakeGamePlayViewModel(_dashboardViewModel);
+            ((SnakeGamePlayViewModel)CurrentViewModel).StartGame();
         }
     }
 }

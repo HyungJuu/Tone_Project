@@ -12,24 +12,19 @@ namespace LoginApp.ViewModels.SnakeGame
         private readonly DashboardViewModel _dashboardViewModel;
 
         /// <summary>
-        /// 대기시간 타이머
-        /// </summary>
-        private readonly DispatcherTimer _countdownTimer;
-
-        /// <summary>
         /// 게임 타이머
         /// </summary>
         private readonly DispatcherTimer _gameTimer;
 
         /// <summary>
-        /// 대기시간
+        /// 게임 대기시간
         /// </summary>
-        private TimeSpan _countdownTime;
+        private TimeSpan _readyTime;
 
         /// <summary>
-        /// 게임 진행 시간
+        /// 게임 진행시간
         /// </summary>
-        private TimeSpan _gameTime;
+        private TimeSpan _playTime;
 
         /// <summary>
         /// 현재 활성화 뷰모델
@@ -38,22 +33,25 @@ namespace LoginApp.ViewModels.SnakeGame
         private object? _currentViewModel;
 
         /// <summary>
-        /// 대기시간을 표시
+        /// 게임 대기시간 표시
         /// </summary>
         [ObservableProperty]
-        private string _countdownDisplay;
+        private string _readyTimeDisplay;
 
         /// <summary>
-        /// 게임진행시간을 표시
+        /// 게임 진행시간 표시
         /// </summary>
         [ObservableProperty]
-        private string _timerDisplay;
+        private string _playTimeDisplay;
 
         /// <summary>
         /// 게임 일시정지 여부
         /// </summary>
         [ObservableProperty]
         private bool isPaused = false;
+
+        [ObservableProperty]
+        private int _score = 0;
 
         /// <summary>
         /// SnakeGamePlayViewModel 클래스의 생성자.
@@ -63,112 +61,81 @@ namespace LoginApp.ViewModels.SnakeGame
         public SnakeGamePlayViewModel(DashboardViewModel dashboardViewModel)
         {
             _dashboardViewModel = dashboardViewModel;
-            _countdownTime = TimeSpan.FromSeconds(3); // 대기시간 3초
-            //_gameTime = TimeSpan.FromMinutes(10); // 게임시간 10분
-            _gameTime = TimeSpan.FromSeconds(5); // 테스트용
+            _readyTime = TimeSpan.FromSeconds(3); // 대기시간 3초
+            //_playTime = TimeSpan.FromMinutes(10); // 게임시간 10분
+            _playTime = TimeSpan.FromSeconds(5); // 테스트용
 
-            CountdownDisplay = _countdownTime.Seconds.ToString();
-            TimerDisplay = _gameTime.ToString(@"mm\:ss");
+            ReadyTimeDisplay = _readyTime.Seconds.ToString();
+            PlayTimeDisplay = _playTime.ToString(@"mm\:ss");
 
-            // 대기시간 초기화
-            _countdownTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(1)
-            };
-            _countdownTimer.Tick += UpdateCountdown;
-
-            // 게임시간 초기화
             _gameTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(1)
             };
-            _gameTimer.Tick += UpdateGameTimer;
+            _gameTimer.Tick += UpdateTimers;
         }
 
         /// <summary>
-        /// 게임 시작 -> 대기시간 카운트다운 시작 
+        /// 게임 시작.
+        /// 대기시간 카운트다운.
         /// </summary>
         [RelayCommand]
         public void StartGame()
-        {
-            _countdownTimer.Start();
-        }
-
-        /// <summary>
-        /// 게임 일시정지/재개.
-        /// 재개 시 대기시간이 0 이상이면 대기시간 카운트다운 이어서, 아닐 경우 게임시간 카운트다운
-        /// </summary>
-        [RelayCommand]
-        private void TogglePause()
-        {
-            IsPaused = !IsPaused;
-
-            if (IsPaused)
-            {
-                _countdownTimer.Stop();
-                _gameTimer.Stop();
-            }
-            else
-            {
-                if (_countdownTime > TimeSpan.Zero)
-                {
-                    _countdownTimer.Start();
-                }
-                else
-                {
-                    CountdownDisplay = string.Empty;
-                    _gameTimer.Start();
-                }
-            }
-        }
-
-        /// <summary>
-        /// 대기시간을 1초씩 감소시키며 업데이트.
-        /// 대기시간 카운트다운이 끝나면 게임시간 카운트다운 시작.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UpdateCountdown(object? sender, EventArgs e)
-        {
-            if (_countdownTime > TimeSpan.Zero)
-            {
-                _countdownTime = _countdownTime.Subtract(TimeSpan.FromSeconds(1));
-                CountdownDisplay = _countdownTime.Seconds.ToString();
-            }
-            else
-            {
-                _countdownTimer.Stop();
-                CountdownDisplay = string.Empty;
-                StartMainTimer();
-            }
-        }
-
-        /// <summary>
-        /// 게임시간 타이머 시작
-        /// </summary>
-        private void StartMainTimer()
         {
             _gameTimer.Start();
         }
 
         /// <summary>
-        /// 게임시간을 1초씩 감소시키며 업데이트.
-        /// 게임시간 카운트다운이 끝나면 게임종료 화면으로 전환
+        /// 게임 일시정지/재개.
+        /// </summary>
+        [RelayCommand]
+        public void TogglePause()
+        {
+            IsPaused = !IsPaused;
+
+            if (IsPaused)
+            {
+                _gameTimer.Stop();
+            }
+            else
+            {
+                _gameTimer.Start();
+            }
+        }
+
+        /// <summary>
+        /// 타이머를 1초씩 감소시키며 업데이트.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UpdateGameTimer(object? sender, EventArgs e)
+        private void UpdateTimers(object? sender, EventArgs e)
         {
-            if (_gameTime > TimeSpan.Zero)
+            if (_readyTime > TimeSpan.Zero) // 대기시간이 남았을 경우
             {
-                _gameTime = _gameTime.Subtract(TimeSpan.FromSeconds(1));
-                TimerDisplay = _gameTime.ToString(@"mm\:ss");
+                _readyTime = _readyTime.Subtract(TimeSpan.FromSeconds(1));
+                ReadyTimeDisplay = _readyTime.Seconds.ToString();
+            }
+            else if (_playTime > TimeSpan.Zero) // 게임시간이 남았을 경우
+            {
+                _readyTime = TimeSpan.Zero;
+                ReadyTimeDisplay = string.Empty;
+
+                _playTime = _playTime.Subtract(TimeSpan.FromSeconds(1));
+                PlayTimeDisplay = _playTime.ToString(@"mm\:ss");
             }
             else
             {
                 _gameTimer.Stop();
                 CurrentViewModel = new SnakeGameEndViewModel(_dashboardViewModel);
             }
+        }
+
+        /// <summary>
+        /// 목표물을 먹었을 때 점수 증가.
+        /// </summary>
+        public void EatFood()
+        {
+            Score += 1;
         }
     }
 }
