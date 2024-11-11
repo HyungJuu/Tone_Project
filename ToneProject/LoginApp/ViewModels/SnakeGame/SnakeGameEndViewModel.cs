@@ -35,7 +35,7 @@ namespace LoginApp.ViewModels.SnakeGame
         /// 현재접속자의 상위 5개의 게임 데이터를 화면에 표시
         /// </summary>
         [RelayCommand]
-        public async Task ShowMyTopScore()
+        public async Task ShowTopScore()
         {
             Scores.Clear();
 
