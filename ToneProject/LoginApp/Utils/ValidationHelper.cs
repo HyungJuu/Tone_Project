@@ -240,7 +240,7 @@ namespace LoginApp.Utils
         /// </summary>
         /// <returns></returns>
         [GeneratedRegex(@"^[a-zA-Z가-힣]+$")]
-        private static partial Regex nameRegex();
+        private static partial Regex NameRegex();
 
         /// <summary>
         /// 이름 입력 상태 확인 메서드
@@ -255,7 +255,7 @@ namespace LoginApp.Utils
             {
                 inputNameResult = "이름을 입력해 주세요";
             }
-            else if (!nameRegex().IsMatch(name))
+            else if (!NameRegex().IsMatch(name))
             {
                 inputNameResult = "영문과 한글만 입력 가능합니다";
             }
