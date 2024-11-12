@@ -1,5 +1,6 @@
 ﻿using LoginApp.DbContexts;
 using LoginApp.Models;
+using LoginApp.ViewModels;
 
 namespace LoginApp.Validators
 {

@@ -1,5 +1,5 @@
 ﻿using LoginApp.DbContexts;
-using LoginApp.Models;
+using LoginApp.ViewModels.SignUp;
 using System.Text.RegularExpressions;
 
 namespace LoginApp.Validators

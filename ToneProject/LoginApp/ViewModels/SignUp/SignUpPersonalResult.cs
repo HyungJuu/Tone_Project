@@ -1,4 +1,4 @@
-﻿namespace LoginApp.Models
+﻿namespace LoginApp.ViewModels.SignUp
 {
     public class SignUpPersonalResult(bool isValid, string nameStatus, string birthStatus)
     {

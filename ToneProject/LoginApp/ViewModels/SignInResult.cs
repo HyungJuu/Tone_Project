@@ -1,5 +1,4 @@
-﻿// SignInResult.cs
-namespace LoginApp.Models
+﻿namespace LoginApp.ViewModels
 {
     public class SignInResult(bool isValid, string message, bool clearId, bool clearPassword)
     {
