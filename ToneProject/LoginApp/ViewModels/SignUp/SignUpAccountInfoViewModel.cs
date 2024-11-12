@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LoginApp.Utils;
-using static LoginApp.Utils.ValidationHelper;
+using LoginApp.Models;
+using LoginApp.Validators;
 
 namespace LoginApp.ViewModels
 {
@@ -59,7 +59,8 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         public void SignUpNext()
         {
-            SignUpAccountResult result = ValidationHelper.CheckSignUp(SignUpId, SignUpPassword, SignUpConfirmPassword);
+            // SignUpAccountValidator로 회원가입 검증을 수행
+            SignUpAccountResult result = SignUpAccountValidator.CheckSignUp(SignUpId, SignUpPassword, SignUpConfirmPassword);
 
             if (!result.IsValid)
             {

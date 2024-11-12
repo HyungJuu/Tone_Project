@@ -11,7 +11,7 @@ namespace LoginApp.ViewModels
     /// </summary>
     public partial class SignUpViewModel : ObservableObject
     {
-        private readonly UserInfoContext _dbContext;
+        private readonly ToneProjectContext _dbContext;
 
         /// <summary>
         /// 현재 회원가입 화면에 표시될 뷰모델을 나타냅니다
@@ -24,7 +24,7 @@ namespace LoginApp.ViewModels
         /// </summary>
         public SignUpViewModel()
         {
-            _dbContext = new UserInfoContext();
+            _dbContext = new ToneProjectContext();
             CurrentSignUpViewModel = new SignUpAccountInfoViewModel(this);
         }
 

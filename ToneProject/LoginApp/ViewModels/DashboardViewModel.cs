@@ -22,7 +22,7 @@ namespace LoginApp.ViewModels
         /// 로그인한 사용자의 ID를 저장
         /// </summary>
         [ObservableProperty]
-        private string? _currentUserId;
+        private string _currentUserId;
 
         public DashboardViewModel(MainViewModel mainViewModel, string currentUserId)
         {
@@ -37,7 +37,7 @@ namespace LoginApp.ViewModels
         public void SignOut()
         {
             _mainViewModel.ShowSignInView();
-            CurrentUserId = null; // ID 초기화
+            CurrentUserId = string.Empty; // ID 초기화
         }
 
         /// <summary>

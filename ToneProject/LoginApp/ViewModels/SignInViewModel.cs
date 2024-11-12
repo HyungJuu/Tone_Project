@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LoginApp.Utils;
+using LoginApp.Models;
+using LoginApp.Validators;
 using LoginApp.Views;
-using static LoginApp.Utils.ValidationHelper;
 
 
 namespace LoginApp.ViewModels
@@ -55,8 +55,8 @@ namespace LoginApp.ViewModels
             {
                 _mainViewModel.ShowDashboardView(Id);
             }
-
-            SignInResult result = ValidationHelper.CheckSignIn(Id, Password);
+            // 로그인 검증
+            SignInResult result = SignInValidator.CheckSignIn(Id, Password);
 
             if (!result.IsValid)
             {

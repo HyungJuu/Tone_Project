@@ -89,7 +89,7 @@ namespace LoginApp.ViewModels.SnakeGame
         /// 게임 일시정지/재개.
         /// </summary>
         [RelayCommand]
-        public void TogglePause()
+        public void PauseGame()
         {
             IsPaused = !IsPaused;
 

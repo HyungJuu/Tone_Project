@@ -2,9 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using LoginApp.DbContexts;
 using LoginApp.Models;
-using LoginApp.Utils;
+using LoginApp.Validators;
 using System.Windows;
-using static LoginApp.Utils.ValidationHelper;
 
 namespace LoginApp.ViewModels
 {
@@ -20,7 +19,7 @@ namespace LoginApp.ViewModels
         /// </summary>
         private readonly SignUpAccountInfoViewModel _signUpAccountInfoViewModel = signUpAccountInfoViewModel;
 
-        private static readonly UserInfoContext _dbContext = new();
+        private static readonly ToneProjectContext _dbContext = new();
 
         /// <summary>
         /// 사용자가 입력한 이름을 저장합니다.
@@ -68,9 +67,9 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         public void SignUpEnd(Window currentWindow)
         {
-            SignUpPersonalResult result = ValidationHelper.CheckSignUp(SignUpName, SignUpBirth);
+            SignUpPersonalResult result = SignUpPersonalValidator.CheckSignUp(SignUpName, SignUpBirth);
 
-            if (!result.IsVaild)
+            if (!result.IsValid)
             {
                 SignUpNameStatus = result.NameStatus;
                 SignUpBirthStatus = result.BirthStatus;
@@ -86,9 +85,9 @@ namespace LoginApp.ViewModels
         /// </summary>
         private void SaveUserInfoToDatabase()
         {
-            UserInfo userInfo = new UserInfo
+            UserInfo userInfo = new()
             {
-                Id = _signUpAccountInfoViewModel.SignUpId,
+                UserId = _signUpAccountInfoViewModel.SignUpId,
                 Pwd = _signUpAccountInfoViewModel.SignUpPassword,
                 Name = SignUpName,
                 Birth = DateOnly.ParseExact(SignUpBirth, "yyyyMMdd", null),

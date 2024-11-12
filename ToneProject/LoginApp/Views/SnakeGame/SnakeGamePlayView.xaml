@@ -60,7 +60,7 @@
                     <StackPanel VerticalAlignment="Center">
                         <Label Content="게임 메뉴" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
                         <!-- 일시정지/재개 버튼 -->
-                        <Button Command="{Binding TogglePauseCommand}" Width="80" Height="25" Margin="0 30" HorizontalAlignment="Center"/>
+                        <Button Command="{Binding PauseGameCommand}" Width="80" Height="25" Margin="0 30" HorizontalAlignment="Center"/>
                         <!-- 타이머 표시 -->
                         <Label Content="{Binding PlayTimeDisplay}" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0 20 0 5" HorizontalAlignment="Center"/>
                         <!-- 점수 표시 -->

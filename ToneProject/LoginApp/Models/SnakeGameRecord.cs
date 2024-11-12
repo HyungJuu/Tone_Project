@@ -11,4 +11,8 @@ public partial class SnakeGameRecord
     public int PlayTime { get; set; }
 
     public int Score { get; set; }
+
+    public int Id { get; set; }
+
+    public virtual UserInfo User { get; set; } = null!;
 }

@@ -17,7 +17,7 @@ namespace LoginApp
         /// <returns>조건에 따라 조회된 데이터 반환</returns>
         public static async Task<List<SnakeGameRecord>> LoadTopScoresAsync(string userId, int topCount = 5)
         {
-            using var context = new SnakeGameContext();
+            using var context = new ToneProjectContext();
             return await context.SnakeGameRecords
                 .Where(r => r.UserId == userId)
                 .OrderByDescending(r => r.GameClear)

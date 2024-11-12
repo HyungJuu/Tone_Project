@@ -39,7 +39,7 @@ namespace LoginApp.ViewModels.SnakeGame
         {
             Scores.Clear();
 
-            string? currentUser = _dashboardViewModel.CurrentUserId ?? "Unknown"; // 로그인된 사용자 아이디
+            string currentUser = _dashboardViewModel.CurrentUserId; // 로그인된 사용자 아이디
 
             try
             {
