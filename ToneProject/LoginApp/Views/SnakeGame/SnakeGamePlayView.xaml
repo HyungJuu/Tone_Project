@@ -3,8 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:LoginApp.ViewModels.SnakeGame"
+             xmlns:enum="clr-namespace:LoginApp.Enums"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             FocusManager.FocusedElement="{Binding ElementName=GameCanvas}">
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="Up" Command="{Binding MoveCommand}" CommandParameter="{x:Static enum:Direction.Up}" />
+        <KeyBinding Key="Down" Command="{Binding MoveCommand}" CommandParameter="{x:Static enum:Direction.Down}" />
+        <KeyBinding Key="Left" Command="{Binding MoveCommand}" CommandParameter="{x:Static enum:Direction.Left}" />
+        <KeyBinding Key="Right" Command="{Binding MoveCommand}" CommandParameter="{x:Static enum:Direction.Right}" />
+    </UserControl.InputBindings>
 
     <UserControl.Resources>
         <Style TargetType="Button">
@@ -43,49 +53,62 @@
     </UserControl.Resources>
 
     <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="210"/>
+            <ColumnDefinition Width="525"/>
+        </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="210"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+        <!-- 왼쪽 영역 (버튼, 타이머, 점수) -->
+        <Border Grid.Column="0" Background="#FF202020" BorderBrush="#FEE500" BorderThickness="3 3 0 3" CornerRadius="5 0 0 5">
+            <StackPanel VerticalAlignment="Center">
+                <Label Content="게임 메뉴" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <!-- 일시정지/재개 버튼 -->
+                <Button Command="{Binding PauseGameCommand}" Width="80" Height="25" Margin="0 30" HorizontalAlignment="Center"/>
+                <!-- 타이머 표시 -->
+                <Label Content="{Binding PlayTimeDisplay}" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0 20 0 5" HorizontalAlignment="Center"/>
+                <!-- 점수 표시 -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Content="점수 :" FontSize="16" Foreground="White" FontWeight="Bold"/>
+                    <Label Content="{Binding Score}" FontSize="16" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
 
-                <!-- 왼쪽 영역 (버튼, 타이머, 점수) -->
-                <Border Grid.Column="0" Background="#FF202020" BorderBrush="#FEE500" BorderThickness="3 3 0 3" CornerRadius="5 0 0 5">
-                    <StackPanel VerticalAlignment="Center">
-                        <Label Content="게임 메뉴" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
-                        <!-- 일시정지/재개 버튼 -->
-                        <Button Command="{Binding PauseGameCommand}" Width="80" Height="25" Margin="0 30" HorizontalAlignment="Center"/>
-                        <!-- 타이머 표시 -->
-                        <Label Content="{Binding PlayTimeDisplay}" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0 20 0 5" HorizontalAlignment="Center"/>
-                        <!-- 점수 표시 -->
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="점수 :" FontSize="16" Foreground="White" FontWeight="Bold"/>
-                            <Label Content="{Binding Score}" FontSize="16" Foreground="White" FontWeight="Bold"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
+        <!-- 오른쪽 영역 (게임 영역) -->
+        <Border Grid.Column="1" Background="Black" BorderBrush="#FEE500" BorderThickness="3" CornerRadius="0 5 5 0">
+            <Canvas x:Name="GameCanvas" Background="Transparent" Focusable="True" VerticalAlignment="Center" HorizontalAlignment="Center" Width="{Binding BoardWidth}" Height="{Binding BoardHeight}">
+                <ItemsControl ItemsSource="{Binding SnakeSegments}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding X}" />
+                            <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="15" Height="15" Fill="Green"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <!-- 목표물 표시 -->
+                <!--
+                    <Ellipse Width="10" Height="10" Fill="Red"
+                                Canvas.Left="{Binding TargetPosition.X}"
+                                Canvas.Top="{Binding TargetPosition.Y}" />-->
+            </Canvas>
 
-                <!-- 오른쪽 영역 (게임 영역) -->
-                <Border Grid.Column="1" Background="Black" BorderBrush="#FEE500" BorderThickness="3" CornerRadius="0 5 5 0">
-                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Label Content="게임 영역" Foreground="White" FontSize="20"/>
-                    </StackPanel>
-                </Border>
+        </Border>
 
-                <!-- 준비 시간 표시 -->
-                <Label Grid.Column="1" Content="{Binding ReadyTimeDisplay}" 
-                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                       FontSize="50" Foreground="#FADA0A" Grid.ColumnSpan="2" />
-            </Grid>
+        <!-- 대기 시간 표시 -->
+        <Label Grid.Column="1" Content="{Binding ReadyTimeDisplay}" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    FontSize="50" Foreground="#FADA0A" Grid.ColumnSpan="2" />
 
-            <!-- 동적으로 바인딩된 콘텐츠 표시 -->
-            <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" />
-        </Grid>
+        <ContentControl Content="{Binding CurrentViewModel}" Grid.ColumnSpan="2" />
     </Grid>
 </UserControl>
