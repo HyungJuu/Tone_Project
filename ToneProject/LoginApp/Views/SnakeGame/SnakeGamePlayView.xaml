@@ -91,15 +91,14 @@
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Rectangle Width="15" Height="15" Fill="Green"/>
+                            <Rectangle Width="15" Height="15" Fill="{Binding SnakeColor}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <!-- 목표물 표시 -->
-                <!--
-                    <Ellipse Width="10" Height="10" Fill="Red"
-                                Canvas.Left="{Binding TargetPosition.X}"
-                                Canvas.Top="{Binding TargetPosition.Y}" />-->
+                <Rectangle Width="15" Height="15" Fill="Red"
+                         Canvas.Left="{Binding FoodLocation.X}"
+                         Canvas.Top="{Binding FoodLocation.Y}" />
             </Canvas>
 
         </Border>
