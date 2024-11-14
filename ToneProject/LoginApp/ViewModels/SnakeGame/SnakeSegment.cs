@@ -7,6 +7,6 @@ namespace LoginApp.ViewModels.SnakeGame
         public int X { get; set; }
         public int Y { get; set; }
         public double Rotation { get; set; }
-        public Brush SnakeColor { get; set; } = Brushes.Green; 
+        public Brush SnakeColor { get; set; } = Brushes.Green;
     }
 }
