@@ -43,6 +43,7 @@ public partial class SnakeGamePlayViewModel
     {
         _gameTimer.Stop();
         _moveTimer.Stop();
+        _noFoodTimer.Stop();
         CurrentViewModel = new SnakeGameEndViewModel(_dashboardViewModel);
     }
 }

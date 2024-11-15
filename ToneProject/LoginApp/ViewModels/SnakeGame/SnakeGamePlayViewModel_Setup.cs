@@ -33,6 +33,11 @@ public partial class SnakeGamePlayViewModel : ObservableObject
     private readonly DispatcherTimer _moveTimer;
 
     /// <summary>
+    /// 마지막 먹이 이후 타이머
+    /// </summary>
+    private readonly DispatcherTimer _noFoodTimer;
+
+    /// <summary>
     /// 게임 대기시간(게임 시작 전 카운트다운)
     /// </summary>
     private TimeSpan _readyTime;
@@ -41,6 +46,11 @@ public partial class SnakeGamePlayViewModel : ObservableObject
     /// 게임 진행시간(게임 플레이 시간)
     /// </summary>
     private TimeSpan _playTime;
+
+    /// <summary>
+    /// 먹이 섭취 제한시간
+    /// </summary>
+    private TimeSpan _noFoodTime;
 
     /// <summary>
     /// 게임 대기시간 표시
@@ -53,6 +63,9 @@ public partial class SnakeGamePlayViewModel : ObservableObject
     /// </summary>
     [ObservableProperty]
     private string _playTimeDisplay;
+
+    [ObservableProperty]
+    private string _noFoodTimeDisplay;
 
     /// <summary>
     /// 현재 활성화 뷰모델
@@ -129,8 +142,11 @@ public partial class SnakeGamePlayViewModel : ObservableObject
 
         _readyTime = TimeSpan.FromSeconds(3); // 대기시간 3초
         _playTime = TimeSpan.FromMinutes(1); // 게임 시간 1분
+        _noFoodTime = TimeSpan.FromSeconds(10); // 먹이 섭취 제한시간 10초
+
         ReadyTimeDisplay = _readyTime.Seconds.ToString();
         PlayTimeDisplay = _playTime.ToString(@"mm\:ss");
+        NoFoodTimeDisplay = $"({_noFoodTime:ss})";
 
         _snakeSegments = new LinkedList<SnakeSegment>();
         InitializeSnake();
@@ -147,6 +163,12 @@ public partial class SnakeGamePlayViewModel : ObservableObject
             Interval = TimeSpan.FromMilliseconds(100)
         };
         _moveTimer.Tick += OnGameTick;
+
+        _noFoodTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1)
+        };
+        _noFoodTimer.Tick += UpdateNoFoodTimer;
     }
 
     /// <summary>

@@ -19,6 +19,7 @@ public partial class SnakeGamePlayViewModel
                 _isWaiting = false;
                 ReadyTimeDisplay = string.Empty;
                 _moveTimer.Start();
+                _noFoodTimer.Start();
             }
         }
         else if (_playTime > TimeSpan.Zero)
@@ -27,6 +28,20 @@ public partial class SnakeGamePlayViewModel
             PlayTimeDisplay = _playTime.ToString(@"mm\:ss");
         }
         else
+        {
+            GameOver();
+        }
+    }
+
+    /// <summary>
+    /// 먹이 섭취 제한시간 타이머 업데이트
+    /// </summary>
+    private void UpdateNoFoodTimer(object? sender, EventArgs e)
+    {
+        _noFoodTime = _noFoodTime.Subtract(TimeSpan.FromSeconds(1));
+        NoFoodTimeDisplay = $"({_noFoodTime:ss})";
+
+        if (_noFoodTime.TotalSeconds == 0)
         {
             GameOver();
         }

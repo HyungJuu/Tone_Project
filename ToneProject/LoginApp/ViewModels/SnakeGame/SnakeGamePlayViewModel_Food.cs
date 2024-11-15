@@ -39,10 +39,16 @@ public partial class SnakeGamePlayViewModel
     /// 스네이크가 먹이를 먹었을 때 호출되는 메서드
     /// </summary>
     /// <remarks>
-    /// 점수 1 증가, 스네이크 색상변경 및 새로운 먹이 생성
+    /// 점수 1 증가, 스네이크 색상변경 및 새로운 먹이 생성.<br/>
+    /// 먹이 섭취 제한시간 초기화
     /// </remarks>
     private void EatFood()
     {
+        _noFoodTime = TimeSpan.FromSeconds(10);
+        NoFoodTimeDisplay = $"({_noFoodTime:ss})";
+        _noFoodTimer.Stop();
+        _noFoodTimer.Start();
+
         Score++;
         ChangeSnakeColor();
         GenerateFood();

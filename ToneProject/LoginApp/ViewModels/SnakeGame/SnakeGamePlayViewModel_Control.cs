@@ -25,6 +25,7 @@ public partial class SnakeGamePlayViewModel
         {
             _gameTimer.Stop();
             _moveTimer.Stop();
+            _noFoodTimer.Stop();
         }
         else if (_isWaiting)
         {
@@ -34,6 +35,7 @@ public partial class SnakeGamePlayViewModel
         {
             _moveTimer.Start();
             _gameTimer.Start();
+            _noFoodTimer.Start();
         }
     }
 
