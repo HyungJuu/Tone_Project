@@ -43,9 +43,9 @@ namespace LoginApp.ViewModels.SnakeGame
 
             try
             {
-                var topScores = await ScoreService.LoadTopScoresAsync(currentUser);
+                List<SnakeGameRecord> topScores = await ScoreService.LoadTopScoresAsync(currentUser);
 
-                foreach (var record in topScores)
+                foreach (SnakeGameRecord record in topScores)
                 {
                     Scores.Add(record);
                 }

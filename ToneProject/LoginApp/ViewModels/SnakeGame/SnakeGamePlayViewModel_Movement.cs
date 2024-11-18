@@ -50,7 +50,7 @@ public partial class SnakeGamePlayViewModel
     /// </remarks>
     private void MoveSnake()
     {
-        var head = _snakeSegments.FirstOrDefault();
+        SnakeSegment? head = _snakeSegments.FirstOrDefault();
         if (head == null) return;
 
         int newX = head.X;
@@ -71,7 +71,7 @@ public partial class SnakeGamePlayViewModel
         }
 
         // 새로운 머리 생성
-        var newHead = new SnakeSegment
+        SnakeSegment newHead = new()
         {
             X = newX,
             Y = newY,

@@ -8,7 +8,7 @@ public partial class SnakeGamePlayViewModel
     /// </summary>
     private void GenerateFood()
     {
-        var possibleLocations = new List<Point>();
+        List<Point> possibleLocations = [];
 
         for (int x = 0; x < BoardWidth - SegmentSize; x += SegmentSize)
         {
@@ -18,7 +18,7 @@ public partial class SnakeGamePlayViewModel
             }
         }
 
-        foreach (var segment in _snakeSegments) // 스네이크가 차지하고 있는 위치를 모두 제거
+        foreach (SnakeSegment segment in _snakeSegments) // 스네이크가 차지하고 있는 위치를 모두 제거
         {
             possibleLocations.RemoveAll(p => p.X == segment.X && p.Y == segment.Y);
         }

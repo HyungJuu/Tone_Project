@@ -44,10 +44,10 @@ namespace LoginApp.ViewModels.SnakeGame
             try
             {
                 // ScoreService에서 점수 조회
-                var topScores = await ScoreService.LoadTopScoresAsync(currentUser);
+                List<SnakeGameRecord> topScores = await ScoreService.LoadTopScoresAsync(currentUser);
 
                 // 조회된 점수를 Scores에 추가
-                foreach (var record in topScores)
+                foreach (SnakeGameRecord record in topScores)
                 {
                     Scores.Add(record);
                 }

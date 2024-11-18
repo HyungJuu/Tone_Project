@@ -45,13 +45,13 @@ public partial class SnakeGamePlayViewModel
     public void ChangeSnakeColor()
     {
         byte GenerateBrightColor() => (byte)_random.Next(100, 256); // 밝은 색상
-        var newColor = new SolidColorBrush(Color.FromRgb(
+        SolidColorBrush newColor = new(Color.FromRgb(
             r: GenerateBrightColor(),
             g: GenerateBrightColor(),
             b: GenerateBrightColor()
         ));
 
-        foreach (var segment in _snakeSegments)
+        foreach (SnakeSegment segment in _snakeSegments)
         {
             segment.SnakeColor = newColor;
         }
