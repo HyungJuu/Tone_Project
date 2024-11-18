@@ -29,7 +29,7 @@ public partial class SnakeGamePlayViewModel
         }
         else
         {
-            GameOver();
+            GameOver(true);
         }
 
         OnPropertyChanged(nameof(FoodLocation));

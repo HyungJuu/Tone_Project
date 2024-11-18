@@ -29,7 +29,7 @@ public partial class SnakeGamePlayViewModel
         }
         else
         {
-            GameOver();
+            GameOver(true);
         }
     }
 
@@ -43,7 +43,7 @@ public partial class SnakeGamePlayViewModel
 
         if (_noFoodTime.TotalSeconds == 0)
         {
-            GameOver();
+            GameOver(false);
         }
     }
 }

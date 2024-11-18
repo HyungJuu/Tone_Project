@@ -81,7 +81,7 @@ public partial class SnakeGamePlayViewModel
         // 경계 및 자가 충돌 감지
         if (IsOutOfBounds(newHead) || IsCollidingWithSelf(newHead))
         {
-            GameOver();
+            GameOver(false);
             return;
         }
 
