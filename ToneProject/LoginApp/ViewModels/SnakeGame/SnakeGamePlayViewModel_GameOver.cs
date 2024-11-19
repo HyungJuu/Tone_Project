@@ -11,7 +11,7 @@ public partial class SnakeGamePlayViewModel
     /// </summary>
     /// <param name="head">스네이크 머리</param>
     /// <returns>경계를 벗어났는지 결과 반환</returns>
-    private bool IsOutOfBounds(SnakeSegment head)
+    private bool BoundaryCrash(SnakeSegment head)
     {
         int centerX = head.X + (SegmentSize / 2);
         int centerY = head.Y + (SegmentSize / 2);
@@ -31,7 +31,7 @@ public partial class SnakeGamePlayViewModel
     /// </summary>
     /// <param name="head">스네이크 머리</param>
     /// <returns>머리와 몸통 충돌 여부 반환</returns>
-    private bool IsCollidingWithSelf(SnakeSegment head)
+    private bool SelfCrash(SnakeSegment head)
     {
         return _snakeSegments.Any(segment => segment.X == head.X && segment.Y == head.Y);
     }
@@ -63,7 +63,15 @@ public partial class SnakeGamePlayViewModel
             PlayTime = totalPlayTime,
             Score = finalScore
         };
-        SaveGameHistory(newHistory);
+
+        if (currentUserId == "admin")
+        {
+            AdminScores.AddAdminScore(newHistory);
+        }
+        else
+        {
+            SaveGameHistory(newHistory);
+        }
 
         CurrentViewModel = new SnakeGameEndViewModel(_dashboardViewModel, finalScore);
     }

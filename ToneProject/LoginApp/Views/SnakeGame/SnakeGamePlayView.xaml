@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:LoginApp.ViewModels.SnakeGame"
              xmlns:enum="clr-namespace:LoginApp.Enums"
+             xmlns:control="clr-namespace:LoginApp.Controls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              FocusManager.FocusedElement="{Binding ElementName=GameCanvas}">
@@ -104,8 +105,27 @@
                          Canvas.Left="{Binding FoodLocation.X}"
                          Canvas.Top="{Binding FoodLocation.Y}" />
             </Canvas>
-
         </Border>
+
+        <!-- 일시정지 화면 -->
+        <Grid Grid.ColumnSpan="2" Background="#80000000" Visibility="{Binding IsPaused, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="4"  Panel.ZIndex="1">
+            <Border VerticalAlignment="Center" HorizontalAlignment="Center" Background="LightGoldenrodYellow" Width="400" Height="310" BorderThickness="2" BorderBrush="#FEE500" CornerRadius="5">
+                <StackPanel>
+                    <TextBlock Text="-- 일시정지 --" FontSize="20" FontWeight="Bold" Foreground="Black" TextAlignment="Center" Margin="10"/>
+                    <TextBlock Text="- 게임 규칙 -" FontSize="16" FontWeight="Bold" Foreground="Black" Margin="20 10"/>
+                    <TextBlock Text="1. 방향키로 스네이크를 조작합니다."
+                               FontSize="14" Foreground="Black" FontWeight="Bold" Margin="20 10"/>
+                    <TextBlock Text="2. 목표물을 먹으면 점수가 +1 증가합니다."
+                               FontSize="14" Foreground="Black" FontWeight="Bold" Margin="20 10"/>
+                    <TextBlock Text="3. 머리가 벽 또는 몸통에 부딪히면 게임이 종료됩니다."
+                               FontSize="14" Foreground="Black" FontWeight="Bold" Margin="20 10"/>
+                    <TextBlock Text="4. 10초 동안 목표물을 먹지않으면 게임이 종료됩니다."
+                               FontSize="14" Foreground="Black" FontWeight="Bold" Margin="20 10"/>
+
+                    <control:SignInOutButton Content="게임 재개" Command="{Binding PauseGameCommand}"  HorizontalAlignment="Center" Width="100" Margin="0 20" FocusManager.FocusedElement="{Binding ElementName=GameCanvas}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
 
         <!-- 대기 시간 표시 -->
         <Label Grid.Column="1" Content="{Binding ReadyTimeDisplay}" 

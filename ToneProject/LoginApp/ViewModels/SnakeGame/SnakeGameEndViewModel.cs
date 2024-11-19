@@ -54,7 +54,15 @@ namespace LoginApp.ViewModels.SnakeGame
 
             try
             {
-                List<SnakeGameHistory> topScores = await UserScores.LoadMyTopScoresAsync(currentUser);
+                List<SnakeGameHistory> topScores;
+                if (currentUser == "admin")
+                {
+                    topScores = AdminScores.GetAdminScores();
+                }
+                else
+                {
+                    topScores = await UserScores.LoadMyTopScoresAsync(currentUser);
+                }
 
                 foreach (SnakeGameHistory history in topScores)
                 {

@@ -53,6 +53,7 @@ namespace LoginApp.ViewModels
             if (Id == "admin" && Password == "admin")
             {
                 _mainViewModel.ShowDashboardView(Id);
+                return;
             }
             // 로그인 검증
             SignInResult result = SignInValidator.CheckSignIn(Id, Password);

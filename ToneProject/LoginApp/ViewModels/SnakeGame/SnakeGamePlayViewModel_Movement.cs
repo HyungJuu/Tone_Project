@@ -35,7 +35,7 @@ public partial class SnakeGamePlayViewModel
         Direction.Down => Direction.Up,
         Direction.Left => Direction.Right,
         Direction.Right => Direction.Left,
-        _ => throw new InvalidOperationException()
+        _ => direction // 기존방향 유지
     };
 
     /// <summary>
@@ -83,7 +83,7 @@ public partial class SnakeGamePlayViewModel
         };
 
         // 경계 및 자가 충돌 감지
-        if (IsOutOfBounds(newHead) || IsCollidingWithSelf(newHead))
+        if (BoundaryCrash(newHead) || SelfCrash(newHead))
         {
             GameOver(false);
             return;

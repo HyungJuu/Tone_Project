@@ -2,7 +2,7 @@
 using LoginApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LoginApp
+namespace LoginApp.ViewModels.SnakeGame
 {
     /// <summary>
     /// 점수 데이터 조회 클래스

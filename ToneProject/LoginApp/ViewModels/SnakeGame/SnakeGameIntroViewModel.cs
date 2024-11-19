@@ -43,7 +43,17 @@ namespace LoginApp.ViewModels.SnakeGame
 
             try
             {
-                List<SnakeGameHistory> topScores = await UserScores.LoadMyTopScoresAsync(currentUser);
+                List<SnakeGameHistory> topScores;
+
+                if (currentUser == "admin")
+                {
+                    topScores = AdminScores.GetAdminScores();
+                }
+                else
+                {
+                    // 일반 사용자의 데이터를 DB에서 불러오기
+                    topScores = await UserScores.LoadMyTopScoresAsync(currentUser);
+                }
 
                 // 기록이 없으면 성적 표시 안함
                 if (topScores == null || topScores.Count == 0)
