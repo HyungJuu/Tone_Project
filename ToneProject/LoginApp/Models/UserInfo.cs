@@ -12,5 +12,5 @@ public partial class UserInfo
 
     public string Gender { get; set; } = null!;
 
-    public virtual ICollection<SnakeGameRecord> SnakeGameRecords { get; set; } = new List<SnakeGameRecord>();
+    public virtual ICollection<SnakeGameHistory> SnakeGameHistories { get; set; } = [];
 }

@@ -9,15 +9,14 @@ namespace LoginApp.ViewModels.SnakeGame
     /// <summary>
     /// 게임 종료 후 성적조회 및 재시작 기능을 제공하는 뷰모델 클래스
     /// </summary>
-    /// <param name="dashboardViewModel"></param>
-    public partial class SnakeGameEndViewModel(DashboardViewModel dashboardViewModel) : ObservableObject
+    public partial class SnakeGameEndViewModel : ObservableObject
     {
-        private readonly DashboardViewModel _dashboardViewModel = dashboardViewModel;
+        private readonly DashboardViewModel _dashboardViewModel;
 
         /// <summary>
         /// 사용자의 게임 기록을 저장하여 화면에 표시
         /// </summary>
-        public ObservableCollection<SnakeGameRecord> Scores { get; set; } = [];
+        public ObservableCollection<SnakeGameHistory> Scores { get; set; } = [];
 
         /// <summary>
         /// 현재 활성화된 뷰모델
@@ -32,6 +31,18 @@ namespace LoginApp.ViewModels.SnakeGame
         private bool _isScoreVisible;
 
         /// <summary>
+        /// 최종 점수
+        /// </summary>
+        [ObservableProperty]
+        private int _finalScore;
+
+        public SnakeGameEndViewModel(DashboardViewModel dashboardViewModel, int finalScore)
+        {
+            _dashboardViewModel = dashboardViewModel;
+            FinalScore = finalScore;
+        }
+
+        /// <summary>
         /// 현재접속자의 상위 5개의 게임 데이터를 화면에 표시
         /// </summary>
         [RelayCommand]
@@ -43,11 +54,11 @@ namespace LoginApp.ViewModels.SnakeGame
 
             try
             {
-                List<SnakeGameRecord> topScores = await ScoreService.LoadTopScoresAsync(currentUser);
+                List<SnakeGameHistory> topScores = await UserScores.LoadMyTopScoresAsync(currentUser);
 
-                foreach (SnakeGameRecord record in topScores)
+                foreach (SnakeGameHistory history in topScores)
                 {
-                    Scores.Add(record);
+                    Scores.Add(history);
                 }
 
                 IsScoreVisible = true;

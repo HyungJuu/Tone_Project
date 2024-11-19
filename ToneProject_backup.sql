@@ -5,7 +5,7 @@
 -- Dumped from database version 17.0
 -- Dumped by pg_dump version 17.0
 
--- Started on 2024-11-14 08:54:19
+-- Started on 2024-11-19 14:57:03
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -49,10 +49,10 @@ SET default_table_access_method = heap;
 
 --
 -- TOC entry 218 (class 1259 OID 16535)
--- Name: SnakeGameRecords; Type: TABLE; Schema: public; Owner: postgres
+-- Name: SnakeGameHistory; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."SnakeGameRecords" (
+CREATE TABLE public."SnakeGameHistory" (
     "UserId" character varying(30) NOT NULL,
     "PlayedDate" date DEFAULT CURRENT_DATE NOT NULL,
     "GameClear" boolean NOT NULL,
@@ -62,14 +62,14 @@ CREATE TABLE public."SnakeGameRecords" (
 );
 
 
-ALTER TABLE public."SnakeGameRecords" OWNER TO postgres;
+ALTER TABLE public."SnakeGameHistory" OWNER TO postgres;
 
 --
 -- TOC entry 219 (class 1259 OID 24580)
--- Name: SnakeGameRecords_Id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: SnakeGameHistory_Id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."SnakeGameRecords_Id_seq"
+CREATE SEQUENCE public."SnakeGameHistory_Id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -78,15 +78,15 @@ CREATE SEQUENCE public."SnakeGameRecords_Id_seq"
     CACHE 1;
 
 
-ALTER SEQUENCE public."SnakeGameRecords_Id_seq" OWNER TO postgres;
+ALTER SEQUENCE public."SnakeGameHistory_Id_seq" OWNER TO postgres;
 
 --
 -- TOC entry 4806 (class 0 OID 0)
 -- Dependencies: 219
--- Name: SnakeGameRecords_Id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: SnakeGameHistory_Id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public."SnakeGameRecords_Id_seq" OWNED BY public."SnakeGameRecords"."Id";
+ALTER SEQUENCE public."SnakeGameHistory_Id_seq" OWNED BY public."SnakeGameHistory"."Id";
 
 
 --
@@ -106,31 +106,20 @@ CREATE TABLE public."UserInfo" (
 ALTER TABLE public."UserInfo" OWNER TO postgres;
 
 --
--- TOC entry 4646 (class 2604 OID 24581)
--- Name: SnakeGameRecords Id; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 4646 (class 2604 OID 24587)
+-- Name: SnakeGameHistory Id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."SnakeGameRecords" ALTER COLUMN "Id" SET DEFAULT nextval('public."SnakeGameRecords_Id_seq"'::regclass);
+ALTER TABLE ONLY public."SnakeGameHistory" ALTER COLUMN "Id" SET DEFAULT nextval('public."SnakeGameHistory_Id_seq"'::regclass);
 
 
 --
 -- TOC entry 4798 (class 0 OID 16535)
 -- Dependencies: 218
--- Data for Name: SnakeGameRecords; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: SnakeGameHistory; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public."SnakeGameRecords" VALUES ('user', '2024-11-06', true, 600, 21, 1);
-INSERT INTO public."SnakeGameRecords" VALUES ('user', '2024-11-06', true, 600, 30, 2);
-INSERT INTO public."SnakeGameRecords" VALUES ('user', '2024-11-06', true, 600, 28, 3);
-INSERT INTO public."SnakeGameRecords" VALUES ('user', '2024-11-06', false, 150, 5, 4);
-INSERT INTO public."SnakeGameRecords" VALUES ('user', '2024-11-06', false, 550, 30, 5);
-INSERT INTO public."SnakeGameRecords" VALUES ('user', '2024-11-06', true, 600, 27, 6);
-INSERT INTO public."SnakeGameRecords" VALUES ('admin', '2024-11-01', true, 600, 20, 7);
-INSERT INTO public."SnakeGameRecords" VALUES ('admin', '2024-11-02', false, 500, 17, 8);
-INSERT INTO public."SnakeGameRecords" VALUES ('admin', '2024-11-03', true, 600, 22, 9);
-INSERT INTO public."SnakeGameRecords" VALUES ('admin', '2024-11-04', false, 300, 10, 10);
-INSERT INTO public."SnakeGameRecords" VALUES ('admin', '2024-11-05', true, 600, 22, 11);
-INSERT INTO public."SnakeGameRecords" VALUES ('admin', '2024-11-06', false, 5, 1, 12);
+INSERT INTO public."SnakeGameHistory" VALUES ('user', '2024-11-19', false, 6, 2, 1);
 
 
 --
@@ -149,10 +138,10 @@ INSERT INTO public."UserInfo" VALUES ('tttest', 'tttest123!', 'Test', '1988-06-1
 --
 -- TOC entry 4807 (class 0 OID 0)
 -- Dependencies: 219
--- Name: SnakeGameRecords_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: SnakeGameHistory_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."SnakeGameRecords_Id_seq"', 12, true);
+SELECT pg_catalog.setval('public."SnakeGameHistory_Id_seq"', 1, true);
 
 
 --
@@ -166,23 +155,23 @@ ALTER TABLE ONLY public."UserInfo"
 
 --
 -- TOC entry 4650 (class 2606 OID 24586)
--- Name: SnakeGameRecords SnakeGameRecords_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: SnakeGameHistory SnakeGameHistories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."SnakeGameRecords"
-    ADD CONSTRAINT "SnakeGameRecords_pkey" PRIMARY KEY ("Id");
+ALTER TABLE ONLY public."SnakeGameHistory"
+    ADD CONSTRAINT "SnakeGameHistories_pkey" PRIMARY KEY ("Id");
 
 
 --
 -- TOC entry 4651 (class 2606 OID 16539)
--- Name: SnakeGameRecords fk_userId; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: SnakeGameHistory fk_userId; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."SnakeGameRecords"
+ALTER TABLE ONLY public."SnakeGameHistory"
     ADD CONSTRAINT "fk_userId" FOREIGN KEY ("UserId") REFERENCES public."UserInfo"("UserId") ON DELETE CASCADE;
 
 
--- Completed on 2024-11-14 08:54:19
+-- Completed on 2024-11-19 14:57:04
 
 --
 -- PostgreSQL database dump complete

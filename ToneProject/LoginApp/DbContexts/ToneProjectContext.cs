@@ -14,7 +14,7 @@ public partial class ToneProjectContext : DbContext
     {
     }
 
-    public virtual DbSet<SnakeGameRecord> SnakeGameRecords { get; set; }
+    public virtual DbSet<SnakeGameHistory> SnakeGameHistories { get; set; }
 
     public virtual DbSet<UserInfo> UserInfos { get; set; }
 
@@ -23,14 +23,16 @@ public partial class ToneProjectContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<SnakeGameRecord>(entity =>
+        modelBuilder.Entity<SnakeGameHistory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SnakeGameRecords_pkey");
+            entity.HasKey(e => e.Id).HasName("SnakeGameHistories_pkey");
+
+            entity.ToTable("SnakeGameHistory");
 
             entity.Property(e => e.PlayedDate).HasDefaultValueSql("CURRENT_DATE");
             entity.Property(e => e.UserId).HasMaxLength(30);
 
-            entity.HasOne(d => d.User).WithMany(p => p.SnakeGameRecords)
+            entity.HasOne(d => d.User).WithMany(p => p.SnakeGameHistories)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("fk_userId");
         });

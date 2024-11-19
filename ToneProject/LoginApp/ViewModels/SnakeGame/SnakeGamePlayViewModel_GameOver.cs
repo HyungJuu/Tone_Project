@@ -55,7 +55,7 @@ public partial class SnakeGamePlayViewModel
         int finalScore = Score; // 획득 점수
         string currentUserId = _dashboardViewModel.CurrentUserId; // 접속자 아이디
 
-        SnakeGameRecord newRecord = new()
+        SnakeGameHistory newHistory = new()
         {
             UserId = currentUserId,
             PlayedDate = playedDate,
@@ -63,21 +63,21 @@ public partial class SnakeGamePlayViewModel
             PlayTime = totalPlayTime,
             Score = finalScore
         };
-        SaveGameRecord(newRecord);
+        SaveGameHistory(newHistory);
 
-        CurrentViewModel = new SnakeGameEndViewModel(_dashboardViewModel);
+        CurrentViewModel = new SnakeGameEndViewModel(_dashboardViewModel, finalScore);
     }
 
     /// <summary>
     /// 게임 기록을 데이터베이스에 저장하는 메서드
     /// </summary>
-    /// <param name="record">SnakeGameRecord 객체</param>
-    private static void SaveGameRecord(SnakeGameRecord record)
+    /// <param name="history">SnakeGameHistory 객체</param>
+    private static void SaveGameHistory(SnakeGameHistory history)
     {
         try
         {
             using ToneProjectContext dbContext = new();
-            dbContext.SnakeGameRecords.Add(record);
+            dbContext.SnakeGameHistories.Add(history);
             dbContext.SaveChanges();
         }
         catch (Exception ex)

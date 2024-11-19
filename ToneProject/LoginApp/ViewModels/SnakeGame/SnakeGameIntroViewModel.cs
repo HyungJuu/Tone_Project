@@ -17,7 +17,7 @@ namespace LoginApp.ViewModels.SnakeGame
         /// <summary>
         /// 사용자의 게임 기록을 저장하여 화면에 표시
         /// </summary>
-        public ObservableCollection<SnakeGameRecord> Scores { get; set; } = [];
+        public ObservableCollection<SnakeGameHistory> Scores { get; set; } = [];
 
         /// <summary>
         /// 현재 활성화된 뷰모델
@@ -39,17 +39,23 @@ namespace LoginApp.ViewModels.SnakeGame
         {
             Scores.Clear();
 
-            string currentUser = _dashboardViewModel.CurrentUserId; // 로그인된 사용자 아이디
+            string currentUser = _dashboardViewModel.CurrentUserId;
 
             try
             {
-                // ScoreService에서 점수 조회
-                List<SnakeGameRecord> topScores = await ScoreService.LoadTopScoresAsync(currentUser);
+                List<SnakeGameHistory> topScores = await UserScores.LoadMyTopScoresAsync(currentUser);
+
+                // 기록이 없으면 성적 표시 안함
+                if (topScores == null || topScores.Count == 0)
+                {
+                    MessageBox.Show("조회할 성적이 없습니다.");
+                    return;
+                }
 
                 // 조회된 점수를 Scores에 추가
-                foreach (SnakeGameRecord record in topScores)
+                foreach (SnakeGameHistory history in topScores)
                 {
-                    Scores.Add(record);
+                    Scores.Add(history);
                 }
 
                 IsScoreVisible = true;

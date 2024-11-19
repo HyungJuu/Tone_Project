@@ -41,7 +41,7 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         public static void BackToSignIn(Window currentWindow)
         {
-            currentWindow?.Close();
+            currentWindow.Close();
         }
     }
 }

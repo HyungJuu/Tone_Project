@@ -10,6 +10,10 @@ public partial class SnakeGamePlayViewModel
     /// 스네이크 이동 방향 전환 메서드
     /// </summary>
     /// <param name="newDirection">새로운 이동 방향</param>
+    /// <remarks>
+    /// 새로 입력된 방향이 현재 진행방향의 반대방향이 아니면 방향 업데이트<br/>
+    /// 반대방향 입력시 현재방향 그대로 유지
+    /// </remarks>
     [RelayCommand]
     public void Move(Direction newDirection)
     {

@@ -1,6 +1,6 @@
 ﻿namespace LoginApp.Models;
 
-public partial class SnakeGameRecord
+public partial class SnakeGameHistory
 {
     public string UserId { get; set; } = null!;
 
