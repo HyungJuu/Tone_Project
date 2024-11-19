@@ -5,7 +5,7 @@
 -- Dumped from database version 17.0
 -- Dumped by pg_dump version 17.0
 
--- Started on 2024-11-19 14:57:03
+-- Started on 2024-11-19 17:52:17
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -130,9 +130,6 @@ INSERT INTO public."SnakeGameHistory" VALUES ('user', '2024-11-19', false, 6, 2,
 
 INSERT INTO public."UserInfo" VALUES ('test', 'tttest123!', 'test', '2000-11-22', '선택안함');
 INSERT INTO public."UserInfo" VALUES ('user', 'userqq1!', 'user', '2000-11-11', '남');
-INSERT INTO public."UserInfo" VALUES ('user1', 'uuuser1!', 'user1', '1998-05-28', '남');
-INSERT INTO public."UserInfo" VALUES ('admin', 'admin', 'admin', '1999-10-10', '선택안함');
-INSERT INTO public."UserInfo" VALUES ('tttest', 'tttest123!', 'Test', '1988-06-13', '남');
 
 
 --
@@ -171,7 +168,7 @@ ALTER TABLE ONLY public."SnakeGameHistory"
     ADD CONSTRAINT "fk_userId" FOREIGN KEY ("UserId") REFERENCES public."UserInfo"("UserId") ON DELETE CASCADE;
 
 
--- Completed on 2024-11-19 14:57:04
+-- Completed on 2024-11-19 17:52:17
 
 --
 -- PostgreSQL database dump complete
