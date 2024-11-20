@@ -88,7 +88,10 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private static void FindId()
         {
-            FindIdView FindIdView = new();
+            FindIdView FindIdView = new()
+            {
+                DataContext = new FindIdViewModel()
+            };
             FindIdView.ShowDialog();
         }
 
