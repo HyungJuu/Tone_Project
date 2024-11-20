@@ -98,7 +98,10 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         private static void FindPassword()
         {
-            FindPasswordView FindPasswordView = new();
+            FindPasswordView FindPasswordView = new()
+            {
+                DataContext = new FindPasswordViewModel()
+            };
             FindPasswordView.ShowDialog();
         }
     }

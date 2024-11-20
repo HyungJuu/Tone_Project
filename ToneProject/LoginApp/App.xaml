@@ -32,6 +32,10 @@
                 <views:SignUpPersonalInfoView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModels:FindPasswordViewModel}">
+                <views:FindPasswordView />
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type snakegameVM:SnakeGameIntroViewModel}">
                 <snakegames:SnakeGameIntroView />
             </DataTemplate>
