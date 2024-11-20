@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:control="clr-namespace:LoginApp.Controls"
+             xmlns:enum="clr-namespace:LoginApp.Enums"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="330">
 
@@ -43,19 +44,19 @@
                 <RadioButton Content="남성"
                              GroupName="GenderGroup"
                              Command="{Binding SelectGenderCommand}"
-                             CommandParameter="0"/>
+                             CommandParameter="{x:Static enum:Gender.Male}"/>
 
                 <RadioButton Content="여성"
                              GroupName="GenderGroup"
                              Command="{Binding SelectGenderCommand}"
-                             CommandParameter="1"
+                             CommandParameter="{x:Static enum:Gender.Female}"
                              Margin="20 0"/>
 
                 <RadioButton Style="{StaticResource DefaultGender}"
                              Content="선택안함"
                              GroupName="GenderGroup"
                              Command="{Binding SelectGenderCommand}"
-                             CommandParameter="2"/>
+                             CommandParameter="{x:Static enum:Gender.None}"/>
             </StackPanel>
 
             <!-- 회원가입 완료 버튼 -->

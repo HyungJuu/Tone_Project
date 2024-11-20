@@ -43,7 +43,7 @@ namespace LoginApp.ViewModels.SnakeGame
         }
 
         /// <summary>
-        /// 현재접속자의 상위 5개의 게임 데이터를 화면에 표시
+        /// 현재접속자의 상위 5개의 게임 데이터를 화면에 표시하는 비동기 메서드
         /// </summary>
         [RelayCommand]
         public async Task ShowMyTopScoreAsync()
@@ -77,14 +77,27 @@ namespace LoginApp.ViewModels.SnakeGame
             }
         }
 
+        /// <summary>
+        /// 스네이크 게임 전체 데이터 중 상위 5개를 화면에 표시하는 비동기 메서드
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         public async Task ShowTotalTopScoreAsync()
         {
             Scores.Clear();
+            string currentUser = _dashboardViewModel.CurrentUserId;
 
             try
             {
-                List<SnakeGameHistory> topScores = await UserScores.LoadTotalTopScoreAsync();
+                List<SnakeGameHistory> topScores;
+                if (currentUser == "admin")
+                {
+                    topScores = AdminScores.GetTotalScores();
+                }
+                else
+                {
+                    topScores = await UserScores.LoadTotalTopScoreAsync();
+                }
 
                 foreach (SnakeGameHistory history in topScores)
                 {

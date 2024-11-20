@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LoginApp.DbContexts;
+using LoginApp.Enums;
 using LoginApp.Models;
 using LoginApp.Validators;
 using LoginApp.ViewModels.SignUp;
@@ -38,7 +39,7 @@ namespace LoginApp.ViewModels
         /// 사용자가 선택한 성별을 저장합니다.
         /// </summary>
         [ObservableProperty]
-        private Gender _signUpGender = Gender.선택안함;
+        private Gender _signUpGender = Gender.None;
 
         /// <summary>
         /// 이름 입력 상태 메시지를 저장합니다.
@@ -55,9 +56,9 @@ namespace LoginApp.ViewModels
         [RelayCommand]
         public void SelectGender(object parameter)
         {
-            if (parameter is string parameterString && int.TryParse(parameterString, out int genderValue))
+            if (parameter is Gender gender)
             {
-                SignUpGender = (Gender)genderValue;
+                SignUpGender = gender;
             }
         }
 
@@ -86,13 +87,21 @@ namespace LoginApp.ViewModels
         /// </summary>
         private void SaveUserInfoToDatabase()
         {
+            string gender = SignUpGender switch
+            {
+                Gender.Male => "남",
+                Gender.Female => "여",
+                Gender.None => "선택안함",
+                _ => "선택안함"
+            };
+
             UserInfo userInfo = new()
             {
                 UserId = _signUpAccountInfoViewModel.SignUpId,
                 Pwd = _signUpAccountInfoViewModel.SignUpPassword,
                 Name = SignUpName,
                 Birth = DateOnly.ParseExact(SignUpBirth, "yyyyMMdd", null),
-                Gender = SignUpGender.ToString()
+                Gender = gender
             };
 
             _dbContext.UserInfos.Add(userInfo);

@@ -1,9 +1,9 @@
-﻿namespace LoginApp.Models
+﻿namespace LoginApp.Enums
 {
     public enum Gender
     {
-        남,
-        여,
-        선택안함
+        Male,
+        Female,
+        None
     }
 }

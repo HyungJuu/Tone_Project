@@ -51,18 +51,15 @@ namespace LoginApp.ViewModels.SnakeGame
                 }
                 else
                 {
-                    // 일반 사용자의 데이터를 DB에서 불러오기
                     topScores = await UserScores.LoadMyTopScoresAsync(currentUser);
                 }
 
-                // 기록이 없으면 성적 표시 안함
                 if (topScores == null || topScores.Count == 0)
                 {
                     MessageBox.Show("조회할 성적이 없습니다.");
                     return;
                 }
 
-                // 조회된 점수를 Scores에 추가
                 foreach (SnakeGameHistory history in topScores)
                 {
                     Scores.Add(history);
@@ -76,14 +73,27 @@ namespace LoginApp.ViewModels.SnakeGame
             }
         }
 
+        /// <summary>
+        /// 스네이크 게임 전체 데이터 중 상위 5개를 화면에 표시하는 비동기 메서드
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         public async Task ShowTotalTopScoreAsync()
         {
             Scores.Clear();
+            string currentUser = _dashboardViewModel.CurrentUserId;
 
             try
             {
-                List<SnakeGameHistory> topScores = await UserScores.LoadTotalTopScoreAsync();
+                List<SnakeGameHistory> topScores;
+                if (currentUser == "admin")
+                {
+                    topScores = AdminScores.GetTotalScores();
+                }
+                else
+                {
+                    topScores = await UserScores.LoadTotalTopScoreAsync();
+                }
 
                 foreach (SnakeGameHistory history in topScores)
                 {
