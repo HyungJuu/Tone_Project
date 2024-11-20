@@ -34,5 +34,16 @@ namespace LoginApp.ViewModels.SnakeGame
                 .Take(topCount)
                 .ToList();
         }
+
+        public static async Task<List<SnakeGameHistory>> LoadTotalTopScoreAsync(int topCount = 5)
+        {
+            await using var context = new ToneProjectContext();
+
+            return await context.SnakeGameHistories
+                .OrderByDescending(r => r.GameClear)
+                .ThenByDescending(r => r.Score)
+                .Take(topCount)
+                .ToListAsync();
+        }
     }
 }

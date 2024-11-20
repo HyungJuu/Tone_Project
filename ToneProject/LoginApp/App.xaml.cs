@@ -20,5 +20,4 @@ namespace LoginApp
             base.OnStartup(e);
         }
     }
-
 }

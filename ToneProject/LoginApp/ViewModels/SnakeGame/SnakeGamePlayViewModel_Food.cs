@@ -18,7 +18,7 @@ public partial class SnakeGamePlayViewModel
             }
         }
 
-        foreach (SnakeSegment segment in _snakeSegments) // 스네이크가 차지하고 있는 위치를 모두 제거
+        foreach (SnakeSegment segment in _snakeSegments)
         {
             possibleLocations.RemoveAll(p => p.X == segment.X && p.Y == segment.Y);
         }

@@ -44,7 +44,7 @@ public partial class SnakeGamePlayViewModel
     /// </summary>
     public void ChangeSnakeColor()
     {
-        byte GenerateBrightColor() => (byte)_random.Next(100, 256); // 밝은 색상
+        byte GenerateBrightColor() => (byte)_random.Next(100, 256);
         SolidColorBrush newColor = new(Color.FromRgb(
             r: GenerateBrightColor(),
             g: GenerateBrightColor(),

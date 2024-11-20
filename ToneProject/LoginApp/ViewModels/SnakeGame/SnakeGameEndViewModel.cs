@@ -46,7 +46,7 @@ namespace LoginApp.ViewModels.SnakeGame
         /// 현재접속자의 상위 5개의 게임 데이터를 화면에 표시
         /// </summary>
         [RelayCommand]
-        public async Task ShowTopScore()
+        public async Task ShowMyTopScoreAsync()
         {
             Scores.Clear();
 
@@ -63,6 +63,28 @@ namespace LoginApp.ViewModels.SnakeGame
                 {
                     topScores = await UserScores.LoadMyTopScoresAsync(currentUser);
                 }
+
+                foreach (SnakeGameHistory history in topScores)
+                {
+                    Scores.Add(history);
+                }
+
+                IsScoreVisible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"데이터를 불러오는 중 오류가 발생했습니다: {ex.Message}");
+            }
+        }
+
+        [RelayCommand]
+        public async Task ShowTotalTopScoreAsync()
+        {
+            Scores.Clear();
+
+            try
+            {
+                List<SnakeGameHistory> topScores = await UserScores.LoadTotalTopScoreAsync();
 
                 foreach (SnakeGameHistory history in topScores)
                 {

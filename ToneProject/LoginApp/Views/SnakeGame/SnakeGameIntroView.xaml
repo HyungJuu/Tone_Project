@@ -81,8 +81,9 @@
                 <Border Grid.Column="1" Background="Black" BorderBrush="#FEE500" BorderThickness="3" CornerRadius="0 5 5 0">
                     <Border BorderBrush="#FEE500" BorderThickness="3"  Width="300" Height="300" Background="#FF202020" CornerRadius="15">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="Snake Game" Foreground="White" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" />
-                            <control:SnakeGameButton Content="성적 보기" Command="{Binding ShowTopScoreCommand}" Margin="30" />
+                            <TextBlock Text="Snake Game" Foreground="White" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Margin="40"/>
+                            <control:SnakeGameButton Content="성적 보기" Command="{Binding ShowMyTopScoreCommand}" Margin="0 0 0 20" />
+                            <control:SnakeGameButton Content="전체성적 보기" Command="{Binding ShowTotalTopScoreCommand}" Margin="0 0 0 20" />
                             <control:SnakeGameButton Content="게임 시작" Command="{Binding StartSnakeGameCommand}"/>
                         </StackPanel>
                     </Border>
