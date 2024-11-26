@@ -43,12 +43,13 @@ namespace LoginApp.ViewModels.SnakeGame
         /// 성공여부 및 점수로 정렬
         /// </summary>
         /// <returns>정렬된 리스트</returns>
-        public static List<SnakeGameHistory> GetAdminScores()
+        public static List<SnakeGameHistory> GetAdminScores(int topCount = 5)
         {
             return [.. adminScores
                 .Where(h => h.UserId == "admin")
                 .OrderByDescending(h => h.GameClear)
-                .ThenByDescending(h => h.Score)];
+                .ThenByDescending(h => h.Score)
+                .Take(topCount)];
         }
 
         /// <summary>
@@ -56,11 +57,12 @@ namespace LoginApp.ViewModels.SnakeGame
         /// 임의의 전체 게임 기록 조회
         /// </summary>
         /// <returns>정렬된 리스트</returns>
-        public static List<SnakeGameHistory> GetTotalScores()
+        public static List<SnakeGameHistory> GetTotalScores(int topCount = 5)
         {
             return [.. adminScores
                 .OrderByDescending(h => h.GameClear)
-                .ThenByDescending(h => h.Score)];
+                .ThenByDescending(h => h.Score)
+                .Take(topCount)];
         }
 
         /// <summary>

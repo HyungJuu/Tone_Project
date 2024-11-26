@@ -56,7 +56,7 @@
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="210"/>
-            <ColumnDefinition Width="525"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- 왼쪽 영역 (버튼, 타이머, 점수) -->
@@ -110,7 +110,7 @@
         <!-- 일시정지. 게임규칙설명 화면 -->
         <Grid Grid.ColumnSpan="2" Background="#80000000" Margin="4"  Panel.ZIndex="1"
               Visibility="{Binding IsPaused, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Border VerticalAlignment="Center" HorizontalAlignment="Center" Background="LightGoldenrodYellow"
+            <Border VerticalAlignment="Center" HorizontalAlignment="Center" Background="#F8F8F8"
                     Width="400" Height="310" BorderBrush="#FEE500" BorderThickness="2" CornerRadius="5">
                 <StackPanel>
                     <TextBlock Text="-- 일시정지 --" FontSize="20" FontWeight="Bold" Foreground="Black" TextAlignment="Center" Margin="10"/>
