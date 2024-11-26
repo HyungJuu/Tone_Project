@@ -17,19 +17,18 @@ public partial class SnakeGamePlayViewModel
     [RelayCommand]
     public void Move(Direction newDirection)
     {
-        if (newDirection != GetOppositeDirection(_currentDirection))
+        if (newDirection != OppositeDirection(_currentDirection))
         {
             _currentDirection = newDirection;
         }
     }
 
     /// <summary>
-    /// 현재 진행방향과 반대방향을 반환하는 메서드
+    /// 진행방향의 반대방향을 반환하는 메서드
     /// </summary>
     /// <param name="direction">현재 방향</param>
     /// <returns>반대방향</returns>
-    /// <exception cref="InvalidOperationException"></exception>
-    private static Direction GetOppositeDirection(Direction direction) => direction switch
+    private static Direction OppositeDirection(Direction direction) => direction switch
     {
         Direction.Up => Direction.Down,
         Direction.Down => Direction.Up,

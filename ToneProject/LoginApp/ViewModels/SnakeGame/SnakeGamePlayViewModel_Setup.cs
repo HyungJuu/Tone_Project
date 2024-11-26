@@ -64,6 +64,9 @@ public partial class SnakeGamePlayViewModel : ObservableObject
     [ObservableProperty]
     private string _playTimeDisplay;
 
+    /// <summary>
+    /// 목표물을 먹지않은 시간 표시
+    /// </summary>
     [ObservableProperty]
     private string _noFoodTimeDisplay;
 
@@ -115,7 +118,8 @@ public partial class SnakeGamePlayViewModel : ObservableObject
     private readonly int SegmentSize = 15;
 
     /// <summary>
-    /// 스네이크 초기 방향 : 오른쪽
+    /// 스네이크 현재 방향<br/>
+    /// 초기방향 : 오른쪽
     /// </summary>
     private Direction _currentDirection = Direction.Right;
 
@@ -158,13 +162,13 @@ public partial class SnakeGamePlayViewModel : ObservableObject
         };
         _gameTimer.Tick += UpdateTimers;
 
-        _moveTimer = new DispatcherTimer
+        _moveTimer = new DispatcherTimer // 스네이크가 한번 이동하는데 걸리는 시간 간격 관리
         {
             Interval = TimeSpan.FromMilliseconds(100)
         };
         _moveTimer.Tick += OnGameTick;
 
-        _noFoodTimer = new DispatcherTimer
+        _noFoodTimer = new DispatcherTimer // 먹이 제한시간 관리(1초)
         {
             Interval = TimeSpan.FromSeconds(1)
         };
@@ -176,11 +180,11 @@ public partial class SnakeGamePlayViewModel : ObservableObject
     /// </summary>
     private void InitializeSnake()
     {
-        int initialLength = 3;
+        int initialLength = 3; // 초기길이
         int startX = BoardWidth / 2;
         int startY = BoardHeight / 2;
 
-        for (int i = 0; i < initialLength; i++)
+        for (int i = 0; i < initialLength; i++) // 초기 스네이크에 세그먼트 3개 추가
         {
             _snakeSegments.AddLast(new SnakeSegment
             {
